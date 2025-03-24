@@ -37,6 +37,22 @@ android {
     buildFeatures {
         compose = true
     }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "MangaTek Dev")
+        }
+        create("pred") {
+            dimension = "version"
+            applicationIdSuffix = ".prod"
+            resValue("string", "app_name", "MangaTek")
+        }
+    }
 }
 
 dependencies {
