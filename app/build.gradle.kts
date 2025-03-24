@@ -75,4 +75,5 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.analytics)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.material.icons.extended)
 }
