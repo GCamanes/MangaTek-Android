@@ -4,15 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.groupany.mangatek.ui.theme.MangaTekTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.composable
+import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
+import com.groupany.mangatek.features.login.presentation.screens.LoginScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,29 +18,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MangaTekTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MyApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello ${stringResource(R.string.app_name)}!",
-        modifier = modifier
-    )
-}
+fun MyApp() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MangaTekTheme {
-        Greeting("Android")
+    NavHost(navController = navController, startDestination = "login") {
+        composable("login") { LoginScreen(navController) }
+        composable("home") { HomeScreen(navController) }
     }
 }
