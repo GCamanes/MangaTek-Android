@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
 import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
 import com.groupany.mangatek.features.login.presentation.screens.LoginScreen
+import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +32,6 @@ fun MyApp() {
     NavHost(navController = navController, startDestination = "login") {
         composable("login") { LoginScreen(navController) }
         composable("home") { HomeScreen(navController) }
+        composable("settings") { SettingsScreen(navController) }
     }
 }

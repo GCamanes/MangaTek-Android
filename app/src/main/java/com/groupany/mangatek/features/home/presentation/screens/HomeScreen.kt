@@ -9,6 +9,11 @@ import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,7 +27,16 @@ fun HomeScreen(navController: NavHostController) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate("settings") }) {
+                        Icon(
+                            Icons.Outlined.Settings, // Use your own icon
+                            contentDescription = "Settings",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                },
             )
         }
     ) { paddingValues ->
