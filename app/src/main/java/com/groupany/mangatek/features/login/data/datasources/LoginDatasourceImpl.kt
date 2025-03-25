@@ -10,7 +10,5 @@ class LoginDatasourceImpl(private val auth: FirebaseAuth) : LoginDatasource{
         return auth.currentUser
     }
 
-    override suspend fun logout() {
-        return auth.signOut()
-    }
+    override fun logout() = auth.signOut()
 }

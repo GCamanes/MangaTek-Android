@@ -4,5 +4,5 @@ import com.google.firebase.auth.FirebaseUser
 
 interface LoginRepository {
      suspend fun login(email: String, password: String): FirebaseUser?
-     suspend fun logout()
+     fun logout()
 }

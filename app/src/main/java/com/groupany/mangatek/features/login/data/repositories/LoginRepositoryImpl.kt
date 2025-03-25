@@ -9,7 +9,5 @@ class LoginRepositoryImpl(private val datasource: LoginDatasource): LoginReposit
         return datasource.login(email, password)
     }
 
-    override suspend fun logout() {
-        return datasource.logout()
-    }
+    override fun logout() = datasource.logout()
 }
