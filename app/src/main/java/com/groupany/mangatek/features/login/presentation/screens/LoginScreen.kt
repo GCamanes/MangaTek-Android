@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.groupany.mangatek.core.navigation.Screen
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
@@ -43,7 +44,7 @@ fun LoginScreen(navController: NavHostController) {
             contentAlignment = Alignment.Center,
         ) {
             Button(
-                onClick = { navController.navigate("home") },
+                onClick = { navController.navigate(Screen.Home.route) },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
             ) {
                 Text("Login")
