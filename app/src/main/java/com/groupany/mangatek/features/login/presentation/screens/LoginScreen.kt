@@ -7,11 +7,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.navigation.Screen
+import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
+    val userName by viewModel.userName.collectAsState()
+    val password by viewModel.password.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -19,13 +24,10 @@ fun LoginScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var userName by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-
         CustomTextField(
             label = "Username",
             initialValue = userName,
-            onValueChange = { userName = it }
+            onValueChange = viewModel::onUserNameChange
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -35,7 +37,7 @@ fun LoginScreen(navController: NavHostController) {
             label = "Password",
             initialValue = password,
             isPassword = true,
-            onValueChange = { password = it }
+            onValueChange = viewModel::onPasswordChange
         )
 
         Spacer(modifier = Modifier.height(60.dp))
