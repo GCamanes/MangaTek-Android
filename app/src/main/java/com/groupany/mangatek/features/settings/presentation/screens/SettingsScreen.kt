@@ -6,10 +6,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
 @Composable
-fun SettingsScreen(navController: NavHostController) {
+fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -21,7 +23,7 @@ fun SettingsScreen(navController: NavHostController) {
             contentAlignment = Alignment.Center,
         ) {
             Button(
-                onClick = { navController.navigate("login") },
+                onClick = { viewModel.logoutUser(navController) },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
             ) {
                 Text("Logout")

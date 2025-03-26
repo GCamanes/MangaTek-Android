@@ -18,10 +18,10 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
     private val _loginState = MutableStateFlow<GenericState<FirebaseUser?>>(GenericState.Idle)
     val loginState: StateFlow<GenericState<FirebaseUser?>> = _loginState.asStateFlow()
 
-    private val _email = MutableStateFlow("")
+    private val _email = MutableStateFlow("guillaume.camanes@gmail.com")
     val email: StateFlow<String> = _email
 
-    private val _password = MutableStateFlow("")
+    private val _password = MutableStateFlow("MGTKbalaise9")
     val password: StateFlow<String> = _password
 
     fun onUserNameChange(newValue: String) {
@@ -41,5 +41,9 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
                 onFailure = { error -> GenericState.Error(error.message ?: "Unknown error") }
             )
         }
+    }
+
+    fun resetLoginState() {
+        _loginState.value = GenericState.Idle
     }
 }
