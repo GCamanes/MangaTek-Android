@@ -26,7 +26,10 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         snapshotFlow { loginState }
             .collect { state ->
                 if (state is GenericState.Success) {
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo("login") { inclusive = true }
+                        launchSingleTop = true
+                    }
                     viewModel.resetLoginState()
                 }
             }

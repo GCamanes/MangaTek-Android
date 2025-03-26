@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -21,11 +20,6 @@ fun HomeScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
                 actions = {
                     IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
                         Icon(

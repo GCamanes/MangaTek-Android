@@ -13,7 +13,9 @@ class SettingsViewModel @Inject constructor(private val logoutUseCase: LogoutUse
     fun logoutUser(navController: NavHostController) {
         viewModelScope.launch {
             logoutUseCase.execute()
-            navController.navigate("login")
+            navController.navigate("login") {
+                popUpTo(0) { inclusive = true } // Clears the entire back stack
+            }
         }
     }
 }
