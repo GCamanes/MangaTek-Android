@@ -6,5 +6,6 @@ sealed class GenericState<out T> {
     data class Success<T>(val value: T) : GenericState<T>()
     data class Error(val message: String) : GenericState<Nothing>()
 
-    fun isLoading(): Boolean = this is Loading;
+    fun isLoading(): Boolean = this is Loading
+    fun isSuccess(): Boolean = this is Success
 }

@@ -15,6 +15,7 @@ fun CustomTextField(
     label: String,
     initialValue: String,
     isPassword: Boolean = false,
+    enabled: Boolean = true,
     onValueChange: (String) -> Unit
 ) {
     var text by remember { mutableStateOf(initialValue) }
@@ -22,6 +23,7 @@ fun CustomTextField(
 
     OutlinedTextField(
         value = text,
+        enabled = enabled,
         onValueChange = {
             text = it
             onValueChange(it)

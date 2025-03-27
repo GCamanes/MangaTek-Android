@@ -62,7 +62,6 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     fun resetLoginState() {
         _loginState.value = GenericState.Idle
-        _validationState.update { ValidationState() }
     }
 }
 

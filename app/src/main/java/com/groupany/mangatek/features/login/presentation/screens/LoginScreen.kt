@@ -46,16 +46,17 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         CustomTextField(
             label = "Email",
             initialValue = email,
+            enabled = !loginState.isLoading() && !loginState.isSuccess(),
             onValueChange = viewModel::onEmailChange
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Password TextField
         CustomTextField(
             label = "Password",
             initialValue = password,
             isPassword = true,
+            enabled = !loginState.isLoading() && !loginState.isSuccess(),
             onValueChange = viewModel::onPasswordChange
         )
 
@@ -68,7 +69,9 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 onClick = {
                     viewModel.loginUser(email, password)
                 },
-                enabled = validationSTate.isValid() && !loginState.isLoading(),
+                enabled = validationSTate.isValid()
+                        && !loginState.isLoading()
+                        && !loginState.isSuccess(),
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
             ) {
                 Text("Login")
