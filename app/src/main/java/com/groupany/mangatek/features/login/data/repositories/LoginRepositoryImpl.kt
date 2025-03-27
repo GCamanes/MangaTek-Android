@@ -5,7 +5,7 @@ import com.groupany.mangatek.features.login.data.datasources.LoginDatasource
 import com.groupany.mangatek.features.login.domain.repositories.LoginRepository
 
 class LoginRepositoryImpl(private val datasource: LoginDatasource): LoginRepository {
-    override suspend fun login(email: String, password: String): FirebaseUser? {
+    override suspend fun login(email: String, password: String): FirebaseUser {
         return datasource.login(email, password)
     }
 

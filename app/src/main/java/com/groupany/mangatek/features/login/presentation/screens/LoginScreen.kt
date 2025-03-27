@@ -21,6 +21,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+    val validationSTate by viewModel.validationState.collectAsState()
 
     LaunchedEffect(Unit) {
         snapshotFlow { loginState }
@@ -45,7 +46,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         CustomTextField(
             label = "Email",
             initialValue = email,
-            onValueChange = viewModel::onUserNameChange
+            onValueChange = viewModel::onEmailChange
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -67,6 +68,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 onClick = {
                     viewModel.loginUser(email, password)
                 },
+                enabled = validationSTate.isValid() && !loginState.isLoading(),
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
             ) {
                 Text("Login")

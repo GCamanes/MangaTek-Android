@@ -5,7 +5,7 @@ import com.groupany.mangatek.features.login.domain.repositories.LoginRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(private val repo: LoginRepository) {
-    suspend fun execute(email: String, password: String) : Result<FirebaseUser?> {
+    suspend fun execute(email: String, password: String) : Result<FirebaseUser> {
         return try {
             val user = repo.login(email, password)
             Result.success(user)

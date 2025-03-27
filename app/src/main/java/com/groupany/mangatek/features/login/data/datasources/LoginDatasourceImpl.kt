@@ -5,9 +5,9 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 class LoginDatasourceImpl(private val auth: FirebaseAuth) : LoginDatasource{
-    override suspend fun login(email: String, password: String): FirebaseUser? {
+    override suspend fun login(email: String, password: String): FirebaseUser {
         auth.signInWithEmailAndPassword(email, password).await()
-        return auth.currentUser
+        return auth.currentUser!!
     }
 
     override fun logout() = auth.signOut()
