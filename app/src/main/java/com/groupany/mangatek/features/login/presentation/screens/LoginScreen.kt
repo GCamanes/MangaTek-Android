@@ -21,18 +21,26 @@ import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewMod
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
-    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
     val validationSTate by viewModel.validationState.collectAsState()
+    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+    val currentUserState by viewModel.currentUserState.collectAsStateWithLifecycle()
 
+    // Retrieve user bloc
+    LaunchedEffect(Unit) { viewModel.getCurrentUser() }
+    LaunchedEffect(Unit) {
+        snapshotFlow { currentUserState }
+            .collect { state ->
+                if (state is GenericState.Success && state.value != null) {
+                    gotToHome(navController)
+                }
+            }
+    }
+    // Login user bloc
     LaunchedEffect(Unit) {
         snapshotFlow { loginState }
             .collect { state ->
                 if (state is GenericState.Success) {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
-                        launchSingleTop = true
-                    }
-                    viewModel.resetLoginState()
+                    gotToHome(navController)
                 }
             }
     }
@@ -90,5 +98,12 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 Text("Error: ${(loginState as GenericState.Error).message}", color = Color.Red)
             }
         }
+    }
+}
+
+fun gotToHome(navController: NavHostController) {
+    navController.navigate(Screen.Home.route) {
+        popUpTo(Screen.Login.route) { inclusive = true }
+        launchSingleTop = true
     }
 }

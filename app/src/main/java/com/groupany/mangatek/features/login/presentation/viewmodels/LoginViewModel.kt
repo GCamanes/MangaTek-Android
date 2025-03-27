@@ -8,6 +8,7 @@ import com.groupany.mangatek.core.validators.EmailValidator
 import com.groupany.mangatek.core.validators.PasswordValidationResult
 import com.groupany.mangatek.core.validators.PasswordValidator
 import com.groupany.mangatek.features.login.domain.entities.UserEntity
+import com.groupany.mangatek.features.login.domain.usecases.GetCurrentUserUseCase
 import com.groupany.mangatek.features.login.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,10 +19,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
-    // Follow state of login
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+) : ViewModel() {
+    // State of login / current user
     private val _loginState = MutableStateFlow<GenericState<UserEntity>>(GenericState.Idle)
     val loginState: StateFlow<GenericState<UserEntity>> = _loginState.asStateFlow()
+    private val _currentUserState = MutableStateFlow<GenericState<UserEntity?>>(GenericState.Idle)
+    val currentUserState: StateFlow<GenericState<UserEntity?>> = _currentUserState.asStateFlow()
 
     // Follow state for login form
     private val _email = MutableStateFlow("")
@@ -60,8 +66,15 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
         }
     }
 
-    fun resetLoginState() {
-        _loginState.value = GenericState.Idle
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            _currentUserState.value = GenericState.Loading
+            val result = getCurrentUserUseCase.execute()
+            _currentUserState.value = result.fold(
+                onSuccess = { user -> GenericState.Success(user) },
+                onFailure = { error -> GenericState.Error(error.message ?: "Unknown error") }
+            )
+        }
     }
 }
 
