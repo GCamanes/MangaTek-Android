@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseUser
 import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.core.states.GenericState
+import com.groupany.mangatek.features.login.domain.entities.UserEntity
 import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
 
 @Composable
@@ -82,8 +83,8 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
             is GenericState.Idle -> Text("Enter your credentials")
             is GenericState.Loading -> CircularProgressIndicator()
             is GenericState.Success -> {
-                val user = (loginState as GenericState.Success<FirebaseUser?>).value
-                Text("Welcome ${user?.email ?: "User"}")
+                val user = (loginState as GenericState.Success<UserEntity>).value
+                Text("Welcome ${user.email}")
             }
             is GenericState.Error -> {
                 Text("Error: ${(loginState as GenericState.Error).message}", color = Color.Red)

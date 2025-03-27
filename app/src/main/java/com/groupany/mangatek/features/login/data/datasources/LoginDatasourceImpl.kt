@@ -11,4 +11,6 @@ class LoginDatasourceImpl(private val auth: FirebaseAuth) : LoginDatasource{
     }
 
     override fun logout() = auth.signOut()
+
+    override fun getCurrentUser(): FirebaseUser? = auth.currentUser
 }
