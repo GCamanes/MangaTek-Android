@@ -1,8 +1,8 @@
 package com.groupany.mangatek.features.login.presentation.viewmodels
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.groupany.mangatek.BuildConfig
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.features.login.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +18,10 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
     private val _loginState = MutableStateFlow<GenericState<FirebaseUser?>>(GenericState.Idle)
     val loginState: StateFlow<GenericState<FirebaseUser?>> = _loginState.asStateFlow()
 
-    private val _email = MutableStateFlow("guillaume.camanes@gmail.com")
+    private val _email = MutableStateFlow(BuildConfig.EMAIL)
     val email: StateFlow<String> = _email
 
-    private val _password = MutableStateFlow("MGTKbalaise9")
+    private val _password = MutableStateFlow(BuildConfig.PASSWORD)
     val password: StateFlow<String> = _password
 
     fun onUserNameChange(newValue: String) {

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,13 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
+
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+
+val email: String = localProperties.getProperty("LOGIN_EMAIL") ?: ""
+val password: String = localProperties.getProperty("LOGIN_PASSWORD") ?: ""
 
 android {
     namespace = "com.groupany.mangatek"
@@ -19,6 +28,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "EMAIL", "\"$email\"")
+        buildConfigField("String", "PASSWORD", "\"$password\"")
     }
 
     buildTypes {
@@ -39,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     flavorDimensions += "version"
