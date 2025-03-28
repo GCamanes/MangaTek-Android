@@ -58,7 +58,7 @@ class LoginViewModel @Inject constructor(
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _loginState.value = GenericState.Loading
-            val result = loginUseCase.execute(email, password)
+            val result = loginUseCase(email, password)
             _loginState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
                 onFailure = { error -> GenericState.Error(error.message ?: "Unknown error") }
@@ -69,7 +69,7 @@ class LoginViewModel @Inject constructor(
     fun getCurrentUser() {
         viewModelScope.launch {
             _currentUserState.value = GenericState.Loading
-            val result = getCurrentUserUseCase.execute()
+            val result = getCurrentUserUseCase()
             _currentUserState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
                 onFailure = { error -> GenericState.Error(error.message ?: "Unknown error") }

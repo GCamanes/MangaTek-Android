@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel @Inject constructor(private val logoutUseCase: LogoutUseCase) : ViewModel() {
     fun logoutUser(navController: NavHostController) {
         viewModelScope.launch {
-            logoutUseCase.execute()
+            logoutUseCase()
             navController.navigate(Screen.Login.route) {
                 popUpTo(0) { inclusive = true } // Clears the entire back stack
             }
