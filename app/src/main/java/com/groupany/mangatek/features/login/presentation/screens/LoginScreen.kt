@@ -2,6 +2,8 @@ package com.groupany.mangatek.features.login.presentation.screens
 
 import CustomTextField
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -45,10 +47,10 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
             }
     }
 
-    Column(
+    Scaffold() { innerPadding -> Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(innerPadding).padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -99,6 +101,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
             }
         }
     }
+        }
 }
 
 fun gotToHome(navController: NavHostController) {

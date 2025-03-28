@@ -1,11 +1,19 @@
 package com.groupany.mangatek
 
+import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.groupany.mangatek.ui.theme.MangaTekTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import com.groupany.mangatek.core.ui.theme.MangaTekTheme
 import androidx.navigation.compose.rememberNavController
 import com.groupany.mangatek.core.navigation.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint

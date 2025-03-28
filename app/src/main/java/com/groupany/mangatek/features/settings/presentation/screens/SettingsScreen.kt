@@ -30,29 +30,22 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
                 },
             )
         }
-    ) { paddingValues ->
-        Box(
-            contentAlignment = Alignment.Center,
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(innerPadding).padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                contentAlignment = Alignment.Center,
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
+                Button(
+                    onClick = { viewModel.logoutUser(navController) },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
                 ) {
-                    Button(
-                        onClick = { viewModel.logoutUser(navController) },
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-                    ) {
-                        Text("Logout")
-                    }
+                    Text("Logout")
                 }
             }
         }
