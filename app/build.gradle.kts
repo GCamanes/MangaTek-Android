@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.firebase.auth)
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.accompanist.navigation.animation)
     // Icons dependencies
     implementation(libs.androidx.material.icons.extended)
     // Hilt dependencies
