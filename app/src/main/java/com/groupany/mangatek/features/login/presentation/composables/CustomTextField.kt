@@ -1,3 +1,5 @@
+package com.groupany.mangatek.features.login.presentation.composables
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -7,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.*
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

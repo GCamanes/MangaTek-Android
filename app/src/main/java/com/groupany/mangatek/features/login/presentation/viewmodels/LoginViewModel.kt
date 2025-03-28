@@ -1,7 +1,7 @@
 package com.groupany.mangatek.features.login.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.groupany.mangatek.core.helpers.PropertyHelper
+import com.groupany.mangatek.BuildConfig
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.core.validators.EmailValidationResult
 import com.groupany.mangatek.core.validators.EmailValidator
@@ -41,8 +41,8 @@ class LoginViewModel @Inject constructor(
 
     init {
         // Retrieve values from local properties
-        onEmailChange(PropertyHelper.getEmailProperty())
-        onPasswordChange(PropertyHelper.getPasswordProperty())
+        onEmailChange(BuildConfig.EMAIL)
+        onPasswordChange(BuildConfig.PASSWORD)
     }
 
     fun onEmailChange(newValue: String) {

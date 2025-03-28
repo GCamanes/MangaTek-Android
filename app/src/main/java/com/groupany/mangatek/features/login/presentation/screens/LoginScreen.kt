@@ -1,9 +1,6 @@
 package com.groupany.mangatek.features.login.presentation.screens
 
-import CustomTextField
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,10 +10,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseUser
 import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.features.login.domain.entities.UserEntity
+import com.groupany.mangatek.features.login.presentation.composables.CustomTextField
 import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
 
 @Composable
@@ -47,7 +44,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
             }
     }
 
-    Scaffold() { innerPadding -> Column(
+    Scaffold { innerPadding -> Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding).padding(16.dp),

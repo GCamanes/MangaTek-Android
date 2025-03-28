@@ -1,10 +1,6 @@
 package com.groupany.mangatek.core.navigation
 
-import android.app.Activity
-import android.view.WindowInsetsController
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
