@@ -17,28 +17,15 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color.Black,
     onBackground = Color.White,
     onSurface = Color.White,
-    onTertiary = Color.White
+    onTertiary = Color.White,
 )
 
 @Composable
 fun MangaTekTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (true) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }*/
-
-        darkTheme -> DarkColorScheme
-        else -> DarkColorScheme
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = DarkColorScheme,
         typography = Typography,
         content = content
     )
