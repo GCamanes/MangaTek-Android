@@ -68,7 +68,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 modifier = Modifier.size(imageSize)
             )
 
-            VerticalSpacer(CustomSpacerSize.BIG)
+            VerticalSpacer(CustomSpacerSize.LARGE)
 
             CustomTextField(
                 label = stringResource(R.string.email),
