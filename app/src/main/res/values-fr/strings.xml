@@ -1,0 +1,12 @@
+<resources>
+    <!--APP-->
+    <string name="app_name">MangaTek</string>
+    <!--ACTION-->
+    <string name="login">Se connecter</string>
+    <string name="logout">Se déconnecter</string>
+    <!--GENERAL-->
+    <string name="home">Accueil</string>
+    <string name="settings">Paramètres</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+</resources>

@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.groupany.mangatek.R
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,7 +20,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -41,7 +43,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
                     onClick = { viewModel.logoutUser(navController) },
                     modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
                 ) {
-                    Text("Logout")
+                    Text(stringResource(R.string.logout))
                 }
             }
         }

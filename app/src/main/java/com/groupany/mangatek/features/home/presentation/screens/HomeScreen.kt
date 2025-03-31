@@ -24,7 +24,7 @@ fun HomeScreen(navController: NavHostController) {
                     IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
                         Icon(
                             Icons.Outlined.Settings, // Use your own icon
-                            contentDescription = "Settings",
+                            contentDescription = stringResource(R.string.settings),
                             modifier = Modifier.size(30.dp)
                         )
                     }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,6 +16,7 @@ import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.features.login.domain.entities.UserEntity
 import com.groupany.mangatek.features.login.presentation.composables.CustomTextField
 import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
+import com.groupany.mangatek.R
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
@@ -52,7 +54,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomTextField(
-            label = "Email",
+            label = stringResource(R.string.email),
             initialValue = email,
             enabled = !loginState.isLoading() && !loginState.isSuccess(),
             onValueChange = viewModel::onEmailChange
@@ -61,7 +63,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         Spacer(modifier = Modifier.height(16.dp))
 
         CustomTextField(
-            label = "Password",
+            label = stringResource(R.string.password),
             initialValue = password,
             isPassword = true,
             enabled = !loginState.isLoading() && !loginState.isSuccess(),
@@ -82,7 +84,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                         && !loginState.isSuccess(),
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
             ) {
-                Text("Login")
+                Text(stringResource(R.string.login))
             }
         }
 
