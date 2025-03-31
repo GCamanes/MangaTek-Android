@@ -1,6 +1,7 @@
 package com.groupany.mangatek
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
 import com.groupany.mangatek.core.ui.theme.MangaTekTheme
 import androidx.navigation.compose.rememberNavController
+import com.groupany.mangatek.core.helpers.LocaleHelper
 import com.groupany.mangatek.core.navigation.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -30,6 +32,11 @@ class MainActivity : ComponentActivity() {
                 AppNavHost(navController = navController)
             }
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val savedLanguage = LocaleHelper.getSavedLanguage(newBase)
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, savedLanguage))
     }
 }
 
