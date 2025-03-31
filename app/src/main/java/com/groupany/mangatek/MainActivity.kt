@@ -36,7 +36,14 @@ class MainActivity : ComponentActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         val savedLanguage = LocaleHelper.getSavedLanguage(newBase)
-        super.attachBaseContext(LocaleHelper.setLocale(newBase, savedLanguage))
+
+        val initialLanguage = if (savedLanguage.isEmpty()) {
+            LocaleHelper.getDefaultSystemLanguage()
+        } else {
+            savedLanguage
+        }
+
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, initialLanguage))
     }
 }
 

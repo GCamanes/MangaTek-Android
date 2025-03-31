@@ -8,6 +8,7 @@ import androidx.core.content.edit
 object LocaleHelper {
     private const val PREFS_NAME = "app_prefs"
     private const val KEY_LANGUAGE = "app_language"
+    private val SUPPORTED_LANGUAGES = listOf("en", "fr")
 
     fun setLocale(context: Context, language: String): Context {
         saveLanguagePreference(context, language)
@@ -23,7 +24,8 @@ object LocaleHelper {
 
     fun getSavedLanguage(context: Context): String {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getString(KEY_LANGUAGE, "en") ?: "en" // Default to English
+        return prefs.getString(KEY_LANGUAGE, SUPPORTED_LANGUAGES.first())
+            ?: SUPPORTED_LANGUAGES.first()
     }
 
     private fun saveLanguagePreference(context: Context, language: String) {
@@ -32,6 +34,15 @@ object LocaleHelper {
     }
 
     fun getCurrentLocale(context: Context): String {
-        return context.resources.configuration.locales[0].language // e.g., "en" or "fr"
+        return context.resources.configuration.locales[0].language
+    }
+
+    fun getDefaultSystemLanguage(): String {
+        val systemLanguage = Locale.getDefault().language
+        return if (systemLanguage in SUPPORTED_LANGUAGES) {
+            systemLanguage
+        } else {
+            SUPPORTED_LANGUAGES.first()
+        }
     }
 }
