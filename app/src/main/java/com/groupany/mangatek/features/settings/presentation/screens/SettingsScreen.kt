@@ -15,6 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.helpers.LocaleHelper
+import com.groupany.mangatek.core.presentation.composable.CustomButton
+import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.mangatek.core.ui.Dimension
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,31 +42,30 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(16.dp),
+                .padding(innerPadding).padding(Dimension.PaddingMedium),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-            ) {
-                Button(
-                    onClick = { viewModel.logoutUser(navController) },
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-                ) {
-                    Text(stringResource(R.string.logout))
-                }
-            }
+            CustomButton(
+                onClick = { viewModel.logoutUser(navController) },
+                label = stringResource(R.string.logout)
+            )
+
+            VerticalSpacer()
 
             Text(text = "Current Language: $language")
 
-            Button(onClick = {
-                val newLanguage = if (language == "en") "fr" else "en"
-                language = newLanguage
-                LocaleHelper.setLocale(context, newLanguage)
-                activity?.recreate() // Restart activity to apply changes
-            }) {
-                Text(text = "Switch Language")
-            }
+            VerticalSpacer()
+
+            CustomButton(
+                onClick = {
+                    val newLanguage = if (language == "en") "fr" else "en"
+                    language = newLanguage
+                    LocaleHelper.setLocale(context, newLanguage)
+                    activity?.recreate() // Restart activity to apply changes
+                },
+                label = "Switch Language"
+            )
         }
     }
 }

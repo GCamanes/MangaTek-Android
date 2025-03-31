@@ -1,10 +1,13 @@
 package com.groupany.mangatek.features.login.presentation.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,6 +18,10 @@ import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.features.login.presentation.composables.CustomTextField
 import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
 import com.groupany.mangatek.R
+import com.groupany.mangatek.core.presentation.composable.CustomButton
+import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
+import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.mangatek.core.ui.Dimension
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
@@ -23,6 +30,9 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     val validationSTate by viewModel.validationState.collectAsState()
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
     val currentUserState by viewModel.currentUserState.collectAsStateWithLifecycle()
+
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val imageSize = screenWidth / 3
 
     // Retrieve user bloc
     LaunchedEffect(Unit) { viewModel.getCurrentUser() }
@@ -48,10 +58,18 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         innerPadding -> Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(16.dp),
+                .padding(innerPadding).padding(Dimension.PaddingMedium),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.mangatek_logo),
+                contentDescription = "app logo",
+                modifier = Modifier.size(imageSize)
+            )
+
+            VerticalSpacer(CustomSpacerSize.BIG)
+
             CustomTextField(
                 label = stringResource(R.string.email),
                 initialValue = email,
@@ -59,7 +77,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 onValueChange = viewModel::onEmailChange
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            VerticalSpacer()
 
             CustomTextField(
                 label = stringResource(R.string.password),
@@ -69,26 +87,20 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 onValueChange = viewModel::onPasswordChange
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
+            VerticalSpacer(CustomSpacerSize.BIG)
 
             Box(
                 contentAlignment = Alignment.Center,
             ) {
-                Button(
+                CustomButton(
                     onClick = {
                         viewModel.loginUser(email, password)
                     },
                     enabled = validationSTate.isValid()
                             && !loginState.isLoading()
                             && !loginState.isSuccess(),
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-                ) {
-                    when (loginState) {
-                        is GenericState.Loading -> CircularProgressIndicator()
-                        is GenericState.Success -> CircularProgressIndicator()
-                        else -> Text(stringResource(R.string.login))
-                    }
-                }
+                    label = stringResource(R.string.login)
+                )
             }
         }
     }
