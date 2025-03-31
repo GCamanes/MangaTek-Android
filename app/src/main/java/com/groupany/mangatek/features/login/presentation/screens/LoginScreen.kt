@@ -1,12 +1,15 @@
 package com.groupany.mangatek.features.login.presentation.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,14 +28,16 @@ import com.groupany.mangatek.core.ui.Dimension
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
+    // Form values
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val validationSTate by viewModel.validationState.collectAsState()
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
     val currentUserState by viewModel.currentUserState.collectAsStateWithLifecycle()
-
+    // UI values
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val imageSize = screenWidth / 3
+    // Focus handle
+    val localFocusManager = LocalFocusManager.current
 
     // Retrieve user bloc
     LaunchedEffect(Unit) { viewModel.getCurrentUser() }
@@ -58,14 +63,19 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         innerPadding -> Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(Dimension.PaddingMedium),
+                .padding(innerPadding).padding(Dimension.PaddingMedium)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        localFocusManager.clearFocus()
+                    })
+                },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = R.drawable.mangatek_logo),
                 contentDescription = "app logo",
-                modifier = Modifier.size(imageSize)
+                modifier = Modifier.size(screenWidth / 3)
             )
 
             VerticalSpacer(CustomSpacerSize.LARGE)
