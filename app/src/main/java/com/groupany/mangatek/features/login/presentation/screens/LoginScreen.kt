@@ -3,6 +3,8 @@ package com.groupany.mangatek.features.login.presentation.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,6 +41,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     // Focus handle
     val localFocusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
     // Retrieve user bloc
     LaunchedEffect(Unit) { viewModel.getCurrentUser() }
@@ -65,6 +68,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding).padding(Dimension.PaddingMedium)
+                .verticalScroll(scrollState)
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = {
                         localFocusManager.clearFocus()
