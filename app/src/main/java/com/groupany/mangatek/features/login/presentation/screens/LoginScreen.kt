@@ -12,13 +12,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.core.states.GenericState
-import com.groupany.mangatek.features.login.presentation.composables.CustomTextField
+import com.groupany.mangatek.core.presentation.composable.CustomTextField
 import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.presentation.composable.CustomButton
@@ -84,6 +85,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 label = stringResource(R.string.email),
                 initialValue = email,
                 enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                keyboardType = KeyboardType.Email,
                 onValueChange = viewModel::onEmailChange
             )
 

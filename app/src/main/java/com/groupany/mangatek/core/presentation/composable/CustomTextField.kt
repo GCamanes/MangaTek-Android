@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.login.presentation.composables
+package com.groupany.mangatek.core.presentation.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,6 +17,7 @@ fun CustomTextField(
     initialValue: String,
     isPassword: Boolean = false,
     enabled: Boolean = true,
+    keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit
 ) {
     var text by remember { mutableStateOf(initialValue) }
@@ -32,7 +33,7 @@ fun CustomTextField(
         label = { Text(label) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(
-            keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text,
+            keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
             imeAction = ImeAction.Done
         ),
         visualTransformation = if (isPassword && !isPasswordVisible) {
