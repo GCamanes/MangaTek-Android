@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -90,6 +91,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 initialValue = email,
                 enabled = !loginState.isLoading() && !loginState.isSuccess(),
                 keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
                 onValueChange = viewModel::onEmailChange
             )
 
@@ -100,6 +102,11 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 initialValue = password,
                 isPassword = true,
                 enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                onDoneAction = {
+                    if (validationSTate.isValid()) {
+                        viewModel.loginUser(email, password)
+                    }
+                },
                 onValueChange = viewModel::onPasswordChange
             )
 

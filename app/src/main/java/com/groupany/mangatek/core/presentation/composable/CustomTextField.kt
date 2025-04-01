@@ -1,6 +1,7 @@
 package com.groupany.mangatek.core.presentation.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -18,6 +19,8 @@ fun CustomTextField(
     isPassword: Boolean = false,
     enabled: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
+    onDoneAction: (() -> Unit)? = null,
     onValueChange: (String) -> Unit
 ) {
     var text by remember { mutableStateOf(initialValue) }
@@ -34,7 +37,10 @@ fun CustomTextField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
-            imeAction = ImeAction.Done
+            imeAction = imeAction
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onDoneAction?.invoke() }
         ),
         visualTransformation = if (isPassword && !isPasswordVisible) {
             PasswordVisualTransformation()
