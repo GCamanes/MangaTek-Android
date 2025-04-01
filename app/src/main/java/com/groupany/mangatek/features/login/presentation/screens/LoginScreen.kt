@@ -35,7 +35,6 @@ import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.ui.Dimension
-import com.groupany.mangatek.features.login.domain.entities.UserEntity
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
@@ -95,62 +94,72 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 modifier = Modifier.size(screenWidth / 3)
             )
 
-            VerticalSpacer(CustomSpacerSize.BIG)
-
-            if (!isFormVisible) {
-                Column {
-                    VerticalSpacer(CustomSpacerSize.BIG)
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
-                }
-            }
-
-            AnimatedVisibility(
-                visible = isFormVisible,
-                enter = fadeIn(animationSpec = tween(durationMillis = 1000))
-                        + slideInVertically(initialOffsetY = { it }, animationSpec = tween(durationMillis = 1000)),
-                exit = fadeOut(animationSpec = tween(durationMillis = 300))
-                        + slideOutVertically(targetOffsetY = { it }, animationSpec = tween(durationMillis = 300)),
+            Column(
+                modifier = Modifier.weight(1f),
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
+                if (!isFormVisible) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ){
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = isFormVisible,
+                    enter = fadeIn(animationSpec = tween(durationMillis = 1000))
+                            + slideInVertically(initialOffsetY = { it }, animationSpec = tween(durationMillis = 1000)),
+                    exit = fadeOut(animationSpec = tween(durationMillis = 300))
+                            + slideOutVertically(targetOffsetY = { it }, animationSpec = tween(durationMillis = 300)),
                 ) {
-                    CustomTextField(
-                        label = stringResource(R.string.email),
-                        initialValue = email,
-                        enabled = !loginState.isLoading() && !loginState.isSuccess(),
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next,
-                        onValueChange = viewModel::onEmailChange
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        VerticalSpacer(CustomSpacerSize.BIG)
 
-                    VerticalSpacer()
+                        CustomTextField(
+                            label = stringResource(R.string.email),
+                            initialValue = email,
+                            enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next,
+                            onValueChange = viewModel::onEmailChange
+                        )
 
-                    CustomTextField(
-                        label = stringResource(R.string.password),
-                        initialValue = password,
-                        isPassword = true,
-                        enabled = !loginState.isLoading() && !loginState.isSuccess(),
-                        onDoneAction = {
-                            if (validationSTate.isValid()) {
+                        VerticalSpacer()
+
+                        CustomTextField(
+                            label = stringResource(R.string.password),
+                            initialValue = password,
+                            isPassword = true,
+                            enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                            onDoneAction = {
+                                if (validationSTate.isValid()) {
+                                    viewModel.loginUser(email, password)
+                                }
+                            },
+                            onValueChange = viewModel::onPasswordChange
+                        )
+
+                        VerticalSpacer(CustomSpacerSize.BIG)
+
+                        CustomButton(
+                            onClick = {
                                 viewModel.loginUser(email, password)
-                            }
-                        },
-                        onValueChange = viewModel::onPasswordChange
-                    )
-
-                    VerticalSpacer(CustomSpacerSize.BIG)
-
-                    CustomButton(
-                        onClick = {
-                            viewModel.loginUser(email, password)
-                        },
-                        isLoading = loginState.isLoading()
-                                || loginState.isSuccess(),
-                        enabled = validationSTate.isValid(),
-                        label = stringResource(R.string.login)
-                    )
+                            },
+                            isLoading = loginState.isLoading()
+                                    || loginState.isSuccess(),
+                            enabled = validationSTate.isValid(),
+                            label = stringResource(R.string.login)
+                        )
+                    }
                 }
             }
+
+            Text("Test")
         }
     }
 }
