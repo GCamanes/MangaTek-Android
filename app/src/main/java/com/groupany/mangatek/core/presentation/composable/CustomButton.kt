@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import com.groupany.mangatek.core.ui.Dimension
 
 @Composable
@@ -27,7 +28,13 @@ fun CustomButton(
         if (isLoading) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
         } else {
-            Text(label)
+            Text(
+                label,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            )
         }
     }
 }

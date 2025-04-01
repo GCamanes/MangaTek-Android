@@ -12,8 +12,8 @@ private val DarkColorScheme = darkColorScheme(
     background = BackgroundColor,
     surface = SurfaceColor,
     surfaceVariant = SurfaceVariantColor,
-    onPrimary = Color.Black,
-    onSecondary = Color.Black,
+    onPrimary = BackgroundColor,
+    onSecondary = BackgroundColor,
     onBackground = Color.White,
     onSurface = Color.White,
     onTertiary = Color.White,
@@ -25,7 +25,7 @@ fun MangaTekTheme(
 ) {
     MaterialTheme(
         colorScheme = DarkColorScheme,
-        typography = Typography,
+        typography = MangaTekTypography,
         content = content
     )
 }
