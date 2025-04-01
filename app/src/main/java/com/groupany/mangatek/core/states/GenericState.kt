@@ -8,4 +8,7 @@ sealed class GenericState<out T> {
 
     fun isLoading(): Boolean = this is Loading
     fun isSuccess(): Boolean = this is Success
+
+    val valueOrNull: T?
+        get() = (this as? Success<T>)?.value
 }

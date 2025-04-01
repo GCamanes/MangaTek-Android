@@ -11,6 +11,7 @@ import com.groupany.mangatek.features.login.domain.entities.UserEntity
 import com.groupany.mangatek.features.login.domain.usecases.GetCurrentUserUseCase
 import com.groupany.mangatek.features.login.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -70,6 +71,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _currentUserState.value = GenericState.Loading
             val result = getCurrentUserUseCase()
+            delay(1000)
             _currentUserState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
                 onFailure = { error -> GenericState.Error(error.message ?: "Unknown error") }

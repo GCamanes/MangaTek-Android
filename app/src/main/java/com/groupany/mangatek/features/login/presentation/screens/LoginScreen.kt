@@ -1,5 +1,11 @@
 package com.groupany.mangatek.features.login.presentation.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -29,6 +35,7 @@ import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.ui.Dimension
+import com.groupany.mangatek.features.login.domain.entities.UserEntity
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
@@ -40,6 +47,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     val currentUserState by viewModel.currentUserState.collectAsStateWithLifecycle()
     // UI values
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    var isFormVisible by remember { mutableStateOf(false) }
     // Focus handle
     val localFocusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
@@ -49,8 +57,10 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     LaunchedEffect(Unit) {
         snapshotFlow { currentUserState }
             .collect { state ->
-                if (state is GenericState.Success && state.value != null) {
+                if (state.valueOrNull != null) {
                     gotToHome(navController)
+                } else if (state.isSuccess()) {
+                    isFormVisible = true
                 }
             }
     }
@@ -75,9 +85,10 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                         localFocusManager.clearFocus()
                     })
                 },
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            VerticalSpacer(CustomSpacerSize.BIG)
+
             Image(
                 painter = painterResource(id = R.drawable.mangatek_logo),
                 contentDescription = "app logo",
@@ -86,44 +97,59 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
 
             VerticalSpacer(CustomSpacerSize.BIG)
 
-            CustomTextField(
-                label = stringResource(R.string.email),
-                initialValue = email,
-                enabled = !loginState.isLoading() && !loginState.isSuccess(),
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next,
-                onValueChange = viewModel::onEmailChange
-            )
+            if (!isFormVisible) {
+                Column {
+                    VerticalSpacer(CustomSpacerSize.BIG)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
+                }
+            }
 
-            VerticalSpacer()
-
-            CustomTextField(
-                label = stringResource(R.string.password),
-                initialValue = password,
-                isPassword = true,
-                enabled = !loginState.isLoading() && !loginState.isSuccess(),
-                onDoneAction = {
-                    if (validationSTate.isValid()) {
-                        viewModel.loginUser(email, password)
-                    }
-                },
-                onValueChange = viewModel::onPasswordChange
-            )
-
-            VerticalSpacer(CustomSpacerSize.BIG)
-
-            Box(
-                contentAlignment = Alignment.Center,
+            AnimatedVisibility(
+                visible = isFormVisible,
+                enter = fadeIn(animationSpec = tween(durationMillis = 1000))
+                        + slideInVertically(initialOffsetY = { it }, animationSpec = tween(durationMillis = 1000)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 300))
+                        + slideOutVertically(targetOffsetY = { it }, animationSpec = tween(durationMillis = 300)),
             ) {
-                CustomButton(
-                    onClick = {
-                        viewModel.loginUser(email, password)
-                    },
-                    isLoading = loginState.isLoading()
-                            || loginState.isSuccess(),
-                    enabled = validationSTate.isValid(),
-                    label = stringResource(R.string.login)
-                )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    CustomTextField(
+                        label = stringResource(R.string.email),
+                        initialValue = email,
+                        enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next,
+                        onValueChange = viewModel::onEmailChange
+                    )
+
+                    VerticalSpacer()
+
+                    CustomTextField(
+                        label = stringResource(R.string.password),
+                        initialValue = password,
+                        isPassword = true,
+                        enabled = !loginState.isLoading() && !loginState.isSuccess(),
+                        onDoneAction = {
+                            if (validationSTate.isValid()) {
+                                viewModel.loginUser(email, password)
+                            }
+                        },
+                        onValueChange = viewModel::onPasswordChange
+                    )
+
+                    VerticalSpacer(CustomSpacerSize.BIG)
+
+                    CustomButton(
+                        onClick = {
+                            viewModel.loginUser(email, password)
+                        },
+                        isLoading = loginState.isLoading()
+                                || loginState.isSuccess(),
+                        enabled = validationSTate.isValid(),
+                        label = stringResource(R.string.login)
+                    )
+                }
             }
         }
     }
