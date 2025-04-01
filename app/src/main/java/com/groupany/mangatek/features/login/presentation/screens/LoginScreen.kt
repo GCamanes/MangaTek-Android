@@ -106,9 +106,9 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                     onClick = {
                         viewModel.loginUser(email, password)
                     },
-                    enabled = validationSTate.isValid()
-                            && !loginState.isLoading()
-                            && !loginState.isSuccess(),
+                    isLoading = loginState.isLoading()
+                            || loginState.isSuccess(),
+                    enabled = validationSTate.isValid(),
                     label = stringResource(R.string.login)
                 )
             }
