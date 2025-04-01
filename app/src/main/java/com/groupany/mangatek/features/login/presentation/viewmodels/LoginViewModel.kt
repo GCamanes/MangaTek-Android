@@ -2,6 +2,7 @@ package com.groupany.mangatek.features.login.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.BuildConfig
+import com.groupany.mangatek.core.domain.usecases.GetAppVersionUseCase
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.core.validators.EmailValidationResult
 import com.groupany.mangatek.core.validators.EmailValidator
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    getAppVersionUseCase: GetAppVersionUseCase
 ) : ViewModel() {
     // State of login / current user
     private val _loginState = MutableStateFlow<GenericState<UserEntity>>(GenericState.Idle)
@@ -39,6 +41,9 @@ class LoginViewModel @Inject constructor(
     private val passwordValidator = PasswordValidator()
     private val _validationState = MutableStateFlow(ValidationState())
     val validationState = _validationState.asStateFlow()
+
+    // Version
+    val appVersion: String = getAppVersionUseCase()
 
     init {
         // Retrieve values from local properties
