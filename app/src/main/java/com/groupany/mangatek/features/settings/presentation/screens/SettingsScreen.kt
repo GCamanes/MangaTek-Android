@@ -18,6 +18,7 @@ import com.groupany.mangatek.core.presentation.composable.ButtonTypes
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.ui.Dimension
+import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +55,22 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
                 VerticalSpacer()
 
                 Text(text = "Current Language: $language")
+
+                VerticalSpacer()
+
+                LanguageButton(
+                    iconRes = R.drawable.flag_en,
+                    value = "en",
+                    selectedValue = "en",
+                    onClick = {  }
+                )
+
+                LanguageButton(
+                    iconRes = R.drawable.flag_fr,
+                    value = "fr",
+                    selectedValue = "en",
+                    onClick = {  }
+                )
 
                 VerticalSpacer()
 

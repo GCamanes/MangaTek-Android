@@ -29,6 +29,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        vectorDrawables.useSupportLibrary = true
+
         buildConfigField("String", "EMAIL", "\"$email\"")
         buildConfigField("String", "PASSWORD", "\"$password\"")
     }
