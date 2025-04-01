@@ -46,26 +46,36 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                Text("Version ${viewModel.appVersion}")
+
+                VerticalSpacer()
+
+                Text(text = "Current Language: $language")
+
+                VerticalSpacer()
+
+                CustomButton(
+                    onClick = {
+                        val newLanguage = if (language == "en") "fr" else "en"
+                        language = newLanguage
+                        LocaleHelper.setLocale(context, newLanguage)
+                        activity?.recreate() // Restart activity to apply changes
+                    },
+                    label = "Switch Language"
+                )
+            }
+
+            VerticalSpacer()
+
             CustomButton(
                 onClick = { viewModel.logoutUser(navController) },
                 label = stringResource(R.string.logout)
             )
 
             VerticalSpacer()
-
-            Text(text = "Current Language: $language")
-
-            VerticalSpacer()
-
-            CustomButton(
-                onClick = {
-                    val newLanguage = if (language == "en") "fr" else "en"
-                    language = newLanguage
-                    LocaleHelper.setLocale(context, newLanguage)
-                    activity?.recreate() // Restart activity to apply changes
-                },
-                label = "Switch Language"
-            )
         }
     }
 }
