@@ -25,7 +25,8 @@ fun HomeScreen(navController: NavHostController) {
                         Icon(
                             Icons.Outlined.Settings, // Use your own icon
                             contentDescription = stringResource(R.string.settings),
-                            modifier = Modifier.size(30.dp)
+                            modifier = Modifier.size(30.dp),
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                     }
                 },

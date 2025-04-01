@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.helpers.LocaleHelper
+import com.groupany.mangatek.core.presentation.composable.ButtonTypes
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.ui.Dimension
@@ -72,7 +72,8 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
 
             CustomButton(
                 onClick = { viewModel.logoutUser(navController) },
-                label = stringResource(R.string.logout)
+                label = stringResource(R.string.logout),
+                buttonType = ButtonTypes.SECONDARY
             )
 
             VerticalSpacer()
