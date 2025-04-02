@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import com.groupany.mangatek.core.ui.Dimension
+import com.groupany.mangatek.core.constants.Dimension
 
 enum class ButtonTypes {
     PRIMARY, SECONDARY

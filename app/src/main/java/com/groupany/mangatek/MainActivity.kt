@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
-import com.groupany.mangatek.core.ui.theme.MangaTekTheme
+import com.groupany.mangatek.core.theme.MangaTekTheme
 import androidx.navigation.compose.rememberNavController
 import com.groupany.mangatek.core.helpers.LocaleHelper
 import com.groupany.mangatek.core.navigation.AppNavHost

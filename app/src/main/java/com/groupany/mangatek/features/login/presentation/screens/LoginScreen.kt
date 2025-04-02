@@ -34,7 +34,7 @@ import com.groupany.mangatek.R
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
-import com.groupany.mangatek.core.ui.Dimension
+import com.groupany.mangatek.core.constants.Dimension
 
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {

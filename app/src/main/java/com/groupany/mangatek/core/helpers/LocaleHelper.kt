@@ -4,11 +4,23 @@ import android.content.Context
 import android.content.res.Configuration
 import java.util.Locale
 import androidx.core.content.edit
+import com.groupany.mangatek.R
+import com.groupany.mangatek.core.states.GenericState.Success
 
 object LocaleHelper {
     private const val PREFS_NAME = "app_prefs"
     private const val KEY_LANGUAGE = "app_language"
     private val SUPPORTED_LANGUAGES = listOf("en", "fr")
+
+    val supportedLanguages: List<String>
+        get() = SUPPORTED_LANGUAGES
+
+    fun getLocaleFlag(locale: String): Int {
+        return when(locale) {
+            SUPPORTED_LANGUAGES[1] -> R.drawable.flag_fr
+            else -> R.drawable.flag_en
+        }
+    }
 
     fun setLocale(context: Context, language: String): Context {
         saveLanguagePreference(context, language)

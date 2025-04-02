@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.ui
+package com.groupany.mangatek.core.constants
 
 import androidx.compose.ui.unit.dp
 

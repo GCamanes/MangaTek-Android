@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.groupany.mangatek.core.constants.Dimension
 
 @Composable
 fun LanguageButton(
@@ -24,14 +26,13 @@ fun LanguageButton(
 ) {
     val isSelected = value == selectedValue
     val borderWidth = if (isSelected) 2.dp else 0.dp
-    val borderColor = if (isSelected) Color.Blue else Color.Transparent
+    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
 
     Box(
         modifier = Modifier
-            .size(64.dp)
-            .border(BorderStroke(borderWidth, borderColor), shape = RoundedCornerShape(8.dp))
+            .border(BorderStroke(borderWidth, borderColor), shape = RoundedCornerShape(Dimension.PaddingSmall))
             .clickable { onClick(value) }
-            .padding(8.dp),
+            .padding(Dimension.PaddingSmall),
         contentAlignment = Alignment.Center
     ) {
         Image(

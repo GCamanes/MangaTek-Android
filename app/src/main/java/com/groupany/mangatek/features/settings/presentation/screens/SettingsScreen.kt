@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.R
@@ -17,7 +18,8 @@ import com.groupany.mangatek.core.helpers.LocaleHelper
 import com.groupany.mangatek.core.presentation.composable.ButtonTypes
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
-import com.groupany.mangatek.core.ui.Dimension
+import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
@@ -26,7 +28,7 @@ import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsV
 fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val activity = context as? Activity // Needed to recreate activity
-    var language by remember { mutableStateOf(LocaleHelper.getCurrentLocale(context)) }
+    var selectedLocale by remember { mutableStateOf(LocaleHelper.getCurrentLocale(context)) }
 
     Scaffold(
         topBar = {
@@ -44,45 +46,53 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding).padding(Dimension.PaddingMedium),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Version ${viewModel.appVersion}")
-
                 VerticalSpacer()
 
-                Text(text = "Current Language: $language")
-
-                VerticalSpacer()
-
-                LanguageButton(
-                    iconRes = R.drawable.flag_en,
-                    value = "en",
-                    selectedValue = "en",
-                    onClick = {  }
-                )
-
-                LanguageButton(
-                    iconRes = R.drawable.flag_fr,
-                    value = "fr",
-                    selectedValue = "en",
-                    onClick = {  }
+                Text(
+                    stringResource(R.string.version),
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        textDecoration = TextDecoration.Underline
+                    )
                 )
 
                 VerticalSpacer()
 
-                CustomButton(
-                    onClick = {
-                        val newLanguage = if (language == "en") "fr" else "en"
-                        language = newLanguage
-                        LocaleHelper.setLocale(context, newLanguage)
-                        activity?.recreate() // Restart activity to apply changes
-                    },
-                    label = "Switch Language"
+                Text(
+                    viewModel.appVersion,
+                    style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
                 )
+
+                VerticalSpacer(CustomSpacerSize.BIG)
+
+                Text(
+                    stringResource(R.string.language),
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        textDecoration = TextDecoration.Underline
+                    )
+                )
+
+                VerticalSpacer()
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
+                ) {
+                    LocaleHelper.supportedLanguages.forEach { locale ->
+                        LanguageButton(
+                            iconRes = LocaleHelper.getLocaleFlag(locale),
+                            value = locale,
+                            selectedValue = selectedLocale,
+                            onClick = {
+                                LocaleHelper.setLocale(context, locale)
+                                activity?.recreate()
+                            }
+                        )
+                    }
+                }
             }
 
             VerticalSpacer()
