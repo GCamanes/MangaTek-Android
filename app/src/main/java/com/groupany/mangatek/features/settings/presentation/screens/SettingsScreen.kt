@@ -21,6 +21,7 @@ import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.Dimension
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
+import com.groupany.mangatek.features.settings.presentation.composables.SettingsElement
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,44 +54,30 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             ) {
                 VerticalSpacer()
 
-                Text(
-                    stringResource(R.string.version),
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        textDecoration = TextDecoration.Underline
+                SettingsElement(title = stringResource(R.string.version)) {
+                    Text(
+                        viewModel.appVersion,
+                        style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
                     )
-                )
-
-                VerticalSpacer()
-
-                Text(
-                    viewModel.appVersion,
-                    style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
-                )
+                }
 
                 VerticalSpacer(CustomSpacerSize.BIG)
 
-                Text(
-                    stringResource(R.string.language),
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        textDecoration = TextDecoration.Underline
-                    )
-                )
-
-                VerticalSpacer()
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
-                ) {
-                    LocaleHelper.supportedLanguages.forEach { locale ->
-                        LanguageButton(
-                            iconRes = LocaleHelper.getLocaleFlag(locale),
-                            value = locale,
-                            selectedValue = selectedLocale,
-                            onClick = {
-                                LocaleHelper.setLocale(context, locale)
-                                activity?.recreate()
-                            }
-                        )
+                SettingsElement(title = stringResource(R.string.language)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
+                    ) {
+                        LocaleHelper.supportedLanguages.forEach { locale ->
+                            LanguageButton(
+                                iconRes = LocaleHelper.getLocaleFlag(locale),
+                                value = locale,
+                                selectedValue = selectedLocale,
+                                onClick = {
+                                    LocaleHelper.setLocale(context, locale)
+                                    activity?.recreate()
+                                }
+                            )
+                        }
                     }
                 }
             }
