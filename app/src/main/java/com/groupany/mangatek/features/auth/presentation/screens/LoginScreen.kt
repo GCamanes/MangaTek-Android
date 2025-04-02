@@ -37,6 +37,8 @@ import com.groupany.mangatek.core.constants.Dimension
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
 import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
+import com.groupany.mangatek.core.snackbar.SnackBarHandler
+import com.groupany.mangatek.core.snackbar.SnackBarManager
 
 @Composable
 fun LoginScreen(
@@ -56,8 +58,6 @@ fun LoginScreen(
     // Focus handle
     val localFocusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
-    // General
-    val snackBarHostState = remember { SnackbarHostState() }
 
     // Retrieve user bloc
     LaunchedEffect(Unit) {
@@ -84,10 +84,9 @@ fun LoginScreen(
                 if (state is GenericState.Success) {
                     NavHelper.gotToHome(navController)
                 } else if (state is GenericState.Failure) {
-                    snackBarHostState.showSnackbar(
+                    SnackBarManager.showSnackBar(
                         "Action failed: ${state.failureOrNull}",
-                        SnackBarTypes.FAILURE.name,
-                        duration = SnackbarDuration.Short
+                        SnackBarTypes.FAILURE
                     )
                 }
             }
@@ -95,7 +94,7 @@ fun LoginScreen(
 
     Scaffold(
         snackbarHost = {
-            SnackbarHost(snackBarHostState) { data -> CustomSnackBar(data) }
+            SnackbarHost(SnackBarManager.snackBarHostState) { data -> CustomSnackBar(data) }
         }
     ) {
         innerPadding -> Column(
@@ -110,6 +109,8 @@ fun LoginScreen(
                 },
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            SnackBarHandler()
+
             VerticalSpacer(CustomSpacerSize.BIG)
 
             Image(
