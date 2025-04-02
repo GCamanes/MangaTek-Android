@@ -35,6 +35,8 @@ import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.Dimension
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
+import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
 
 @Composable
 fun LoginScreen(
@@ -54,6 +56,8 @@ fun LoginScreen(
     // Focus handle
     val localFocusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
+    // General
+    val snackBarHostState = remember { SnackbarHostState() }
 
     // Retrieve user bloc
     LaunchedEffect(Unit) {
@@ -79,11 +83,21 @@ fun LoginScreen(
             .collect { state ->
                 if (state is GenericState.Success) {
                     NavHelper.gotToHome(navController)
+                } else if (state is GenericState.Failure) {
+                    snackBarHostState.showSnackbar(
+                        "Action failed: ${state.failureOrNull}",
+                        SnackBarTypes.FAILURE.name,
+                        duration = SnackbarDuration.Short
+                    )
                 }
             }
     }
 
-    Scaffold {
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackBarHostState) { data -> CustomSnackBar(data) }
+        }
+    ) {
         innerPadding -> Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -157,11 +171,8 @@ fun LoginScreen(
                         VerticalSpacer(CustomSpacerSize.BIG)
 
                         CustomButton(
-                            onClick = {
-                                viewModel.loginUser(email, password)
-                            },
-                            isLoading = loginState.isLoading()
-                                    || loginState.isSuccess(),
+                            onClick = { viewModel.loginUser(email, password) },
+                            isLoading = loginState.isLoading() || loginState.isSuccess(),
                             enabled = validationSTate.isValid(),
                             label = stringResource(R.string.login)
                         )
