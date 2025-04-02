@@ -1,8 +1,8 @@
-package com.groupany.mangatek.features.login.data.datasources
+package com.groupany.mangatek.features.auth.data.datasources
 
 import com.google.firebase.auth.FirebaseUser
 
-interface LoginDatasource {
+interface AuthDatasource {
     suspend fun login(email: String, password: String): FirebaseUser
     fun logout()
     fun getCurrentUser(): FirebaseUser?

@@ -1,10 +1,10 @@
-package com.groupany.mangatek.features.login.domain.usecases
+package com.groupany.mangatek.features.auth.domain.usecases
 
-import com.groupany.mangatek.features.login.domain.entities.UserEntity
-import com.groupany.mangatek.features.login.domain.repositories.LoginRepository
+import com.groupany.mangatek.features.auth.domain.entities.UserEntity
+import com.groupany.mangatek.features.auth.domain.repositories.AuthRepository
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(private val repo: LoginRepository) {
+class LoginUseCase @Inject constructor(private val repo: AuthRepository) {
     suspend operator fun invoke(email: String, password: String) : Result<UserEntity> {
         return try {
             val user = repo.login(email, password)

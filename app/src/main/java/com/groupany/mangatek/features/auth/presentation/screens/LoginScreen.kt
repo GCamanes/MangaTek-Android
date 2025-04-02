@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.login.presentation.screens
+package com.groupany.mangatek.features.auth.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -29,7 +29,7 @@ import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.core.presentation.composable.CustomTextField
-import com.groupany.mangatek.features.login.presentation.viewmodels.LoginViewModel
+import com.groupany.mangatek.features.auth.presentation.viewmodels.LoginViewModel
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize

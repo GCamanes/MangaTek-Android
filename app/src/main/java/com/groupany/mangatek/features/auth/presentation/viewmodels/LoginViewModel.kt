@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.login.presentation.viewmodels
+package com.groupany.mangatek.features.auth.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.BuildConfig
@@ -8,9 +8,9 @@ import com.groupany.mangatek.core.validators.EmailValidationResult
 import com.groupany.mangatek.core.validators.EmailValidator
 import com.groupany.mangatek.core.validators.PasswordValidationResult
 import com.groupany.mangatek.core.validators.PasswordValidator
-import com.groupany.mangatek.features.login.domain.entities.UserEntity
-import com.groupany.mangatek.features.login.domain.usecases.GetCurrentUserUseCase
-import com.groupany.mangatek.features.login.domain.usecases.LoginUseCase
+import com.groupany.mangatek.features.auth.domain.entities.UserEntity
+import com.groupany.mangatek.features.auth.domain.usecases.GetCurrentUserUseCase
+import com.groupany.mangatek.features.auth.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import javax.inject.Inject
