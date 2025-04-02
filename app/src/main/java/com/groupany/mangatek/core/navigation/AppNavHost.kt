@@ -22,7 +22,7 @@ fun AppNavHost(navController: NavHostController) {
         composable(
             Screen.Login.route,
             arguments = listOf(
-                navArgument("autoAuth") {
+                navArgument(NavParam.AutoAuth.name) {
                     type = NavType.BoolType
                     defaultValue = true
                     nullable = false
@@ -31,7 +31,7 @@ fun AppNavHost(navController: NavHostController) {
             enterTransition = { fadeIn(animationSpec = tween(1000)) },
             exitTransition = { fadeOut(animationSpec = tween(1000)) }
         ) { backStackEntry ->
-            val autoAuth = backStackEntry.arguments?.getBoolean("autoAuth") != false
+            val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
             LoginScreen(navController, autoAuth)
         }
         composable(

@@ -1,6 +1,7 @@
 package com.groupany.mangatek.core.helpers
 
 import androidx.navigation.NavHostController
+import com.groupany.mangatek.core.navigation.NavParam
 import com.groupany.mangatek.core.navigation.Screen
 
 object NavHelper {
@@ -16,7 +17,8 @@ object NavHelper {
     }
 
     fun backToLogin(navController: NavHostController) {
-        navController.navigate(Screen.Login.route.replace("{autoAuth}", "false")) {
+        val route = Screen.Login.route.replace(NavParam.AutoAuth.asParam, "false")
+        navController.navigate(route) {
             popUpTo(0) { inclusive = true } // Clears the entire back stack
         }
     }

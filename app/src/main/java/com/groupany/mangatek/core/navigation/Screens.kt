@@ -1,14 +1,14 @@
 package com.groupany.mangatek.core.navigation
 
-sealed class ScreenParam(val name: String) {
-    object AutoAuth : ScreenParam("autoAuth")
+sealed class NavParam(val name: String) {
+    object AutoAuth : NavParam("autoAuth")
 
     val asParam: String
-        get() = "{$this}"
+        get() = "{${this.name}}"
 }
 
 sealed class Screen(val route: String) {
-    object Login : Screen("login/{autoAuth}")
+    object Login : Screen("login/${NavParam.AutoAuth.asParam}")
     object Home : Screen("home")
     object Settings: Screen ("settings")
 }
