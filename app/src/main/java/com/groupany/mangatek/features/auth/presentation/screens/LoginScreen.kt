@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.core.presentation.composable.CustomTextField
 import com.groupany.mangatek.features.auth.presentation.viewmodels.LoginViewModel
@@ -35,9 +34,14 @@ import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.helpers.NavHelper
 
 @Composable
-fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    navController: NavHostController,
+    autoAuth: Boolean,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     // Form values
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
@@ -52,12 +56,18 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     val scrollState = rememberScrollState()
 
     // Retrieve user bloc
-    LaunchedEffect(Unit) { viewModel.getCurrentUser() }
+    LaunchedEffect(Unit) {
+        if (autoAuth) {
+            viewModel.getCurrentUser()
+        } else {
+            isFormVisible = true
+        }
+    }
     LaunchedEffect(Unit) {
         snapshotFlow { currentUserState }
             .collect { state ->
                 if (state.valueOrNull != null) {
-                    gotToHome(navController)
+                    NavHelper.gotToHome(navController)
                 } else if (state.isSuccess()) {
                     isFormVisible = true
                 }
@@ -68,7 +78,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
         snapshotFlow { loginState }
             .collect { state ->
                 if (state is GenericState.Success) {
-                    gotToHome(navController)
+                    NavHelper.gotToHome(navController)
                 }
             }
     }
@@ -161,12 +171,5 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
 
             Text(viewModel.appVersion)
         }
-    }
-}
-
-fun gotToHome(navController: NavHostController) {
-    navController.navigate(Screen.Home.route) {
-        popUpTo(Screen.Login.route) { inclusive = true }
-        launchSingleTop = true
     }
 }

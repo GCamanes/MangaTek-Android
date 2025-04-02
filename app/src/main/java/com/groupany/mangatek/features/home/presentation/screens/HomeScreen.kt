@@ -11,7 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.navigation.Screen
+import com.groupany.mangatek.core.helpers.NavHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavHostController) {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
                 actions = {
-                    IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
+                    IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                         Icon(
                             Icons.Outlined.Settings, // Use your own icon
                             contentDescription = stringResource(R.string.settings),

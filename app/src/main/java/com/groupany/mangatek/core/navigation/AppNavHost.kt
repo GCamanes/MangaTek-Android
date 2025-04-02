@@ -8,8 +8,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
 import com.groupany.mangatek.features.auth.presentation.screens.LoginScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
@@ -19,10 +21,18 @@ fun AppNavHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.Login.route) {
         composable(
             Screen.Login.route,
+            arguments = listOf(
+                navArgument("autoAuth") {
+                    type = NavType.BoolType
+                    defaultValue = true
+                    nullable = false
+                }
+            ),
             enterTransition = { fadeIn(animationSpec = tween(1000)) },
             exitTransition = { fadeOut(animationSpec = tween(1000)) }
-        ) {
-            LoginScreen(navController)
+        ) { backStackEntry ->
+            val autoAuth = backStackEntry.arguments?.getBoolean("autoAuth") != false
+            LoginScreen(navController, autoAuth)
         }
         composable(
             Screen.Home.route,

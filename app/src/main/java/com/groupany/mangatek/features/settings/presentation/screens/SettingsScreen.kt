@@ -18,6 +18,7 @@ import com.groupany.mangatek.core.presentation.composable.ButtonTypes
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
 import com.groupany.mangatek.features.settings.presentation.composables.SettingsElement
@@ -84,7 +85,10 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             VerticalSpacer()
 
             CustomButton(
-                onClick = { viewModel.logoutUser(navController) },
+                onClick = {
+                    viewModel.logoutUser()
+                    NavHelper.backToLogin(navController)
+                },
                 label = stringResource(R.string.logout),
                 buttonType = ButtonTypes.SECONDARY
             )

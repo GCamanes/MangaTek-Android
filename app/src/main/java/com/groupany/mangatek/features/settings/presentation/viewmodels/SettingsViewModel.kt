@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.domain.usecases.GetAppVersionUseCase
+import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.navigation.Screen
 import com.groupany.mangatek.features.auth.domain.usecases.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +18,9 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     val appVersion = getAppVersionUseCase()
 
-    fun logoutUser(navController: NavHostController) {
+    fun logoutUser() {
         viewModelScope.launch {
             logoutUseCase()
-            navController.navigate(Screen.Login.route) {
-                popUpTo(0) { inclusive = true } // Clears the entire back stack
-            }
         }
     }
 }
