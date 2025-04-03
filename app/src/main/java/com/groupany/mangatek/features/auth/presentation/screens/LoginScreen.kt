@@ -85,7 +85,7 @@ fun LoginScreen(
                     NavHelper.gotToHome(navController)
                 } else if (state is GenericState.Failure) {
                     SnackBarManager.showSnackBar(
-                        "Action failed: ${state.failureOrNull}",
+                        "${state.failureOrNull}",
                         SnackBarTypes.FAILURE
                     )
                 }
@@ -180,6 +180,8 @@ fun LoginScreen(
                     }
                 }
             }
+
+            Text(loginState.failureOrNull.toString())
 
             Text(viewModel.appVersion)
         }
