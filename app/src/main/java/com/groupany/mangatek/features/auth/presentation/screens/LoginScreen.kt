@@ -70,9 +70,9 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         snapshotFlow { currentUserState }
             .collect { state ->
-                if (state.valueOrNull != null) {
+                if (state.isSuccess()) {
                     NavHelper.gotToHome(navController)
-                } else if (state.isSuccess()) {
+                } else if (state.isFailure()) {
                     isFormVisible = true
                 }
             }
@@ -181,6 +181,7 @@ fun LoginScreen(
                 }
             }
 
+            Text(currentUserState.failureOrNull.toString())
             Text(loginState.failureOrNull.toString())
 
             Text(viewModel.appVersion)

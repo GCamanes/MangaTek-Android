@@ -29,8 +29,8 @@ class LoginViewModel @Inject constructor(
     // State of login / current user
     private val _loginState = MutableStateFlow<GenericState<UserEntity>>(GenericState.Idle)
     val loginState: StateFlow<GenericState<UserEntity>> = _loginState.asStateFlow()
-    private val _currentUserState = MutableStateFlow<GenericState<UserEntity?>>(GenericState.Idle)
-    val currentUserState: StateFlow<GenericState<UserEntity?>> = _currentUserState.asStateFlow()
+    private val _currentUserState = MutableStateFlow<GenericState<UserEntity>>(GenericState.Idle)
+    val currentUserState: StateFlow<GenericState<UserEntity>> = _currentUserState.asStateFlow()
 
     // Follow state for login form
     private val _email = MutableStateFlow("")

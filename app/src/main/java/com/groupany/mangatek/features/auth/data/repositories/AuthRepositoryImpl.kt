@@ -33,8 +33,9 @@ class AuthRepositoryImpl(private val datasource: AuthDatasource): AuthRepository
 
     override fun logout() = datasource.logout()
 
-    override fun getCurrentUser(): UserEntity? {
+    override fun getCurrentUser(): UserEntity {
         val user = datasource.getCurrentUser()
-        return if (user != null) UserAdapter.toUserEntity(user) else null
+        if (user != null) return UserAdapter.toUserEntity(user)
+        else throw CustomException.NoUser()
     }
 }
