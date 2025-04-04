@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.states.GenericState
 import com.groupany.mangatek.core.presentation.composable.CustomTextField
 import com.groupany.mangatek.features.auth.presentation.viewmodels.LoginViewModel
 import com.groupany.mangatek.R
@@ -81,9 +80,9 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         snapshotFlow { loginState }
             .collect { state ->
-                if (state is GenericState.Success) {
+                if (state.isSuccess()) {
                     NavHelper.gotToHome(navController)
-                } else if (state is GenericState.Failure) {
+                } else if (state.isFailure()) {
                     SnackBarManager.showSnackBar(
                         "${state.failureOrNull}",
                         SnackBarTypes.FAILURE
@@ -180,9 +179,6 @@ fun LoginScreen(
                     }
                 }
             }
-
-            Text(currentUserState.failureOrNull.toString())
-            Text(loginState.failureOrNull.toString())
 
             Text(viewModel.appVersion)
         }
