@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +34,7 @@ import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
 import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
@@ -45,6 +47,8 @@ fun LoginScreen(
     autoAuth: Boolean,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+
     // Form values
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
@@ -86,7 +90,12 @@ fun LoginScreen(
                     NavHelper.gotToHome(navController)
                 } else if (state.isFailure()) {
                     SnackBarManager.showSnackBar(
-                        "${state.failureOrNull}",
+                        when(state.failureOrNull) {
+                            is CustomFailure.InvalidCredential -> context.getString(R.string.error_credentials)
+                            is CustomFailure.NetworkError -> context.getString(R.string.error_network)
+                            is CustomFailure.TooManyRequests -> context.getString(R.string.error_too_many_request)
+                            else -> context.getString(R.string.error_unknown)
+                        },
                         SnackBarTypes.FAILURE
                     )
                 }

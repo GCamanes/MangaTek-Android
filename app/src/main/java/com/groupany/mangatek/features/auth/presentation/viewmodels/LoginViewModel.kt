@@ -70,7 +70,7 @@ class LoginViewModel @Inject constructor(
             val result = loginUseCase(LoginParams(email, password))
             _loginState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
-                onFailure = { error -> GenericState.Failure(error.toString()) }
+                onFailure = { error -> GenericState.Failure(error) }
             )
         }
     }
@@ -82,7 +82,7 @@ class LoginViewModel @Inject constructor(
             delay(1000)
             _currentUserState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
-                onFailure = { error -> GenericState.Failure(error.message ?: "Unknown error") }
+                onFailure = { error -> GenericState.Failure(error) }
             )
         }
     }
