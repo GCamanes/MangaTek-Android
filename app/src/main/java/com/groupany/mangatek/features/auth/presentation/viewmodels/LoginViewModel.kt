@@ -10,6 +10,7 @@ import com.groupany.mangatek.core.validators.PasswordValidationResult
 import com.groupany.mangatek.core.validators.PasswordValidator
 import com.groupany.mangatek.features.auth.domain.entities.UserEntity
 import com.groupany.mangatek.features.auth.domain.usecases.GetCurrentUserUseCase
+import com.groupany.mangatek.features.auth.domain.usecases.LoginParams
 import com.groupany.mangatek.features.auth.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -64,7 +65,7 @@ class LoginViewModel @Inject constructor(
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _loginState.value = GenericState.Loading
-            val result = loginUseCase(email, password)
+            val result = loginUseCase(LoginParams(email, password))
             _loginState.value = result.fold(
                 onSuccess = { user -> GenericState.Success(user) },
                 onFailure = { error -> GenericState.Failure(error.toString()) }
