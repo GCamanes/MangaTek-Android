@@ -44,12 +44,14 @@ class LoginViewModel @Inject constructor(
     val validationState = _validationState.asStateFlow()
 
     // Version
-    val appVersion: String = getAppVersionUseCase()
+    private val _appVersion = MutableStateFlow("")
+    val appVersion: StateFlow<String> = _appVersion.asStateFlow()
 
     init {
         // Retrieve values from local properties
         onEmailChange(BuildConfig.EMAIL)
         onPasswordChange(BuildConfig.PASSWORD)
+        viewModelScope.launch { _appVersion.value = getAppVersionUseCase() }
     }
 
     fun onEmailChange(newValue: String) {

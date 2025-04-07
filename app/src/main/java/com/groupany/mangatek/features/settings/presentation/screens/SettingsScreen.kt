@@ -30,6 +30,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
     val context = LocalContext.current
     val activity = context as? Activity // Needed to recreate activity
     var selectedLocale by remember { mutableStateOf(LocaleHelper.getCurrentLocale(context)) }
+    val appVersion by viewModel.appVersion.collectAsState()
 
     Scaffold(
         topBar = {
@@ -56,7 +57,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
 
                 SettingsElement(title = stringResource(R.string.version)) {
                     Text(
-                        viewModel.appVersion,
+                        appVersion,
                         style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
                     )
                 }

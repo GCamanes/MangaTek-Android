@@ -58,6 +58,8 @@ fun LoginScreen(
     val localFocusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
 
+    val appVersion by viewModel.appVersion.collectAsState()
+
     // Retrieve user bloc
     LaunchedEffect(Unit) {
         if (autoAuth) {
@@ -180,7 +182,7 @@ fun LoginScreen(
                 }
             }
 
-            Text(viewModel.appVersion)
+            Text(appVersion)
         }
     }
 }
