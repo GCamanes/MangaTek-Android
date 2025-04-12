@@ -13,7 +13,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
@@ -47,13 +47,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues),
-                    contentPadding = PaddingValues(
-                        start = Dimension.PaddingMedium,
-                        top = Dimension.PaddingMedium,
-                        end = Dimension.PaddingMedium,
-                        bottom = Dimension.PaddingMedium
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
+                    contentPadding = PaddingValues(AppDimension.PaddingMedium),
+                    verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                 ) {
                     items(uiState.mangaList) { manga -> MangaCard(manga) }
                 }

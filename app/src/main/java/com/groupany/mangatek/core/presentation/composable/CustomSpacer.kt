@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 
 enum class CustomSpacerSize(val height: Dp) {
-    SMALL(Dimension.PaddingSmall),
-    MEDIUM(Dimension.PaddingMedium),
-    LARGE(Dimension.PaddingLarge),
-    BIG(Dimension.PaddingBig)
+    SMALL(AppDimension.PaddingSmall),
+    MEDIUM(AppDimension.PaddingMedium),
+    LARGE(AppDimension.PaddingLarge),
+    BIG(AppDimension.PaddingBig)
 }
 
 @Composable

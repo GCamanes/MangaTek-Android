@@ -33,7 +33,7 @@ import com.groupany.mangatek.R
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
@@ -110,7 +110,7 @@ fun LoginScreen(
         innerPadding -> Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(Dimension.PaddingMedium)
+                .padding(innerPadding).padding(AppDimension.PaddingMedium)
                 .verticalScroll(scrollState)
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = {

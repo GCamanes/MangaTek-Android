@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 
 enum class ButtonTypes {
     PRIMARY, SECONDARY
@@ -41,7 +41,7 @@ fun CustomButton(
         colors = colors,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = Dimension.ButtonHeight, max = Dimension.ButtonHeight)
+            .heightIn(min = AppDimension.ButtonHeight, max = AppDimension.ButtonHeight)
     ) {
         if (isLoading) {
             CircularProgressIndicator(color = colors.containerColor)

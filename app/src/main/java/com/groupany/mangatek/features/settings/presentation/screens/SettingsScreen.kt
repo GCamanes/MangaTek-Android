@@ -17,7 +17,7 @@ import com.groupany.mangatek.core.helpers.LocaleHelper
 import com.groupany.mangatek.core.presentation.composable.ButtonTypes
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
@@ -47,7 +47,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(Dimension.PaddingMedium),
+                .padding(innerPadding).padding(AppDimension.PaddingMedium),
         ) {
             Column(
                 modifier = Modifier.weight(1f).fillMaxSize(),
@@ -66,7 +66,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
 
                 SettingsElement(title = stringResource(R.string.language)) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
+                        horizontalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                     ) {
                         LocaleHelper.supportedLanguages.forEach { locale ->
                             LanguageButton(

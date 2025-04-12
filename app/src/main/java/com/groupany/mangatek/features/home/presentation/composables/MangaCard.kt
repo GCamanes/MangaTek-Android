@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.groupany.mangatek.core.constants.Dimension
+import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
@@ -23,7 +23,7 @@ fun MangaCard(manga: MangaLightEntity) {
         )
     ) {
         Column (
-            modifier = Modifier.fillMaxWidth().padding(Dimension.PaddingMedium)
+            modifier = Modifier.fillMaxWidth().padding(AppDimension.PaddingMedium)
         ) {
             Text(text = manga.title, style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
             VerticalSpacer(CustomSpacerSize.SMALL)
