@@ -1,6 +1,8 @@
 package com.groupany.mangatek.features.home.presentation.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,12 +12,16 @@ import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,7 +45,15 @@ fun HomeScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            Text("Welcome to Home Screen!")
+            when {
+                uiState.isLoading -> CircularProgressIndicator()
+                uiState.error != null -> Text("Error: ${uiState.error}")
+                else -> LazyColumn {
+                    items(uiState.mangaList) { manga ->
+                        Text(manga.title)
+                    }
+                }
+            }
         }
     }
 }
