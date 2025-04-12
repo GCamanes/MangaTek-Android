@@ -8,10 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
 
-class GetMangaListUseCase(
-    private val repository: MangaRepository
-) {
+class GetMangaListUseCase @Inject constructor(private val repository: MangaRepository) {
     operator fun invoke(): Flow<CustomResult<List<MangaLightEntity>>> {
         return repository.getMangaList()
             .map { list -> CustomResult.Success(list) as CustomResult<List<MangaLightEntity>> }

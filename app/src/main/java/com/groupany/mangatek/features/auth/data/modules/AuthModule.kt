@@ -14,7 +14,7 @@ import com.groupany.mangatek.features.auth.data.repositories.AuthRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModules {
+object AuthModule {
     @Provides
     @Singleton
     fun provideLoginDatasource(): AuthDatasource {
