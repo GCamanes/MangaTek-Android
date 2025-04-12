@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
@@ -14,7 +13,9 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.groupany.mangatek.core.constants.Dimension
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,23 +38,25 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     }
                 },
             )
-        }
+        },
     ) { paddingValues ->
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
             when {
                 uiState.isLoading -> CircularProgressIndicator()
                 uiState.error != null -> Text("Error: ${uiState.error}")
-                else -> LazyColumn {
-                    items(uiState.mangaList) { manga ->
-                        Text(manga.title)
-                    }
+                else -> LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentPadding = PaddingValues(
+                        start = Dimension.PaddingMedium,
+                        top = Dimension.PaddingMedium,
+                        end = Dimension.PaddingMedium,
+                        bottom = Dimension.PaddingMedium
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(Dimension.PaddingMedium)
+                ) {
+                    items(uiState.mangaList) { manga -> MangaCard(manga) }
                 }
             }
-        }
     }
 }
