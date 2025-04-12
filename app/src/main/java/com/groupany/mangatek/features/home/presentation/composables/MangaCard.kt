@@ -25,6 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Path
 import coil.compose.AsyncImage
 import com.google.firebase.storage.FirebaseStorage
@@ -33,6 +38,7 @@ import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MangaCard(manga: MangaLightEntity) {
     var imageUrl by remember { mutableStateOf<String?>(null) }
@@ -47,7 +53,9 @@ fun MangaCard(manga: MangaLightEntity) {
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
@@ -82,19 +90,26 @@ fun MangaCard(manga: MangaLightEntity) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(AppDimension.PaddingMedium)
+                        .padding(top = AppDimension.PaddingSmall, start = AppDimension.PaddingSmall)
                 ) {
                     Text(
                         text = manga.title,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
+
                     VerticalSpacer(CustomSpacerSize.SMALL)
-                    Text(
-                        text = manga.getFilteredGenres().toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+
+                    Row {
+                        FlowRow (modifier = Modifier.weight(1f)){
+                            manga.getFilteredAuthors().forEach { author ->
+                                Text(author)
+                            }
+                        }
+                        Box (modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.BottomEnd) {
+                            LastChapterText(manga.lastChapter)
+                        }
+                    }
                 }
             }
         }
@@ -120,4 +135,19 @@ fun TriangleBanner(isOngoing: Boolean, modifier: Modifier = Modifier) {
             drawPath(path = path, color = color)
         }
     }
+}
+
+@Composable
+fun LastChapterText(lastChapter: String) {
+    Text(
+        text = lastChapter,
+        color = MaterialTheme.colorScheme.onSurface,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier
+            .background(
+                MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                shape = RoundedCornerShape(4.dp)
+            )
+            .padding(6.dp)
+    )
 }
