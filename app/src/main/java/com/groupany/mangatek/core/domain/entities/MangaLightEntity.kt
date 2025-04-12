@@ -8,4 +8,6 @@ data class MangaLightEntity(
     val genres: List<String> = emptyList(),
     val status: String = "",
     val lastChapter: String = ""
-)
+) {
+    fun isOnGoing() = status.lowercase() == "ongoing"
+}

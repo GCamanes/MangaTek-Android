@@ -48,7 +48,12 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues),
-                    contentPadding = PaddingValues(AppDimension.PaddingMedium),
+                    contentPadding = PaddingValues(
+                        top = AppDimension.PaddingMedium,
+                        start = AppDimension.PaddingMedium,
+                        end = AppDimension.PaddingMedium,
+                        bottom = AppDimension.PaddingBig,
+                    ),
                     verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                 ) {
                     items(uiState.mangaList) { manga -> MangaCard(manga) }
