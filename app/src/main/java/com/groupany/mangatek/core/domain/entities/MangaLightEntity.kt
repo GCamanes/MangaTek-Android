@@ -10,4 +10,6 @@ data class MangaLightEntity(
     val lastChapter: String = ""
 ) {
     fun isOnGoing() = status.lowercase() == "ongoing"
+
+    fun getFilteredGenres() = genres.filter { it -> it.lowercase() != "manga" }
 }

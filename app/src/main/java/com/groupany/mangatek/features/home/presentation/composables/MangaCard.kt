@@ -37,7 +37,6 @@ import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 fun MangaCard(manga: MangaLightEntity) {
     var imageUrl by remember { mutableStateOf<String?>(null) }
 
-    // Fetch download URL
     LaunchedEffect(manga.coverPath) {
         val storageRef = FirebaseStorage.getInstance().reference.child(manga.coverPath)
         storageRef.downloadUrl.addOnSuccessListener { uri ->
@@ -92,7 +91,7 @@ fun MangaCard(manga: MangaLightEntity) {
                     )
                     VerticalSpacer(CustomSpacerSize.SMALL)
                     Text(
-                        text = manga.status,
+                        text = manga.getFilteredGenres().toString(),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
