@@ -1,6 +1,7 @@
 [versions]
 accompanistNavigationAnimation = "0.32.0"
 agp = "8.9.1"
+coilCompose = "2.5.0"
 firebaseBom = "33.11.0"
 firebaseFirestoreKtx = "25.1.3"
 hiltAndroid = "2.51.1"
@@ -33,10 +34,12 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-hilt-navigation-compose-v100 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 #noinspection SimilarGradleDependency
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

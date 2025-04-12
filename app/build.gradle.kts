@@ -94,7 +94,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.analytics)
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore.ktx) // or latest
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.navigation.animation)
@@ -104,6 +105,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    // Async image
+    implementation(libs.coil.compose)
 }
 
 kapt {
