@@ -2,7 +2,10 @@ package com.groupany.mangatek.core.domain
 
 sealed class CustomResult<out T> {
     data class Success<out T>(val value: T) : CustomResult<T>()
-    data class Failure(val failure: CustomFailure) : CustomResult<Nothing>()
+    data class Failure(val failure: CustomFailure) : CustomResult<Nothing>() {
+        @Suppress("UNCHECKED_CAST")
+        fun <T> toFailure(): CustomResult<T> = this as CustomResult<T>
+    }
 
     val isSuccess: Boolean get() = this is Success
     val isFailure: Boolean get() = this is Failure

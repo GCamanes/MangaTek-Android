@@ -11,7 +11,6 @@ open class FailureHandler {
         }
     }
 
-
     protected fun handleException(e: Exception): CustomFailure {
         return when (e.message) {
             FailureType.InvalidCredential.key -> CustomFailure.InvalidCredential()
