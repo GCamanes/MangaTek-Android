@@ -39,6 +39,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 },
             )
         },
+        contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
             when {
                 uiState.isLoading -> CircularProgressIndicator()
