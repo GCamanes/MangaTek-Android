@@ -94,6 +94,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.analytics)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx) // or latest
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.navigation.animation)
