@@ -30,10 +30,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 actions = {
                     IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                         Icon(
-                            Icons.Outlined.Settings, // Use your own icon
+                            Icons.Outlined.Settings,
                             contentDescription = stringResource(R.string.settings),
-                            modifier = Modifier.size(30.dp),
-                            tint = MaterialTheme.colorScheme.primary
+                            modifier = Modifier.size(AppDimension.IconHeight),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 },

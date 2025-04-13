@@ -12,6 +12,7 @@ object AppDimension {
     val CornerRound = 8.dp
 
     val ButtonHeight = 56.dp
+    val IconHeight = 30.dp
     val MangaStatusHeight = 25.dp
 
     val MangaCardHeight = 140.dp

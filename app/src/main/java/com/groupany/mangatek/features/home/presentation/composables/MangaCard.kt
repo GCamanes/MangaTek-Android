@@ -30,9 +30,15 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.google.firebase.storage.FirebaseStorage
+import com.groupany.mangatek.R
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
@@ -98,14 +104,30 @@ fun MangaCard(manga: MangaLightEntity) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = AppDimension.PaddingSmall)
                 ) {
-                    Text(
-                        modifier = Modifier.padding(horizontal = AppDimension.PaddingSmall),
-                        text = manga.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Row (
+                        modifier = Modifier.padding(start = AppDimension.PaddingSmall)
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(
+                                    end = AppDimension.PaddingSmall,
+                                    top = AppDimension.PaddingSmall,
+                                ),
+                            text = manga.title,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Outlined.Favorite,
+                                contentDescription = stringResource(R.string.settings),
+                                modifier = Modifier.size(AppDimension.IconHeight),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
 
                     VerticalSpacer(CustomSpacerSize.SMALL)
 
