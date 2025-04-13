@@ -69,7 +69,7 @@ fun MangaCard(manga: MangaLightEntity) {
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.BottomEnd,
+            contentAlignment = Alignment.TopEnd,
         ) {
             Row {
                 if (imageUrl != null) {
@@ -96,28 +96,17 @@ fun MangaCard(manga: MangaLightEntity) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(vertical = AppDimension.PaddingSmall)
                 ) {
-                    Row (
-                        modifier = Modifier.padding(start = AppDimension.PaddingSmall)
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(top = AppDimension.PaddingSmall),
-                            text = manga.title,
-                            maxLines = 2,
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        IconButton(onClick = {}) {
-                            Icon(
-                                Icons.Outlined.Favorite,
-                                contentDescription = stringResource(R.string.settings),
-                                modifier = Modifier.size(AppDimension.IconHeight),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
+                    Text(
+                        modifier = Modifier.padding(start = AppDimension.PaddingSmall, end = 48.dp),
+                        text = manga.title,
+                        maxLines = 2,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    VerticalSpacer(CustomSpacerSize.SMALL)
 
                     FlowRow (
                         modifier = Modifier
@@ -136,8 +125,22 @@ fun MangaCard(manga: MangaLightEntity) {
                     }
                 }
             }
-
-            MangaStatus(manga)
+            IconButton(onClick = {}) {
+                Icon(
+                    Icons.Outlined.Favorite,
+                    contentDescription = stringResource(R.string.settings),
+                    modifier = Modifier.size(AppDimension.IconHeight),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.BottomEnd,
+            ) {
+                MangaStatus(manga)
+            }
         }
     }
 }
@@ -171,7 +174,6 @@ fun MangaStatus(manga: MangaLightEntity) {
                     lineTo(0f, size.height)          // To the top-right corner
                     close()                         // Close path to return to top-left corner
                 }
-
                 drawPath(path = path, color = color)
             }
         }
