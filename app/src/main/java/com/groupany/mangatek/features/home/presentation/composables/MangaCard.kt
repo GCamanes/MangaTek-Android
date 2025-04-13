@@ -105,6 +105,7 @@ fun MangaCard(manga: MangaLightEntity) {
                                 .weight(1f)
                                 .padding(top = AppDimension.PaddingSmall),
                             text = manga.title,
+                            maxLines = 2,
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -125,7 +126,11 @@ fun MangaCard(manga: MangaLightEntity) {
                     ){
                         manga.getFilteredAuthors().forEach { author ->
                             Box (modifier = Modifier.padding(end = AppDimension.PaddingMedium)){
-                                Text(author, style = MaterialTheme.typography.bodyLarge)
+                                Text(
+                                    author,
+                                    maxLines = 1,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
                             }
                         }
                     }

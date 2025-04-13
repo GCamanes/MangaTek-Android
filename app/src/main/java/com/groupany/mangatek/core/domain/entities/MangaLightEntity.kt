@@ -32,5 +32,5 @@ data class MangaLightEntity(
 
     fun getFilteredAuthors() = authors.filter { str ->
         str.all { it.code in 0x00..0x7F } and !filteredAuthors.contains(str) // Only allow ASCII characters
-    }
+    }.take(3)
 }
