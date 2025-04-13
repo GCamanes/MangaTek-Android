@@ -4,9 +4,9 @@ import androidx.compose.ui.unit.dp
 
 object AppDimension {
     val PaddingExtraSmall = 4.dp
-    val PaddingSmall = 10.dp
-    val PaddingMedium = 20.dp
-    val PaddingLarge = 30.dp
+    val PaddingSmall = 8.dp
+    val PaddingMedium = 16.dp
+    val PaddingLarge = 32.dp
     val PaddingBig = 64.dp
 
     val CornerRound = 8.dp

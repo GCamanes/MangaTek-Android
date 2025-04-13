@@ -48,8 +48,8 @@ fun CustomButton(
         } else {
             Text(
                 label,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontSize = 20.sp,
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontSize = 25.sp,
                     color = colors.contentColor
                 )
             )

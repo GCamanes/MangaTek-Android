@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 
@@ -26,7 +27,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_name)) },
+                title = { MangaTekTitle() },
                 actions = {
                     IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                         Icon(

@@ -37,6 +37,7 @@ import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
+import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
 import com.groupany.mangatek.core.snackbar.SnackBarHandler
 import com.groupany.mangatek.core.snackbar.SnackBarManager
@@ -128,10 +129,9 @@ fun LoginScreen(
                 contentDescription = "app logo",
                 modifier = Modifier.size(screenWidth / 3)
             )
+            MangaTekTitle()
 
-            Column(
-                modifier = Modifier.weight(1f),
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
                 if (!isFormVisible) {
                     Box(
                         modifier = Modifier
