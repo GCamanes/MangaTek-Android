@@ -28,17 +28,14 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import coil.compose.AsyncImage
 import com.google.firebase.storage.FirebaseStorage
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
-import com.groupany.mangatek.core.presentation.composable.HorizontalSpacer
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -59,6 +56,7 @@ fun MangaCard(manga: MangaLightEntity) {
         modifier = Modifier
             .fillMaxWidth()
             .height(AppDimension.MangaCardHeight),
+        shape = RoundedCornerShape(AppDimension.CornerRound),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
@@ -155,12 +153,15 @@ fun LastChapterText(lastChapter: String) {
     Text(
         text = lastChapter,
         color = MaterialTheme.colorScheme.onSurface,
-        style = MaterialTheme.typography.bodyMedium,
+        style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier
             .background(
                 MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(topStart = AppDimension.CornerRound)
             )
-            .padding(6.dp)
+            .padding(
+                horizontal = AppDimension.PaddingSmall,
+                vertical = AppDimension.PaddingExtraSmall,
+            )
     )
 }

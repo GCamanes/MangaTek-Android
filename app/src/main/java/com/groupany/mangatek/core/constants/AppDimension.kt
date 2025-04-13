@@ -9,6 +9,8 @@ object AppDimension {
     val PaddingLarge = 30.dp
     val PaddingBig = 64.dp
 
+    val CornerRound = 8.dp
+
     val ButtonHeight = 56.dp
 
     val MangaCardHeight = 140.dp
