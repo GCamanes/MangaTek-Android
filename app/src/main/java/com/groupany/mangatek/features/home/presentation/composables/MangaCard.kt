@@ -65,14 +65,13 @@ fun MangaCard(manga: MangaLightEntity) {
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.TopEnd,
         ) {
-            TriangleBanner(isOngoing = manga.isOnGoing())
             Box (
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
                 contentAlignment = Alignment.BottomEnd,
             ) {
-                LastChapterText(manga.lastChapter)
+                MangaStatus(manga)
             }
             Row {
                 if (imageUrl != null) {
@@ -128,40 +127,37 @@ fun MangaCard(manga: MangaLightEntity) {
 }
 
 @Composable
-fun TriangleBanner(isOngoing: Boolean, modifier: Modifier = Modifier) {
-    val color = if (isOngoing) MaterialTheme.colorScheme.primary
+fun MangaStatus(manga: MangaLightEntity) {
+    val color = if (manga.isOnGoing()) MaterialTheme.colorScheme.primary
         else MaterialTheme.colorScheme.secondary
 
-    Box(
-        modifier = modifier
-            .size(20.dp) // Size of the triangle (adjust as needed)
-    ) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val path = Path().apply {
-                lineTo(size.width, size.height) // To bottom-right corner
-                lineTo(size.width, 0f)          // To the top-right corner
-                close()                         // Close path to return to top-left corner
-            }
-
-            drawPath(path = path, color = color)
-        }
-    }
-}
-
-@Composable
-fun LastChapterText(lastChapter: String) {
-    Text(
-        text = lastChapter,
-        color = MaterialTheme.colorScheme.onSurface,
-        style = MaterialTheme.typography.bodyLarge,
+    Row (
         modifier = Modifier
             .background(
                 MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
                 shape = RoundedCornerShape(topStart = AppDimension.CornerRound)
             )
-            .padding(
-                horizontal = AppDimension.PaddingSmall,
-                vertical = AppDimension.PaddingExtraSmall,
-            )
-    )
+            .padding(start = AppDimension.PaddingSmall)
+            .height(AppDimension.MangaStatusHeight),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = manga.lastChapter,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(end = AppDimension.PaddingSmall)
+        )
+        Box(modifier = Modifier.size(AppDimension.MangaStatusHeight)) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val path = Path().apply {
+                    moveTo(size.width, 0f)
+                    lineTo(size.width, size.height) // To bottom-right corner
+                    lineTo(0f, size.height)          // To the top-right corner
+                    close()                         // Close path to return to top-left corner
+                }
+
+                drawPath(path = path, color = color)
+            }
+        }
+    }
 }
