@@ -3,10 +3,12 @@ package com.groupany.mangatek.core.domain.entities
 val filteredAuthors = listOf(
     "Young Magazine",
     "Shounen Magazine",
+    "Bessatsu Shounen Magazine",
     "Shounen Jump",
     "Jump SQ.",
     "Shounen Gangan",
     "Young Jump",
+    "Ultra Jump",
     "Young Gangan",
     "Gundam Ace",
     "MangaONE",

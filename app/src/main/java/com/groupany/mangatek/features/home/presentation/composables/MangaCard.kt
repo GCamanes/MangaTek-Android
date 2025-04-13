@@ -69,16 +69,8 @@ fun MangaCard(manga: MangaLightEntity) {
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.TopEnd,
+            contentAlignment = Alignment.BottomEnd,
         ) {
-            Box (
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.BottomEnd,
-            ) {
-                MangaStatus(manga)
-            }
             Row {
                 if (imageUrl != null) {
                     AsyncImage(
@@ -111,10 +103,7 @@ fun MangaCard(manga: MangaLightEntity) {
                         Text(
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(
-                                    end = AppDimension.PaddingSmall,
-                                    top = AppDimension.PaddingSmall,
-                                ),
+                                .padding(top = AppDimension.PaddingSmall),
                             text = manga.title,
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -129,8 +118,6 @@ fun MangaCard(manga: MangaLightEntity) {
                         }
                     }
 
-                    VerticalSpacer(CustomSpacerSize.SMALL)
-
                     FlowRow (
                         modifier = Modifier
                             .fillMaxWidth()
@@ -144,6 +131,8 @@ fun MangaCard(manga: MangaLightEntity) {
                     }
                 }
             }
+
+            MangaStatus(manga)
         }
     }
 }
