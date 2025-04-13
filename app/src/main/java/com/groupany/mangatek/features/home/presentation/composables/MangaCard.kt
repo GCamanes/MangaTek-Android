@@ -28,14 +28,17 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import coil.compose.AsyncImage
 import com.google.firebase.storage.FirebaseStorage
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
+import com.groupany.mangatek.core.presentation.composable.HorizontalSpacer
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -55,7 +58,7 @@ fun MangaCard(manga: MangaLightEntity) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp),
+            .height(AppDimension.MangaCardHeight),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
@@ -65,22 +68,30 @@ fun MangaCard(manga: MangaLightEntity) {
             contentAlignment = Alignment.TopEnd,
         ) {
             TriangleBanner(isOngoing = manga.isOnGoing())
+            Box (
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.BottomEnd,
+            ) {
+                LastChapterText(manga.lastChapter)
+            }
             Row {
                 if (imageUrl != null) {
                     AsyncImage(
                         model = imageUrl,
                         contentDescription = manga.title,
                         modifier = Modifier
-                            .width(80.dp)
-                            .height(120.dp),
+                            .width(AppDimension.MangaCardWidth)
+                            .height(AppDimension.MangaCardHeight),
                         contentScale = ContentScale.FillHeight
                     )
                 } else {
                     // Placeholder or loading
                     Box(
                         modifier = Modifier
-                            .width(80.dp)
-                            .height(120.dp),
+                            .width(AppDimension.MangaCardWidth)
+                            .height(AppDimension.MangaCardHeight),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(modifier = Modifier.size(30.dp))
@@ -90,24 +101,26 @@ fun MangaCard(manga: MangaLightEntity) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = AppDimension.PaddingSmall, start = AppDimension.PaddingSmall)
+                        .padding(top = AppDimension.PaddingSmall)
                 ) {
                     Text(
+                        modifier = Modifier.padding(horizontal = AppDimension.PaddingSmall),
                         text = manga.title,
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
                     VerticalSpacer(CustomSpacerSize.SMALL)
 
-                    Row {
-                        FlowRow (modifier = Modifier.weight(1f)){
-                            manga.getFilteredAuthors().forEach { author ->
-                                Text(author)
+                    FlowRow (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = AppDimension.PaddingSmall)
+                    ){
+                        manga.getFilteredAuthors().forEach { author ->
+                            Box (modifier = Modifier.padding(end = AppDimension.PaddingMedium)){
+                                Text(author, style = MaterialTheme.typography.bodyLarge)
                             }
-                        }
-                        Box (modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.BottomEnd) {
-                            LastChapterText(manga.lastChapter)
                         }
                     }
                 }
