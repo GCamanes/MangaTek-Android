@@ -1,8 +1,10 @@
 package com.groupany.mangatek.core.data.modules
 
+import android.content.Context
 import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.groupany.mangatek.core.data.datasources.MangaLocalDataSource
+import com.groupany.mangatek.core.data.datasources.MangaLocalDataSourceImpl
 import com.groupany.mangatek.core.data.datasources.MangaRemoteDataSource
 import com.groupany.mangatek.core.data.datasources.MangaRemoteDataSourceImpl
 import com.groupany.mangatek.core.data.repositories.MangaRepositoryImpl
@@ -12,10 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import com.groupany.mangatek.features.auth.data.datasources.AuthDatasource
-import com.groupany.mangatek.features.auth.data.datasources.AuthDatasourceImpl
-import com.groupany.mangatek.features.auth.domain.repositories.AuthRepository
-import com.groupany.mangatek.features.auth.data.repositories.AuthRepositoryImpl
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,7 +27,16 @@ object MangaModule {
 
     @Provides
     @Singleton
-    fun provideMangaRepository(datasource: MangaRemoteDataSource): MangaRepository {
-        return MangaRepositoryImpl(datasource)
+    fun provideMangaLocalDatasource(@ApplicationContext appContext: Context): MangaLocalDataSource {
+        return MangaLocalDataSourceImpl(appContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMangaRepository(
+        remoteDatasource: MangaRemoteDataSource,
+        localDatasource: MangaLocalDataSource,
+    ): MangaRepository {
+        return MangaRepositoryImpl(remoteDatasource, localDatasource)
     }
 }
