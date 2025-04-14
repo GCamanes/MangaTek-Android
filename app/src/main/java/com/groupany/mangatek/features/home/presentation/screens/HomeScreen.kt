@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.presentation.composable.CustomError
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
@@ -64,18 +65,25 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         },
         contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
-            Box (modifier = Modifier.fillMaxSize().padding(paddingValues)){
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = AppDimension.PaddingMedium),
+                contentAlignment = Alignment.Center
+            ){
                 when {
                     uiState.isLoading -> CircularProgressIndicator()
-                    uiState.error != null -> Text("Error: ${uiState.error}")
+                    uiState.failure != null -> CustomError(
+                        uiState.failure!!,
+                        onRetry = { viewModel.loadUiState() }
+                    )
                     else -> Box (modifier = Modifier.fillMaxSize()){
                         LazyColumn(
                             state = listState,
                             modifier = Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(
                                 top = AppDimension.PaddingMedium,
-                                start = AppDimension.PaddingMedium,
-                                end = AppDimension.PaddingMedium,
                                 bottom = AppDimension.PaddingBig,
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)

@@ -34,7 +34,6 @@ import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 import com.groupany.mangatek.core.constants.AppDimension
-import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
@@ -91,12 +90,7 @@ fun LoginScreen(
                     NavHelper.gotToHome(navController)
                 } else if (state.isFailure()) {
                     SnackBarManager.showSnackBar(
-                        when(state.failureOrNull) {
-                            is CustomFailure.InvalidCredential -> context.getString(R.string.error_credentials)
-                            is CustomFailure.NetworkError -> context.getString(R.string.error_network)
-                            is CustomFailure.TooManyRequests -> context.getString(R.string.error_too_many_request)
-                            else -> context.getString(R.string.error_unknown)
-                        },
+                        state.failureOrNull!!.trad(context),
                         SnackBarTypes.FAILURE
                     )
                 }

@@ -29,12 +29,12 @@ class HomeViewModel @Inject constructor(
         loadUiState()
     }
 
-    private fun loadUiState() {
+    fun loadUiState() {
         viewModelScope.launch {
             _uiState.update { it.copy(favorites = getFavoritesUseCase()) }
             getMangaListUseCase()
                 .onStart {
-                    _uiState.update { it.copy(isLoading = true, error = null) }
+                    _uiState.update { it.copy(isLoading = true, failure = null) }
                 }
                 .collect { result ->
                     _uiState.update {
@@ -42,10 +42,10 @@ class HomeViewModel @Inject constructor(
                             is CustomResult.Success -> it.copy(
                                 mangaList = result.value,
                                 isLoading = false,
-                                error = null
+                                failure = null,
                             )
                             is CustomResult.Failure -> it.copy(
-                                error = result.failure,
+                                failure = result.failure,
                                 isLoading = false
                             )
                         }
@@ -64,7 +64,7 @@ class HomeViewModel @Inject constructor(
 data class MangaListUiState(
     val mangaList: List<MangaLightEntity> = emptyList(),
     val favorites: Set<String> = emptySet<String>(),
-    val error: CustomFailure? = null,
+    val failure: CustomFailure? = null,
     val isLoading: Boolean = false
 ) {
     fun isFavorite(id: String) : Boolean = favorites.contains(id)
