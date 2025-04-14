@@ -28,7 +28,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
@@ -134,9 +133,7 @@ fun MangaCard(manga: MangaLightEntity) {
                 )
             }
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomEnd,
             ) {
                 MangaStatus(manga)

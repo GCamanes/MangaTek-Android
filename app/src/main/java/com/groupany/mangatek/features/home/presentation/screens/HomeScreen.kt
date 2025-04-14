@@ -1,5 +1,6 @@
 package com.groupany.mangatek.features.home.presentation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,9 @@ import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -42,23 +46,39 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         },
         contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
-            when {
-                uiState.isLoading -> CircularProgressIndicator()
-                uiState.error != null -> Text("Error: ${uiState.error}")
-                else -> LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentPadding = PaddingValues(
-                        top = AppDimension.PaddingMedium,
-                        start = AppDimension.PaddingMedium,
-                        end = AppDimension.PaddingMedium,
-                        bottom = AppDimension.PaddingBig,
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
-                ) {
-                    items(uiState.mangaList) { manga -> MangaCard(manga) }
+            Box (modifier = Modifier.fillMaxSize().padding(paddingValues)){
+                when {
+                    uiState.isLoading -> CircularProgressIndicator()
+                    uiState.error != null -> Text("Error: ${uiState.error}")
+                    else -> Box (modifier = Modifier.fillMaxSize()){
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(
+                                top = AppDimension.PaddingMedium + AppDimension.PaddingSmall,
+                                start = AppDimension.PaddingMedium,
+                                end = AppDimension.PaddingMedium,
+                                bottom = AppDimension.PaddingBig,
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
+                        ) {
+                            items(uiState.mangaList) { manga -> MangaCard(manga) }
+                        }
+                    }
                 }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(AppDimension.PaddingSmall)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.surface,
+                                    Color.Transparent,
+                                )
+                            )
+                        )
+                        .align(Alignment.TopCenter)
+                )
             }
     }
 }
