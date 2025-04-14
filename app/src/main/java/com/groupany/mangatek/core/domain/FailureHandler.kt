@@ -1,17 +1,29 @@
 package com.groupany.mangatek.core.domain
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+
 open class FailureHandler {
     protected suspend fun <T> safeCall(
         call: suspend () -> T
     ): CustomResult<T> {
         return try {
             CustomResult.Success(call())
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             CustomResult.Failure(handleException(e))
         }
     }
 
-    protected fun handleException(e: Exception): CustomFailure {
+    protected fun <T> safeCallFlow(
+        call: () -> Flow<T>
+    ): Flow<CustomResult<T>> {
+        return call()
+            .map { result -> CustomResult.Success(result) as CustomResult<T> }
+            .catch { e -> emit(CustomResult.Failure(handleException(e)).toFailure()) }
+    }
+
+    protected fun handleException(e: Throwable): CustomFailure {
         return when (e.message) {
             FailureType.InvalidCredential.key -> CustomFailure.InvalidCredential()
             FailureType.TooManyRequests.key -> CustomFailure.TooManyRequests()
