@@ -1,9 +1,9 @@
-package com.groupany.mangatek.core.presentation.composable
+package com.groupany.mangatek.core.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.R
+import com.groupany.mangatek.core.presentation.composable.CustomButton
+import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
+import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
 @Composable
 fun CustomError(
@@ -27,8 +30,7 @@ fun CustomError(
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth().padding(AppDimension.PaddingMedium),
+        modifier = Modifier.fillMaxSize().padding(horizontal = AppDimension.PaddingMedium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier.weight(1f))
@@ -44,7 +46,7 @@ fun CustomError(
             textAlign = TextAlign.Center
         )
         Box(
-            modifier = Modifier.weight(1f).padding(vertical = AppDimension.PaddingLarge),
+            modifier = Modifier.weight(1f).padding(vertical = AppDimension.PaddingBig),
             contentAlignment = Alignment.BottomCenter
         ) {
             CustomButton(

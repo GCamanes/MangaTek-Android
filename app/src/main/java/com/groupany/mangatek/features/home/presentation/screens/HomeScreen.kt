@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
-import com.groupany.mangatek.core.presentation.composable.CustomError
+import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
@@ -68,28 +68,27 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             Box (
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(horizontal = AppDimension.PaddingMedium),
+                    .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ){
                 when {
                     uiState.isLoading -> CircularProgressIndicator()
                     uiState.failure != null -> CustomError(
-                        uiState.failure!!,
-                        onRetry = { viewModel.loadUiState() }
-                    )
-                    else -> Box (modifier = Modifier.fillMaxSize()){
-                        LazyColumn(
+                            uiState.failure!!,
+                            onRetry = { viewModel.loadUiState() }
+                        )
+                    else -> LazyColumn(
                             state = listState,
                             modifier = Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(
                                 top = AppDimension.PaddingMedium,
+                                start = AppDimension.PaddingMedium,
+                                end = AppDimension.PaddingMedium,
                                 bottom = AppDimension.PaddingBig,
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                         ) {
-                            items(uiState.mangaList) {
-                                manga -> MangaCard(
+                            items(uiState.mangaList) { manga -> MangaCard(
                                     manga,
                                     uiState.isFavorite(manga.id),
                                     onToggle = viewModel::toggleFavorite,
@@ -97,7 +96,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 )
                             }
                         }
-                    }
                 }
                 Box(
                     modifier = Modifier
