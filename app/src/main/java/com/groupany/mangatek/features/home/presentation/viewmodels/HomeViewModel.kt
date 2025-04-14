@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.domain.CustomResult
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.mangatek.core.domain.usecases.GetFavoritesUseCase
 import com.groupany.mangatek.core.domain.usecases.GetMangaListUseCase
+import com.groupany.mangatek.core.domain.usecases.ToggleFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,17 +18,20 @@ import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getMangaListUseCase: GetMangaListUseCase
+    private val getMangaListUseCase: GetMangaListUseCase,
+    private val getFavoritesUseCase: GetFavoritesUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MangaListUiState())
     val uiState: StateFlow<MangaListUiState> = _uiState
 
     init {
-        loadManga()
+        loadUiState()
     }
 
-    fun loadManga() {
+    private fun loadUiState() {
         viewModelScope.launch {
+            _uiState.update { it.copy(favorites = getFavoritesUseCase()) }
             getMangaListUseCase()
                 .onStart {
                     _uiState.update { it.copy(isLoading = true, error = null) }
@@ -48,10 +53,19 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
+
+    fun toggleFavorite(id: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(favorites = toggleFavoriteUseCase(id)) }
+        }
+    }
 }
 
 data class MangaListUiState(
     val mangaList: List<MangaLightEntity> = emptyList(),
+    val favorites: Set<String> = emptySet<String>(),
     val error: CustomFailure? = null,
     val isLoading: Boolean = false
-)
+) {
+    fun isFavorite(id: String) : Boolean = favorites.contains(id)
+}

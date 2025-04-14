@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Path
@@ -45,7 +46,11 @@ import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MangaCard(manga: MangaLightEntity) {
+fun MangaCard(
+    manga: MangaLightEntity,
+    isFavorite: Boolean = false,
+    onToggle: (String) -> Unit,
+) {
     var imageUrl by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(manga.coverPath) {
@@ -124,9 +129,9 @@ fun MangaCard(manga: MangaLightEntity) {
                     }
                 }
             }
-            IconButton(onClick = {}) {
+            IconButton(onClick = { onToggle(manga.id) }) {
                 Icon(
-                    Icons.Outlined.Favorite,
+                    if (isFavorite) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
                     contentDescription = stringResource(R.string.settings),
                     modifier = Modifier.size(AppDimension.IconHeight),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant

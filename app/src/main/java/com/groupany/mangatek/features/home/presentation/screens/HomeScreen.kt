@@ -80,7 +80,13 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                         ) {
-                            items(uiState.mangaList) { manga -> MangaCard(manga) }
+                            items(uiState.mangaList) {
+                                manga -> MangaCard(
+                                    manga,
+                                    uiState.isFavorite(manga.id),
+                                    onToggle = viewModel::toggleFavorite
+                                )
+                            }
                         }
                     }
                 }
