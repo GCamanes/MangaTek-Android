@@ -33,8 +33,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
@@ -73,7 +75,10 @@ fun MangaCard(
             Row {
                 if (imageUrl != null) {
                     AsyncImage(
-                        model = imageUrl,
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(imageUrl)
+                            .crossfade(500)
+                            .build(),
                         contentDescription = manga.title,
                         modifier = Modifier
                             .width(AppDimension.MangaCardWidth)
