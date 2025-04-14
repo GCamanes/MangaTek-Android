@@ -24,4 +24,6 @@ class MangaRepositoryImpl(
     override fun getFavorites(): Set<String> = localDataSource.getFavorites()
 
     override fun toggleFavorite(id: String): Set<String> = localDataSource.toggleFavorite(id)
+
+    override fun clearFavorites() { localDataSource.clearFavorites() }
 }

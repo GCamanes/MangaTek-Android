@@ -33,4 +33,6 @@ class MangaLocalDataSourceImpl(private val context: Context) : MangaLocalDataSou
         saveFavorites(currentFavorites)
         return currentFavorites
     }
+
+    override fun clearFavorites() { saveFavorites(emptySet()) }
 }

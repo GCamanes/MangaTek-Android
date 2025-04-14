@@ -7,4 +7,5 @@ interface MangaRepository {
     fun getMangaList(): Flow<List<MangaLightEntity>>
     fun getFavorites(): Set<String>
     fun toggleFavorite(id: String): Set<String>
+    fun clearFavorites()
 }
