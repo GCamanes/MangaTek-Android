@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,8 +13,10 @@ import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -27,6 +30,21 @@ import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
+    val listState = rememberLazyListState()
+
+    // Convert padding value to pixels (Int)
+    val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
+
+    val alpha by remember {
+        derivedStateOf {
+            if (listState.firstVisibleItemIndex > 0) {
+                1f // Show gradient once scrolled past first item
+            } else {
+                val offset = listState.firstVisibleItemScrollOffset.coerceAtMost(maxOffsetPx)
+                0f + (offset.toFloat() / maxOffsetPx.toFloat())
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -52,9 +70,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     uiState.error != null -> Text("Error: ${uiState.error}")
                     else -> Box (modifier = Modifier.fillMaxSize()){
                         LazyColumn(
+                            state = listState,
                             modifier = Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(
-                                top = AppDimension.PaddingMedium + AppDimension.PaddingSmall,
+                                top = AppDimension.PaddingMedium,
                                 start = AppDimension.PaddingMedium,
                                 end = AppDimension.PaddingMedium,
                                 bottom = AppDimension.PaddingBig,
@@ -68,7 +87,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(AppDimension.PaddingSmall)
+                        .height(AppDimension.PaddingMedium)
+                        .alpha(alpha)
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
