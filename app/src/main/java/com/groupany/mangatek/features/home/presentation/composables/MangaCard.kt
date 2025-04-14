@@ -15,11 +15,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,6 +31,7 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
@@ -49,12 +47,14 @@ fun MangaCard(
     manga: MangaLightEntity,
     isFavorite: Boolean = false,
     onToggle: (String) -> Unit,
+    getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?
 ) {
-    var imageUrl by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(manga.coverPath) {
-        imageUrl = getDownloadUrl(manga.coverPath)
+    val cachedUrl = remember(manga.coverPath) { getCachedUrl(manga.coverPath) }
+    val imageUrl by produceState(initialValue = cachedUrl, key1 = manga.coverPath) {
+        if (cachedUrl == null) {
+            value = getDownloadUrl(manga.coverPath)
+        }
     }
 
     Card(

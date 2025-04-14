@@ -64,6 +64,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getCachedUrl(path: String): String? {
+        return imageUrlCache[path]
+    }
+
     suspend fun getDownloadUrl(path: String): String? {
         return imageUrlCache[path] ?: run {
             val url = getDownloadedUrlUseCase(path).getOrNull()

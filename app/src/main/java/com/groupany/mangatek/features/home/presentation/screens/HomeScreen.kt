@@ -92,6 +92,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                     manga,
                                     uiState.isFavorite(manga.id),
                                     onToggle = viewModel::toggleFavorite,
+                                    getCachedUrl = viewModel::getCachedUrl,
                                     getDownloadUrl = viewModel::getDownloadUrl
                                 )
                             }
