@@ -86,7 +86,6 @@ fun MangaCard(
                         contentScale = ContentScale.FillHeight
                     )
                 } else {
-                    // Placeholder or loading
                     Box(
                         modifier = Modifier
                             .width(AppDimension.MangaCardWidth)
