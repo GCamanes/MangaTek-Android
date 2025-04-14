@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.core.domain.CustomResult
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.mangatek.core.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.mangatek.core.domain.usecases.GetFavoritesUseCase
 import com.groupany.mangatek.core.domain.usecases.GetMangaListUseCase
 import com.groupany.mangatek.core.domain.usecases.ToggleFavoriteUseCase
@@ -19,11 +20,14 @@ import kotlinx.coroutines.flow.update
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getMangaListUseCase: GetMangaListUseCase,
+    private val getDownloadedUrlUseCase: GetDownloadedUrlUseCase,
     private val getFavoritesUseCase: GetFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MangaListUiState())
     val uiState: StateFlow<MangaListUiState> = _uiState
+
+    private val imageUrlCache = mutableMapOf<String, String?>()
 
     init {
         loadUiState()
@@ -57,6 +61,14 @@ class HomeViewModel @Inject constructor(
     fun toggleFavorite(id: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(favorites = toggleFavoriteUseCase(id)) }
+        }
+    }
+
+    suspend fun getDownloadUrl(path: String): String? {
+        return imageUrlCache[path] ?: run {
+            val url = getDownloadedUrlUseCase(path).getOrNull()
+            imageUrlCache[path] = url
+            url
         }
     }
 }

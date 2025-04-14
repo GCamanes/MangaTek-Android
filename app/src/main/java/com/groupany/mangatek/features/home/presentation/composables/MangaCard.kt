@@ -37,7 +37,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
-import com.google.firebase.storage.FirebaseStorage
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
@@ -50,16 +49,12 @@ fun MangaCard(
     manga: MangaLightEntity,
     isFavorite: Boolean = false,
     onToggle: (String) -> Unit,
+    getDownloadUrl: suspend (String) -> String?
 ) {
     var imageUrl by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(manga.coverPath) {
-        val storageRef = FirebaseStorage.getInstance().reference.child(manga.coverPath)
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            imageUrl = uri.toString()
-        }.addOnFailureListener {
-            imageUrl = null
-        }
+        imageUrl = getDownloadUrl(manga.coverPath)
     }
 
     Card(

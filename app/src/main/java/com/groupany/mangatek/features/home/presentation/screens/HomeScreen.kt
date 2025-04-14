@@ -92,7 +92,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 manga -> MangaCard(
                                     manga,
                                     uiState.isFavorite(manga.id),
-                                    onToggle = viewModel::toggleFavorite
+                                    onToggle = viewModel::toggleFavorite,
+                                    getDownloadUrl = viewModel::getDownloadUrl
                                 )
                             }
                         }
