@@ -1,10 +1,5 @@
 package com.groupany.mangatek.features.home.presentation.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,10 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
@@ -33,6 +24,7 @@ import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
+import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
 import com.groupany.mangatek.features.home.presentation.composables.MangaCard
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 
@@ -81,69 +73,13 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             )
         },
         floatingActionButton = {
-            Column(
-                modifier = Modifier.padding(bottom = AppDimension.PaddingSmall),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingSmall)
-            ) {
-
-                AnimatedVisibility(
-                    visible = isFabExpanded,
-                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-                ) {
-                    SmallFloatingActionButton(
-                        onClick = {
-                            isFabExpanded = false
-                            filteredOnFavorites = true
-                        },
-                        containerColor = MaterialTheme.colorScheme.surface,
-                        contentColor = if (filteredOnFavorites) MaterialTheme.colorScheme.secondary
-                        else MaterialTheme.colorScheme.primary,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Favorite,
-                            contentDescription = "Favorites",
-                            Modifier.size(AppDimension.IconHeight)
-                        )
-                    }
-                }
-
-                AnimatedVisibility(
-                    visible = isFabExpanded,
-                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-                ) {
-                    SmallFloatingActionButton(
-                        onClick = {
-                            isFabExpanded = false
-                            filteredOnFavorites = false
-                        },
-                        containerColor = MaterialTheme.colorScheme.surface,
-                        contentColor = if (filteredOnFavorites) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.secondary,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "All",
-                            Modifier.size(AppDimension.IconHeight)
-                        )
-                    }
-                }
-
-                FloatingActionButton(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    contentColor = MaterialTheme.colorScheme.primary,
-                    onClick = { isFabExpanded = !isFabExpanded }
-                ) {
-                    Icon(
-                        imageVector = if (isFabExpanded) Icons.Default.Close else Icons.Default.FilterList,
-                        contentDescription = "Toggle Filter",
-                        Modifier.size(AppDimension.IconHeight)
-                    )
-                }
+            HomeFilterFAB(
+                filteredOnFavorites,
+                modifier = Modifier.padding(bottom = AppDimension.PaddingMedium)
+            )  { newFilterState ->
+                filteredOnFavorites = newFilterState
             }
-        },
+       },
     ) { paddingValues ->
             Box (
                 modifier = Modifier
@@ -164,7 +100,9 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 top = AppDimension.PaddingMedium,
                                 start = AppDimension.PaddingMedium,
                                 end = AppDimension.PaddingMedium,
-                                bottom = AppDimension.PaddingBig + AppDimension.PaddingLarge,
+                                bottom = AppDimension.PaddingBig
+                                        + AppDimension.PaddingLarge
+                                        + AppDimension.PaddingSmall,
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                         ) {
