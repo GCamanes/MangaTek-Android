@@ -11,6 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.groupany.mangatek.R
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
@@ -36,6 +40,9 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     // Convert padding value to pixels (Int)
     val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
 
+    var isFabExpanded by remember { mutableStateOf(false) }
+    var filteredOnFavorites by remember { mutableStateOf(false) }
+
     val alpha by remember {
         derivedStateOf {
             if (listState.firstVisibleItemIndex > 0) {
@@ -48,6 +55,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             TopAppBar(
                 title = { MangaTekTitle() },
@@ -63,7 +71,61 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 },
             )
         },
-        contentWindowInsets = WindowInsets(0.dp),
+        floatingActionButton = {
+            Column(
+                modifier = Modifier.padding(bottom = AppDimension.PaddingSmall),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingSmall)
+            ) {
+                if (isFabExpanded) {
+                    SmallFloatingActionButton(
+                        onClick = {
+                            // Handle "Favorites"
+                            isFabExpanded = false
+                            filteredOnFavorites = true
+                        },
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = if (filteredOnFavorites) MaterialTheme.colorScheme.secondary
+                        else MaterialTheme.colorScheme.primary,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = "Favorites",
+                            Modifier.size(AppDimension.IconHeight)
+                        )
+                    }
+
+                    SmallFloatingActionButton(
+                        onClick = {
+                            // Handle "All"
+                            isFabExpanded = false
+                            filteredOnFavorites = false
+                        },
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = if (filteredOnFavorites) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.secondary,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "All",
+                            Modifier.size(AppDimension.IconHeight)
+                        )
+                    }
+                }
+
+                FloatingActionButton(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    onClick = { isFabExpanded = !isFabExpanded }
+                ) {
+                    Icon(
+                        imageVector = if (isFabExpanded) Icons.Default.Close else Icons.Default.FilterList,
+                        contentDescription = "Toggle Filter",
+                        Modifier.size(AppDimension.IconHeight)
+                    )
+                }
+            }
+        },
     ) { paddingValues ->
             Box (
                 modifier = Modifier
@@ -84,7 +146,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 top = AppDimension.PaddingMedium,
                                 start = AppDimension.PaddingMedium,
                                 end = AppDimension.PaddingMedium,
-                                bottom = AppDimension.PaddingBig,
+                                bottom = AppDimension.PaddingBig + AppDimension.PaddingLarge,
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                         ) {
