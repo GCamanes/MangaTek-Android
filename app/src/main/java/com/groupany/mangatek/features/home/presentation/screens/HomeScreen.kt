@@ -36,13 +36,12 @@ import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
-
-    // Convert padding value to pixels (Int)
-    val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
-
     var isFabExpanded by remember { mutableStateOf(false) }
     var filteredOnFavorites by remember { mutableStateOf(false) }
 
+    // Convert padding value to pixels (Int)
+    val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
+    // Alpha value for top fading
     val alpha by remember {
         derivedStateOf {
             if (listState.firstVisibleItemIndex > 0) {
@@ -52,6 +51,11 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 0f + (offset.toFloat() / maxOffsetPx.toFloat())
             }
         }
+    }
+
+    fun filterFavorites(id: String) : Boolean {
+        return if (filteredOnFavorites) uiState.isFavorite(id)
+        else true
     }
 
     Scaffold(
@@ -150,7 +154,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             ),
                             verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
                         ) {
-                            items(uiState.mangaList) { manga -> MangaCard(
+                            items(uiState.mangaList.filter { it -> filterFavorites(it.id) }) {
+                                manga -> MangaCard(
                                     manga,
                                     uiState.isFavorite(manga.id),
                                     onToggle = viewModel::toggleFavorite,
