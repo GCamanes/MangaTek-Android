@@ -1,5 +1,10 @@
 package com.groupany.mangatek.features.home.presentation.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -81,10 +86,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingSmall)
             ) {
-                if (isFabExpanded) {
+
+                AnimatedVisibility(
+                    visible = isFabExpanded,
+                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+                ) {
                     SmallFloatingActionButton(
                         onClick = {
-                            // Handle "Favorites"
                             isFabExpanded = false
                             filteredOnFavorites = true
                         },
@@ -98,10 +107,15 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             Modifier.size(AppDimension.IconHeight)
                         )
                     }
+                }
 
+                AnimatedVisibility(
+                    visible = isFabExpanded,
+                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+                ) {
                     SmallFloatingActionButton(
                         onClick = {
-                            // Handle "All"
                             isFabExpanded = false
                             filteredOnFavorites = false
                         },
