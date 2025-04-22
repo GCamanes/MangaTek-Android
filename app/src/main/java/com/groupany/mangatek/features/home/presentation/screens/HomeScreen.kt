@@ -33,7 +33,6 @@ import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
-    var isFabExpanded by remember { mutableStateOf(false) }
     var filteredOnFavorites by remember { mutableStateOf(false) }
 
     // Convert padding value to pixels (Int)
