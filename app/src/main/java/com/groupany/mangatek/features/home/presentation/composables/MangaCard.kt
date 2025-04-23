@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,18 +28,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.groupany.mangatek.R
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
+import com.groupany.mangatek.core.presentation.composable.ToggleIconButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -125,14 +121,12 @@ fun MangaCard(
                     }
                 }
             }
-            IconButton(onClick = { onToggle(manga.id) }) {
-                Icon(
-                    if (isFavorite) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
-                    contentDescription = stringResource(R.string.settings),
-                    modifier = Modifier.size(AppDimension.IconHeight),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            ToggleIconButton(
+                isSelected = isFavorite,
+                selectedIcon = Icons.Outlined.Favorite,
+                unselectedIcon = Icons.Outlined.FavoriteBorder,
+                contentDescription = "add to favorites"
+            ) { onToggle(manga.id) }
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomEnd,
