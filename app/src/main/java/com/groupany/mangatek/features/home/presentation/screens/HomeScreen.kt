@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.presentation.composable.EmptyError
 import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
@@ -84,14 +85,18 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             uiState.failure!!,
                             onRetry = { viewModel.loadUiState() }
                         )
-                    else -> MangaLazyList(
+                    else -> {
+                        val mangaList = uiState.getFilteredList()
+                        if (mangaList.isNotEmpty()) MangaLazyList(
                             state = listState,
-                            mangaList = uiState.getFilteredList(),
+                            mangaList = mangaList,
                             isFavorite = uiState::isFavorite,
                             onToggle = viewModel::toggleFavorite,
                             getCachedUrl = viewModel::getCachedUrl,
                             getDownloadUrl = viewModel::getDownloadUrl,
                         )
+                        else EmptyError()
+                    }
                 }
                 // Top gradient appearing on scroll
                 Box(

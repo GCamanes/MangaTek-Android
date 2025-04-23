@@ -6,6 +6,7 @@
     <string name="logout">Logout</string>
     <!--ERRORS-->
     <string name="error_credentials">Invalid email or password</string>
+    <string name="error_empty">Oops, there is nothing here…</string>
     <string name="error_network">Network issue, please check your internet access</string>
     <string name="error_too_many_request">Too many request have been made, please wait and try again</string>
     <string name="error_unknown">An unknown error has occurred</string>
