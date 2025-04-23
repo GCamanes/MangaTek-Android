@@ -52,11 +52,8 @@ fun MangaCard(
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?
 ) {
-    val cachedUrl = remember(manga.coverPath) { getCachedUrl(manga.coverPath) }
-    val imageUrl by produceState(initialValue = cachedUrl, key1 = manga.coverPath) {
-        if (cachedUrl == null) {
-            value = getDownloadUrl(manga.coverPath)
-        }
+    val imageUrl by produceState<String?>(initialValue = null, key1 = manga.id) {
+        value = getCachedUrl(manga.coverPath) ?: getDownloadUrl(manga.coverPath)
     }
 
     Card(
@@ -154,7 +151,7 @@ fun MangaStatus(manga: MangaLightEntity) {
     Row (
         modifier = Modifier
             .background(
-                MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(topStart = AppDimension.CornerRound)
             )
             .padding(start = AppDimension.PaddingSmall)

@@ -93,6 +93,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             getDownloadUrl = viewModel::getDownloadUrl,
                         )
                 }
+                // Top gradient appearing on scroll
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
