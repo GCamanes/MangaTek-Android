@@ -102,8 +102,8 @@ private fun SmallFAB(
         SmallFloatingActionButton(
             modifier = Modifier.size(AppDimension.SmallButtonHeight),
             containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = if (selected) MaterialTheme.colorScheme.secondary
-            else MaterialTheme.colorScheme.primary,
+            contentColor = if (selected) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurface,
             onClick = { onClick() },
         ) {
             Icon(
