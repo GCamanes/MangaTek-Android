@@ -2,7 +2,7 @@ package com.groupany.mangatek.core.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryColor = Color(0xFF45D1FC)  // Blue
+val PrimaryColor = Color(0xFF2FBBDC)  // Blue
 val SecondaryColor = Color(0xFFF57542) // Orange
 val TertiaryColor = Color(0xFF02539A)  // Dark Blue
 
