@@ -2,8 +2,6 @@ package com.groupany.mangatek.features.home.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,7 +23,7 @@ import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
-import com.groupany.mangatek.features.home.presentation.composables.MangaCard
+import com.groupany.mangatek.features.home.presentation.composables.MangaLazyList
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,7 +31,6 @@ import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
-    var filteredOnFavorites by remember { mutableStateOf(false) }
 
     // Convert padding value to pixels (Int)
     val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
@@ -47,11 +44,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 0f + (offset.toFloat() / maxOffsetPx.toFloat())
             }
         }
-    }
-
-    fun filterFavorites(id: String) : Boolean {
-        return if (filteredOnFavorites) uiState.isFavorite(id)
-        else true
     }
 
     Scaffold(
@@ -73,10 +65,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         },
         floatingActionButton = {
             HomeFilterFAB(
-                filteredOnFavorites,
+                uiState.filter,
                 modifier = Modifier.padding(bottom = AppDimension.PaddingMedium)
-            )  { newFilterState ->
-                filteredOnFavorites = newFilterState
+            )  { newFilter ->
+                viewModel.updateFilter(newFilter)
             }
        },
     ) { paddingValues ->
@@ -92,29 +84,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             uiState.failure!!,
                             onRetry = { viewModel.loadUiState() }
                         )
-                    else -> LazyColumn(
+                    else -> MangaLazyList(
                             state = listState,
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(
-                                top = AppDimension.PaddingMedium,
-                                start = AppDimension.PaddingMedium,
-                                end = AppDimension.PaddingMedium,
-                                bottom = AppDimension.PaddingBig
-                                        + AppDimension.PaddingLarge
-                                        + AppDimension.PaddingSmall,
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
-                        ) {
-                            items(uiState.mangaList.filter { it -> filterFavorites(it.id) }) {
-                                manga -> MangaCard(
-                                    manga,
-                                    uiState.isFavorite(manga.id),
-                                    onToggle = viewModel::toggleFavorite,
-                                    getCachedUrl = viewModel::getCachedUrl,
-                                    getDownloadUrl = viewModel::getDownloadUrl
-                                )
-                            }
-                        }
+                            mangaList = uiState.getFilteredList(),
+                            isFavorite = uiState::isFavorite,
+                            onToggle = viewModel::toggleFavorite,
+                            getCachedUrl = viewModel::getCachedUrl,
+                            getDownloadUrl = viewModel::getDownloadUrl,
+                        )
                 }
                 Box(
                     modifier = Modifier

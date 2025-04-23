@@ -27,12 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import com.groupany.mangatek.core.constants.AppDimension
+import com.groupany.mangatek.features.home.data.enums.HomeFilter
 
 @Composable
 fun HomeFilterFAB(
-    filteredOnFavorites: Boolean,
+    filter: HomeFilter,
     modifier: Modifier = Modifier,
-    onClick: (Boolean) -> Unit,
+    onClick: (HomeFilter) -> Unit,
 ) {
     var isFabExpanded by remember { mutableStateOf(false) }
 
@@ -42,23 +43,23 @@ fun HomeFilterFAB(
     ) {
         SmallFAB(
             visible = isFabExpanded,
-            selected = filteredOnFavorites,
+            selected = filter == HomeFilter.FAVORITES,
             icon = Icons.Default.Favorite,
             description = "Favorites",
             index = 1,
         ) {
             isFabExpanded = false
-            onClick(true)
+            onClick(HomeFilter.FAVORITES)
         }
 
         SmallFAB(
             visible = isFabExpanded,
-            selected = !filteredOnFavorites,
+            selected = filter == HomeFilter.ALL,
             icon = Icons.Default.Menu,
             description = "All",
         ) {
             isFabExpanded = false
-            onClick(false)
+            onClick(HomeFilter.ALL)
         }
 
         FloatingActionButton(

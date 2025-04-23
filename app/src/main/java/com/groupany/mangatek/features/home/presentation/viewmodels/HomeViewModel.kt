@@ -9,6 +9,7 @@ import com.groupany.mangatek.core.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.mangatek.core.domain.usecases.GetFavoritesUseCase
 import com.groupany.mangatek.core.domain.usecases.GetMangaListUseCase
 import com.groupany.mangatek.core.domain.usecases.ToggleFavoriteUseCase
+import com.groupany.mangatek.features.home.data.enums.HomeFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlin.collections.filter
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -64,6 +66,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun updateFilter(filter: HomeFilter) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(filter = filter) }
+        }
+    }
+
     fun getCachedUrl(path: String): String? {
         return imageUrlCache[path]
     }
@@ -81,7 +89,17 @@ data class MangaListUiState(
     val mangaList: List<MangaLightEntity> = emptyList(),
     val favorites: Set<String> = emptySet<String>(),
     val failure: CustomFailure? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val filter: HomeFilter = HomeFilter.ALL,
 ) {
     fun isFavorite(id: String) : Boolean = favorites.contains(id)
+
+    private fun filterFavorites(id: String) : Boolean {
+        return isFavorite(id)
+    }
+
+    fun getFilteredList() : List<MangaLightEntity> {
+        return if (filter == HomeFilter.FAVORITES) mangaList.filter { it -> filterFavorites(it.id) }
+            else mangaList
+    }
 }
