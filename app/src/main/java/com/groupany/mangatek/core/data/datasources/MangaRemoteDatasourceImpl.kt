@@ -6,9 +6,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class MangaRemoteDataSourceImpl(
-    private val firestore: FirebaseFirestore
-) : MangaRemoteDataSource {
+class MangaRemoteDataSourceImpl(firestore: FirebaseFirestore) : MangaRemoteDataSource {
 
     private val docRef = firestore.collection("mangas-list").document("mangas-list")
 

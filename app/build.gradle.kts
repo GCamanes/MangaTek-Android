@@ -107,6 +107,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     // Async image
     implementation(libs.coil.compose)
+
+    // Local modules
+    implementation(project(":core:ui"))
 }
 
 kapt {

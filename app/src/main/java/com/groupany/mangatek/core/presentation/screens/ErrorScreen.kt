@@ -15,12 +15,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.R
 import com.groupany.mangatek.core.presentation.composable.CustomButton
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun CustomError(
@@ -30,7 +30,7 @@ fun CustomError(
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = AppDimension.PaddingMedium),
+        modifier = Modifier.fillMaxSize().padding(horizontal = UIConstants.PaddingMedium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier.weight(1f))
@@ -46,7 +46,7 @@ fun CustomError(
             textAlign = TextAlign.Center
         )
         Box(
-            modifier = Modifier.weight(1f).padding(vertical = AppDimension.PaddingBig),
+            modifier = Modifier.weight(1f).padding(vertical = UIConstants.PaddingBig),
             contentAlignment = Alignment.BottomCenter
         ) {
             CustomButton(

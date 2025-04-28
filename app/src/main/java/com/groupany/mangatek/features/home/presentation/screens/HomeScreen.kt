@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.mangatek.core.presentation.composable.EmptyError
 import com.groupany.mangatek.core.presentation.screens.CustomError
@@ -26,6 +25,7 @@ import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
 import com.groupany.mangatek.features.home.presentation.composables.MangaLazyList
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
+import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +34,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     val listState = rememberLazyListState()
 
     // Convert padding value to pixels (Int)
-    val maxOffsetPx = with(LocalDensity.current) { AppDimension.PaddingMedium.roundToPx() }
+    val maxOffsetPx = with(LocalDensity.current) { UIConstants.PaddingMedium.roundToPx() }
     // Alpha value for top fading
     val alpha by remember {
         derivedStateOf {
@@ -57,7 +57,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                         Icon(
                             Icons.Outlined.Settings,
                             contentDescription = stringResource(R.string.settings),
-                            modifier = Modifier.size(AppDimension.IconHeight),
+                            modifier = Modifier.size(UIConstants.IconHeight),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -67,7 +67,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         floatingActionButton = {
             HomeFilterFAB(
                 uiState.filter,
-                modifier = Modifier.padding(bottom = AppDimension.PaddingMedium)
+                modifier = Modifier.padding(bottom = UIConstants.PaddingMedium)
             )  { newFilter ->
                 viewModel.updateFilter(newFilter)
             }
@@ -102,7 +102,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(AppDimension.PaddingMedium)
+                        .height(UIConstants.PaddingMedium)
                         .alpha(alpha)
                         .background(
                             brush = Brush.verticalGradient(

@@ -26,8 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
-import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.features.home.data.enums.HomeFilter
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun HomeFilterFAB(
@@ -65,13 +65,13 @@ fun HomeFilterFAB(
         FloatingActionButton(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size( AppDimension.ButtonHeight),
+            modifier = Modifier.size(UIConstants.ButtonHeight),
             onClick = { isFabExpanded = !isFabExpanded }
         ) {
             Icon(
                 imageVector = if (isFabExpanded) Icons.Default.Close else Icons.Default.FilterList,
                 contentDescription = "Toggle Filter",
-                Modifier.size(AppDimension.IconHeight)
+                Modifier.size(UIConstants.IconHeight)
             )
         }
     }
@@ -86,8 +86,8 @@ private fun SmallFAB(
    index: Int = 0,
    onClick: () -> Unit,
 ) {
-    val initialDp = AppDimension.ButtonHeight + AppDimension.PaddingMedium
-    val variableDp = (AppDimension.SmallButtonHeight + AppDimension.PaddingMedium) * index
+    val initialDp = UIConstants.ButtonHeight + UIConstants.PaddingMedium
+    val variableDp = (UIConstants.SmallButtonHeight + UIConstants.PaddingMedium) * index
     val totalDp = initialDp + variableDp
 
     val density = LocalDensity.current
@@ -100,7 +100,7 @@ private fun SmallFAB(
         modifier = Modifier.padding(bottom = totalDp)
     ) {
         SmallFloatingActionButton(
-            modifier = Modifier.size(AppDimension.SmallButtonHeight),
+            modifier = Modifier.size(UIConstants.SmallButtonHeight),
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = if (selected) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurface,
@@ -109,7 +109,7 @@ private fun SmallFAB(
             Icon(
                 imageVector = icon,
                 contentDescription = description,
-                Modifier.size(AppDimension.IconHeight)
+                Modifier.size(UIConstants.IconHeight)
             )
         }
     }

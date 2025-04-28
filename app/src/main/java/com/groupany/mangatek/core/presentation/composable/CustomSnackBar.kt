@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.R
-import com.groupany.mangatek.core.constants.AppDimension
+import com.groupany.ui.constants.UIConstants
 
 enum class SnackBarTypes {
     SUCCESS, FAILURE
@@ -33,13 +33,13 @@ fun CustomSnackBar (data: SnackbarData) {
         else R.drawable.app_failure
 
     Box (
-        modifier = Modifier.padding(AppDimension.PaddingMedium)
+        modifier = Modifier.padding(UIConstants.PaddingMedium)
     ){
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(AppDimension.PaddingSmall))
+                .clip(RoundedCornerShape(UIConstants.PaddingSmall))
                 .background(backgroundColor)
-                .padding(AppDimension.PaddingSmall),
+                .padding(UIConstants.PaddingSmall),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(

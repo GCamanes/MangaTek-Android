@@ -1,8 +1,8 @@
-package com.groupany.mangatek.core.constants
+package com.groupany.ui.constants
 
 import androidx.compose.ui.unit.dp
 
-object AppDimension {
+object UIConstants {
     val PaddingExtraSmall = 4.dp
     val PaddingSmall = 8.dp
     val PaddingMedium = 16.dp

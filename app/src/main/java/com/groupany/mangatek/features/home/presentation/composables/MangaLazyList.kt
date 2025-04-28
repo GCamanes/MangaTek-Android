@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun MangaLazyList(
@@ -24,14 +24,14 @@ fun MangaLazyList(
         state = state,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            top = AppDimension.PaddingMedium,
-            start = AppDimension.PaddingMedium,
-            end = AppDimension.PaddingMedium,
-            bottom = AppDimension.PaddingBig
-                    + AppDimension.PaddingLarge
-                    + AppDimension.PaddingSmall,
+            top = UIConstants.PaddingMedium,
+            start = UIConstants.PaddingMedium,
+            end = UIConstants.PaddingMedium,
+            bottom = UIConstants.PaddingBig
+                    + UIConstants.PaddingLarge
+                    + UIConstants.PaddingSmall,
         ),
-        verticalArrangement = Arrangement.spacedBy(AppDimension.PaddingMedium)
+        verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium)
     ) {
         items(mangaList) {
             manga -> MangaCard(

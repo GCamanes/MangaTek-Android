@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.groupany.mangatek.core.constants.AppDimension
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun LanguageButton(
@@ -30,9 +30,9 @@ fun LanguageButton(
 
     Box(
         modifier = Modifier
-            .border(BorderStroke(borderWidth, borderColor), shape = RoundedCornerShape(AppDimension.PaddingSmall))
+            .border(BorderStroke(borderWidth, borderColor), shape = RoundedCornerShape(UIConstants.PaddingSmall))
             .clickable { onClick(value) }
-            .padding(AppDimension.PaddingSmall),
+            .padding(UIConstants.PaddingSmall),
         contentAlignment = Alignment.Center
     ) {
         Image(

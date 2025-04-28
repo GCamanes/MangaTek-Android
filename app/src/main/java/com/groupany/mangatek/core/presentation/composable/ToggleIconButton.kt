@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.groupany.mangatek.core.constants.AppDimension
+import com.groupany.ui.constants.UIConstants
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,7 +50,7 @@ fun ToggleIconButton(
         Icon(
             if (isSelected) selectedIcon else unselectedIcon,
             contentDescription = contentDescription,
-            modifier = Modifier.size(AppDimension.IconHeight),
+            modifier = Modifier.size(UIConstants.IconHeight),
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }

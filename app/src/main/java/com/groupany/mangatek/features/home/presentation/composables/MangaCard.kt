@@ -33,11 +33,11 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.groupany.mangatek.core.constants.AppDimension
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
 import com.groupany.mangatek.core.presentation.composable.ToggleIconButton
 import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -55,8 +55,8 @@ fun MangaCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(AppDimension.MangaCardHeight),
-        shape = RoundedCornerShape(AppDimension.CornerRound),
+            .height(UIConstants.MangaCardHeight),
+        shape = RoundedCornerShape(UIConstants.CornerRound),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
@@ -74,15 +74,15 @@ fun MangaCard(
                             .build(),
                         contentDescription = manga.title,
                         modifier = Modifier
-                            .width(AppDimension.MangaCardWidth)
-                            .height(AppDimension.MangaCardHeight),
+                            .width(UIConstants.MangaCardWidth)
+                            .height(UIConstants.MangaCardHeight),
                         contentScale = ContentScale.FillHeight
                     )
                 } else {
                     Box(
                         modifier = Modifier
-                            .width(AppDimension.MangaCardWidth)
-                            .height(AppDimension.MangaCardHeight),
+                            .width(UIConstants.MangaCardWidth)
+                            .height(UIConstants.MangaCardHeight),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(modifier = Modifier.size(30.dp))
@@ -92,10 +92,10 @@ fun MangaCard(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = AppDimension.PaddingSmall)
+                        .padding(vertical = UIConstants.PaddingSmall)
                 ) {
                     Text(
-                        modifier = Modifier.padding(start = AppDimension.PaddingSmall, end = 48.dp),
+                        modifier = Modifier.padding(start = UIConstants.PaddingSmall, end = 48.dp),
                         text = manga.title,
                         maxLines = 2,
                         style = MaterialTheme.typography.titleLarge,
@@ -107,10 +107,10 @@ fun MangaCard(
                     FlowRow (
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = AppDimension.PaddingSmall)
+                            .padding(horizontal = UIConstants.PaddingSmall)
                     ){
                         manga.getFilteredAuthors().forEach { author ->
-                            Box (modifier = Modifier.padding(end = AppDimension.PaddingMedium)){
+                            Box (modifier = Modifier.padding(end = UIConstants.PaddingMedium)){
                                 Text(
                                     author,
                                     maxLines = 1,
@@ -146,19 +146,19 @@ fun MangaStatus(manga: MangaLightEntity) {
         modifier = Modifier
             .background(
                 MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(topStart = AppDimension.CornerRound)
+                shape = RoundedCornerShape(topStart = UIConstants.CornerRound)
             )
-            .padding(start = AppDimension.PaddingSmall)
-            .height(AppDimension.MangaStatusHeight),
+            .padding(start = UIConstants.PaddingSmall)
+            .height(UIConstants.MangaStatusHeight),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = manga.lastChapter,
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(end = AppDimension.PaddingSmall)
+            modifier = Modifier.padding(end = UIConstants.PaddingSmall)
         )
-        Box(modifier = Modifier.size(AppDimension.MangaStatusHeight)) {
+        Box(modifier = Modifier.size(UIConstants.MangaStatusHeight)) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val path = Path().apply {
                     moveTo(size.width, 0f)

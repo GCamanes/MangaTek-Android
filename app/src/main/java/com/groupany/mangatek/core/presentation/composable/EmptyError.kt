@@ -16,12 +16,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.R
-import com.groupany.mangatek.core.constants.AppDimension
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun EmptyError() {
     Column(
-        modifier = Modifier.fillMaxSize().padding(AppDimension.PaddingMedium),
+        modifier = Modifier.fillMaxSize().padding(UIConstants.PaddingMedium),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.weight(1f))
