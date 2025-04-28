@@ -1,10 +1,10 @@
-package com.groupany.mangatek.core.theme
+package com.groupany.ui.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import com.groupany.mangatek.R
+import com.groupany.ui.R
 
 val exo2FontFamily = FontFamily(
     Font(R.font.exo2_light, weight = FontWeight.Light, style = FontStyle.Normal),

@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.theme
+package com.groupany.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

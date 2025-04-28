@@ -10,10 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 
-import com.groupany.mangatek.core.theme.MangaTekTheme
 import androidx.navigation.compose.rememberNavController
 import com.groupany.mangatek.core.helpers.LocaleHelper
 import com.groupany.mangatek.core.navigation.AppNavHost
+import com.groupany.ui.theme.MangaTekTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
