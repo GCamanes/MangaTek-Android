@@ -17,9 +17,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.core.domain.CustomFailure
 import com.groupany.mangatek.R
-import com.groupany.mangatek.core.presentation.composable.CustomButton
-import com.groupany.mangatek.core.presentation.composable.CustomSpacerSize
-import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.ui.components.CustomButton
+import com.groupany.ui.components.CustomSpacerSize
+import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
 @Composable

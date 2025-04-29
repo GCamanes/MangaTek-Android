@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.composable
+package com.groupany.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn

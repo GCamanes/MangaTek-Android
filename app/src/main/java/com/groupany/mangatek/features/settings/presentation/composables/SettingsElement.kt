@@ -3,7 +3,7 @@ package com.groupany.mangatek.features.settings.presentation.composables
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.groupany.mangatek.core.presentation.composable.VerticalSpacer
+import com.groupany.ui.components.VerticalSpacer
 
 @Composable
 fun SettingsElement(

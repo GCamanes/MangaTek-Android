@@ -17,6 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.R
+import com.groupany.ui.components.CustomSpacerSize
+import com.groupany.ui.components.HorizontalSpacer
 import com.groupany.ui.constants.UIConstants
 
 enum class SnackBarTypes {
