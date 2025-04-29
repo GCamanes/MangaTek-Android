@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.snackbar
+package com.groupany.ui.snackbar
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable

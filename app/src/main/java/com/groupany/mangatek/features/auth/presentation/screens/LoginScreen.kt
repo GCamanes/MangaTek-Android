@@ -37,8 +37,8 @@ import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.ui.components.CustomSnackBar
 import com.groupany.mangatek.core.presentation.components.MangaTekTitle
 import com.groupany.ui.components.SnackBarTypes
-import com.groupany.mangatek.core.snackbar.SnackBarHandler
-import com.groupany.mangatek.core.snackbar.SnackBarManager
+import com.groupany.ui.snackbar.SnackBarHandler
+import com.groupany.ui.snackbar.SnackBarManager
 import com.groupany.ui.constants.UIConstants
 import com.groupany.ui.R as uiR
 
