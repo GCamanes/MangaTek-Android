@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.composable
+package com.groupany.mangatek.core.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.MaterialTheme

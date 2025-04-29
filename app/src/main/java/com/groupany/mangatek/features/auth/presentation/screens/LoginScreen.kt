@@ -16,14 +16,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -34,12 +34,13 @@ import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.mangatek.core.helpers.NavHelper
-import com.groupany.mangatek.core.presentation.composable.CustomSnackBar
-import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
-import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
+import com.groupany.ui.components.CustomSnackBar
+import com.groupany.mangatek.core.presentation.components.MangaTekTitle
+import com.groupany.ui.components.SnackBarTypes
 import com.groupany.mangatek.core.snackbar.SnackBarHandler
 import com.groupany.mangatek.core.snackbar.SnackBarManager
 import com.groupany.ui.constants.UIConstants
+import com.groupany.ui.R as uiR
 
 @Composable
 fun LoginScreen(
@@ -55,9 +56,11 @@ fun LoginScreen(
     val validationSTate by viewModel.validationState.collectAsState()
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
     val currentUserState by viewModel.currentUserState.collectAsStateWithLifecycle()
-    // UI values
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     var isFormVisible by remember { mutableStateOf(false) }
+    // UI values
+    val screenWidth = with(LocalDensity.current) {
+        LocalWindowInfo.current.containerSize.width.toDp()
+    }
     // Focus handle
     val localFocusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
@@ -119,7 +122,7 @@ fun LoginScreen(
             VerticalSpacer(CustomSpacerSize.BIG)
 
             Image(
-                painter = painterResource(id = R.drawable.mangatek_logo),
+                painter = painterResource(id = uiR.drawable.mangatek_logo),
                 contentDescription = "app logo",
                 modifier = Modifier.size(screenWidth / 3)
             )

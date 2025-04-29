@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.helpers.NavHelper
-import com.groupany.mangatek.core.presentation.composable.EmptyError
+import com.groupany.mangatek.core.presentation.components.EmptyError
 import com.groupany.mangatek.core.presentation.screens.CustomError
-import com.groupany.mangatek.core.presentation.composable.MangaTekTitle
+import com.groupany.mangatek.core.presentation.components.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
 import com.groupany.mangatek.features.home.presentation.composables.MangaLazyList
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel

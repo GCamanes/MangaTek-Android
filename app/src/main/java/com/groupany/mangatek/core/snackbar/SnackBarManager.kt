@@ -1,7 +1,7 @@
 package com.groupany.mangatek.core.snackbar
 
 import androidx.compose.material3.SnackbarHostState
-import com.groupany.mangatek.core.presentation.composable.SnackBarTypes
+import com.groupany.ui.components.SnackBarTypes
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 

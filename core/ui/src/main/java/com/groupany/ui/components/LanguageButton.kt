@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.settings.presentation.composables
+package com.groupany.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

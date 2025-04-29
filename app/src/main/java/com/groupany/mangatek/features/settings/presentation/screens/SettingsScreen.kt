@@ -21,7 +21,7 @@ import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.mangatek.core.helpers.NavHelper
 import com.groupany.ui.components.CustomSpacerSize
-import com.groupany.mangatek.features.settings.presentation.composables.LanguageButton
+import com.groupany.ui.components.LanguageButton
 import com.groupany.mangatek.features.settings.presentation.composables.SettingsElement
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.constants.UIConstants

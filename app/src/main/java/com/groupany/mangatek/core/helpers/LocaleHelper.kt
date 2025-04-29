@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import java.util.Locale
 import androidx.core.content.edit
-import com.groupany.mangatek.R
-import com.groupany.mangatek.core.states.GenericState.Success
+import com.groupany.ui.R
 
 object LocaleHelper {
     private const val PREFS_NAME = "app_prefs"

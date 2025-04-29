@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.composable
+package com.groupany.mangatek.core.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.groupany.mangatek.R
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
+import com.groupany.ui.R as uiR
 
 @Composable
 fun EmptyError() {
@@ -27,7 +28,7 @@ fun EmptyError() {
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Image(
-            painter = painterResource(id = R.drawable.app_failure),
+            painter = painterResource(id = uiR.drawable.app_failure),
             contentDescription = stringResource(R.string.error_empty),
             modifier = Modifier.size(200.dp) // or whatever size you want
         )
