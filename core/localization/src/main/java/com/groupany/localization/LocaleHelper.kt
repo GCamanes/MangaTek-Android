@@ -1,10 +1,9 @@
-package com.groupany.mangatek.core.helpers
+package com.groupany.localization
 
 import android.content.Context
 import android.content.res.Configuration
-import java.util.Locale
 import androidx.core.content.edit
-import com.groupany.ui.R
+import java.util.Locale
 
 object LocaleHelper {
     private const val PREFS_NAME = "app_prefs"
@@ -41,7 +40,7 @@ object LocaleHelper {
 
     private fun saveLanguagePreference(context: Context, language: String) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit() { putString(KEY_LANGUAGE, language) }
+        prefs.edit { putString(KEY_LANGUAGE, language) }
     }
 
     fun getCurrentLocale(context: Context): String {

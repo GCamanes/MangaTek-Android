@@ -1,20 +1,4 @@
 <resources>
     <!--APP-->
     <string name="app_name">MangaTek</string>
-    <!--ACTION-->
-    <string name="login">Login</string>
-    <string name="logout">Logout</string>
-    <!--ERRORS-->
-    <string name="error_credentials">Invalid email or password</string>
-    <string name="error_empty">Oops, there is nothing here…</string>
-    <string name="error_network">Network issue, please check your internet access</string>
-    <string name="error_too_many_request">Too many request have been made, please wait and try again</string>
-    <string name="error_unknown">An unknown error has occurred</string>
-    <!--GENERAL-->
-    <string name="email">Email</string>
-    <string name="home">Home</string>
-    <string name="language">Language</string>
-    <string name="password">Password</string>
-    <string name="settings">Settings</string>
-    <string name="version">Version</string>
 </resources>

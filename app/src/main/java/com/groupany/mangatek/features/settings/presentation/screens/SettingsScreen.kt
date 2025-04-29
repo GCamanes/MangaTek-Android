@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.R
-import com.groupany.mangatek.core.helpers.LocaleHelper
+import com.groupany.localization.LocaleHelper
+import com.groupany.localization.R as localeR
 import com.groupany.ui.components.ButtonTypes
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.VerticalSpacer
@@ -37,7 +37,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.settings)) },
+                title = { Text(stringResource(localeR.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -61,7 +61,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             ) {
                 VerticalSpacer()
 
-                SettingsElement(title = stringResource(R.string.version)) {
+                SettingsElement(title = stringResource(localeR.string.version)) {
                     Text(
                         appVersion,
                         style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
@@ -70,7 +70,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
 
                 VerticalSpacer(CustomSpacerSize.BIG)
 
-                SettingsElement(title = stringResource(R.string.language)) {
+                SettingsElement(title = stringResource(localeR.string.language)) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium)
                     ) {
@@ -96,7 +96,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
                     viewModel.logoutUser()
                     NavHelper.backToLogin(navController)
                 },
-                label = stringResource(R.string.logout),
+                label = stringResource(localeR.string.logout),
                 buttonType = ButtonTypes.SECONDARY
             )
         }

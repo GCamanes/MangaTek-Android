@@ -28,7 +28,7 @@ data class MangaLightEntity(
 ) {
     fun isOnGoing() = status.lowercase() == "ongoing"
 
-    fun getFilteredGenres() = genres.filter { it -> it.lowercase() != "manga" }
+    // fun getFilteredGenres() = genres.filter { it -> it.lowercase() != "manga" }
 
     fun getFilteredAuthors() = authors.filter { str ->
         str.all { it.code in 0x00..0x7F } and !filteredAuthors.contains(str) // Only allow ASCII characters

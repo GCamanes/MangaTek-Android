@@ -7,7 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.groupany.mangatek.R
+import com.groupany.localization.R as localeR
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.Alignment
@@ -56,7 +56,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                         Icon(
                             Icons.Outlined.Settings,
-                            contentDescription = stringResource(R.string.settings),
+                            contentDescription = stringResource(localeR.string.settings),
                             modifier = Modifier.size(UIConstants.IconHeight),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )

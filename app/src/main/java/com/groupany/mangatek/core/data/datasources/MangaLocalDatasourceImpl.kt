@@ -10,7 +10,7 @@ class MangaLocalDataSourceImpl(private val context: Context) : MangaLocalDataSou
     private fun saveFavorites(favoriteIds: Set<String>) : Set<String> {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences(FAVORITES_KEY, Context.MODE_PRIVATE)
-        sharedPreferences.edit() {
+        sharedPreferences.edit {
             putStringSet(FAVORITES_KEY, favoriteIds)
         }
         return favoriteIds

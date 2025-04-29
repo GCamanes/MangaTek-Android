@@ -1,7 +1,5 @@
 package com.groupany.mangatek.features.auth.data.repositories
 
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuthException
 import com.groupany.mangatek.core.data.repositories.BaseRepository
 import com.groupany.mangatek.core.domain.FailureType
 import com.groupany.mangatek.features.auth.data.adapter.UserAdapter

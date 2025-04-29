@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.groupany.mangatek.R
+import com.groupany.localization.R as localeR
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 import com.groupany.ui.R as uiR
@@ -29,12 +29,12 @@ fun EmptyError() {
         Spacer(modifier = Modifier.weight(1f))
         Image(
             painter = painterResource(id = uiR.drawable.app_failure),
-            contentDescription = stringResource(R.string.error_empty),
+            contentDescription = stringResource(localeR.string.error_empty),
             modifier = Modifier.size(200.dp) // or whatever size you want
         )
         VerticalSpacer()
         Text(
-            stringResource(R.string.error_empty),
+            stringResource(localeR.string.error_empty),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center
         )

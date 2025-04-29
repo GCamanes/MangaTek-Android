@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "MangaTek"
 include(":app")
 include(":core:ui")
+include(":core:localization")

@@ -23,12 +23,12 @@ interface BaseNoParamFlowUseCase<out Output> {
     suspend operator fun invoke(): Flow<Output>
 }
 
-abstract class UseCase<in Input, out Output> : BaseUseCase<Input, Output>, FailureHandler() {}
+abstract class UseCase<in Input, out Output> : BaseUseCase<Input, Output>, FailureHandler()
 
-abstract class NoParamUseCase<out Output> : NoParamBaseUseCase<Output>, FailureHandler() {}
+abstract class NoParamUseCase<out Output> : NoParamBaseUseCase<Output>, FailureHandler()
 
-abstract class BlankUseCase : BlankBaseUseCase, FailureHandler() {}
+abstract class BlankUseCase : BlankBaseUseCase, FailureHandler()
 
-abstract class FlowUseCase<in Input, out Output> : BaseFlowUseCase<Input, Output>, FailureHandler() {}
+abstract class FlowUseCase<in Input, out Output> : BaseFlowUseCase<Input, Output>, FailureHandler()
 
-abstract class NoParamFlowUseCase<out Output> : BaseNoParamFlowUseCase<Output>, FailureHandler() {}
+abstract class NoParamFlowUseCase<out Output> : BaseNoParamFlowUseCase<Output>, FailureHandler()

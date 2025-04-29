@@ -1,7 +1,7 @@
 package com.groupany.mangatek.core.domain
 
 import android.content.Context
-import com.groupany.mangatek.R
+import com.groupany.localization.R
 
 enum class FailureType (val key: String) {
      InvalidCredential("INVALID_CREDENTIALS"),

@@ -29,7 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.groupany.ui.components.CustomTextField
 import com.groupany.mangatek.features.auth.presentation.viewmodels.LoginViewModel
-import com.groupany.mangatek.R
+import com.groupany.localization.R as localeR
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.VerticalSpacer
@@ -153,7 +153,7 @@ fun LoginScreen(
                         VerticalSpacer(CustomSpacerSize.BIG)
 
                         CustomTextField(
-                            label = stringResource(R.string.email),
+                            label = stringResource(localeR.string.email),
                             initialValue = email,
                             enabled = !loginState.isLoading() && !loginState.isSuccess(),
                             keyboardType = KeyboardType.Email,
@@ -164,7 +164,7 @@ fun LoginScreen(
                         VerticalSpacer()
 
                         CustomTextField(
-                            label = stringResource(R.string.password),
+                            label = stringResource(localeR.string.password),
                             initialValue = password,
                             isPassword = true,
                             enabled = !loginState.isLoading() && !loginState.isSuccess(),
@@ -182,7 +182,7 @@ fun LoginScreen(
                             onClick = { viewModel.loginUser(email, password) },
                             isLoading = loginState.isLoading() || loginState.isSuccess(),
                             enabled = validationSTate.isValid(),
-                            label = stringResource(R.string.login)
+                            label = stringResource(localeR.string.login)
                         )
                     }
                 }
