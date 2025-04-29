@@ -36,7 +36,7 @@ fun LanguageButton(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = iconRes), // Load image from drawable
+            painter = painterResource(id = iconRes),
             contentDescription = "Icon",
             modifier = Modifier.size(40.dp)
         )
