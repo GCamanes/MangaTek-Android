@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     // Local modules
+    implementation(project(":core:base"))
     implementation(project(":core:localization"))
     implementation(project(":core:ui"))
 }
