@@ -34,7 +34,7 @@ import com.groupany.localization.R as localeR
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.VerticalSpacer
-import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.CustomSnackBar
 import com.groupany.mangatek.core.presentation.components.MangaTekTitle
 import com.groupany.ui.components.SnackBarTypes

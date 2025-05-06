@@ -1,8 +1,6 @@
-package com.groupany.mangatek.core.helpers
+package com.groupany.mangatek.core.navigation
 
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.navigation.NavParam
-import com.groupany.mangatek.core.navigation.Screen
 
 object NavHelper {
     fun gotToHome(navController: NavHostController) {

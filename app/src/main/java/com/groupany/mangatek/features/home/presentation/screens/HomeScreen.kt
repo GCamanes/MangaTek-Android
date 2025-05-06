@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.helpers.NavHelper
+import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.mangatek.core.presentation.components.EmptyError
 import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.mangatek.core.presentation.components.MangaTekTitle
