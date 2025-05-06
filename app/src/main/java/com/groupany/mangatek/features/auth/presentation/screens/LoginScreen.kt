@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.groupany.mangatek.core.extensions.trad
+import com.groupany.localization.extensions.trad
 import com.groupany.ui.components.CustomTextField
 import com.groupany.mangatek.features.auth.presentation.viewmodels.LoginViewModel
 import com.groupany.localization.R as localeR

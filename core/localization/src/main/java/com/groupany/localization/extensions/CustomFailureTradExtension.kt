@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.extensions
+package com.groupany.localization.extensions
 
 import android.content.Context
 import com.groupany.localization.R
