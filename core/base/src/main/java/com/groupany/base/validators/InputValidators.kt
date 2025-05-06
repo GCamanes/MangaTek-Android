@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.validators
+package com.groupany.base.validators
 
 import android.util.Patterns
 import kotlin.text.isBlank

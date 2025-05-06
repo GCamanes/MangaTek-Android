@@ -4,10 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.BuildConfig
 import com.groupany.mangatek.core.domain.usecases.GetAppVersionUseCase
 import com.groupany.base.GenericState
-import com.groupany.mangatek.core.validators.EmailValidationResult
-import com.groupany.mangatek.core.validators.EmailValidator
-import com.groupany.mangatek.core.validators.PasswordValidationResult
-import com.groupany.mangatek.core.validators.PasswordValidator
+import com.groupany.base.validators.EmailValidationResult
+import com.groupany.base.validators.EmailValidator
+import com.groupany.base.validators.PasswordValidationResult
+import com.groupany.base.validators.PasswordValidator
 import com.groupany.mangatek.features.auth.domain.entities.UserEntity
 import com.groupany.mangatek.features.auth.domain.usecases.GetCurrentUserUseCase
 import com.groupany.mangatek.features.auth.domain.usecases.LoginParams
