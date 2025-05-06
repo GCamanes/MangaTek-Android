@@ -3,7 +3,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.mangatek.BuildConfig
 import com.groupany.mangatek.core.domain.usecases.GetAppVersionUseCase
-import com.groupany.mangatek.core.states.GenericState
+import com.groupany.base.GenericState
 import com.groupany.mangatek.core.validators.EmailValidationResult
 import com.groupany.mangatek.core.validators.EmailValidator
 import com.groupany.mangatek.core.validators.PasswordValidationResult

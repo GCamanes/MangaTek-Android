@@ -1,5 +1,8 @@
 package com.groupany.mangatek.core.domain
 
+import com.groupany.base.CustomFailure
+import com.groupany.base.CustomResult
+import com.groupany.base.FailureType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

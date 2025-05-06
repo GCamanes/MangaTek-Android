@@ -1,6 +1,4 @@
-package com.groupany.mangatek.core.states
-
-import com.groupany.mangatek.core.domain.CustomFailure
+package com.groupany.base
 
 sealed class GenericState<out T> {
     object Idle : GenericState<Nothing>()

@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.domain
+package com.groupany.base
 
 sealed class CustomResult<out T> {
     data class Success<out T>(val value: T) : CustomResult<T>()
@@ -21,4 +21,3 @@ sealed class CustomResult<out T> {
         is Failure -> onFailure(failure)
     }
 }
-

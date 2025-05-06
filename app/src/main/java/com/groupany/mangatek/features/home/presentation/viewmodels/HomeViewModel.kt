@@ -2,8 +2,8 @@ package com.groupany.mangatek.features.home.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.groupany.mangatek.core.domain.CustomFailure
-import com.groupany.mangatek.core.domain.CustomResult
+import com.groupany.base.CustomFailure
+import com.groupany.base.CustomResult
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.mangatek.core.domain.usecases.GetFavoritesUseCase

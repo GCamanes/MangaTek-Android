@@ -2,10 +2,10 @@ package com.groupany.mangatek.core.extensions
 
 import android.content.Context
 import com.groupany.localization.R
-import com.groupany.mangatek.core.domain.CustomFailure
-import com.groupany.mangatek.core.domain.CustomFailure.InvalidCredential
-import com.groupany.mangatek.core.domain.CustomFailure.NetworkError
-import com.groupany.mangatek.core.domain.CustomFailure.TooManyRequests
+import com.groupany.base.CustomFailure
+import com.groupany.base.CustomFailure.InvalidCredential
+import com.groupany.base.CustomFailure.NetworkError
+import com.groupany.base.CustomFailure.TooManyRequests
 
 fun CustomFailure.trad(context: Context): String {
     return when(this) {

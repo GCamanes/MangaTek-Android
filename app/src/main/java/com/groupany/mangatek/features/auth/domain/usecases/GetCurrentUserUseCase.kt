@@ -1,6 +1,6 @@
 package com.groupany.mangatek.features.auth.domain.usecases
 
-import com.groupany.mangatek.core.domain.CustomResult
+import com.groupany.base.CustomResult
 import com.groupany.mangatek.core.domain.usecases.NoParamUseCase
 import com.groupany.mangatek.features.auth.domain.entities.UserEntity
 import com.groupany.mangatek.features.auth.domain.repositories.AuthRepository

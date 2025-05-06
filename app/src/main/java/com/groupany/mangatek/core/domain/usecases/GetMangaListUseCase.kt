@@ -1,6 +1,6 @@
 package com.groupany.mangatek.core.domain.usecases
 
-import com.groupany.mangatek.core.domain.CustomResult
+import com.groupany.base.CustomResult
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.mangatek.core.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow

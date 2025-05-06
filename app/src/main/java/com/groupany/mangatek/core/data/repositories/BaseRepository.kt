@@ -6,7 +6,7 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.groupany.mangatek.core.domain.FailureType
+import com.groupany.base.FailureType
 
 open class BaseRepository {
     protected suspend fun <T> safeCall(

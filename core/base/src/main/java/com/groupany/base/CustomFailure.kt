@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.domain
+package com.groupany.base
 
 enum class FailureType (val key: String) {
      InvalidCredential("INVALID_CREDENTIALS"),

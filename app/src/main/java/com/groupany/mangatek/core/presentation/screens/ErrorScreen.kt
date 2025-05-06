@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.groupany.mangatek.core.domain.CustomFailure
+import com.groupany.base.CustomFailure
 import com.groupany.mangatek.core.extensions.trad
 import com.groupany.ui.R
 import com.groupany.ui.components.CustomButton
