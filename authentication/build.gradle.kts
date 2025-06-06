@@ -1,3 +1,6 @@
+import java.util.Properties
+import kotlin.apply
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,8 +8,15 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+
+val email: String = localProperties.getProperty("LOGIN_EMAIL") ?: ""
+val password: String = localProperties.getProperty("LOGIN_PASSWORD") ?: ""
+
 android {
-    namespace = "com.groupany.base"
+    namespace = "com.groupany.authentication"
     compileSdk = 35
 
     defaultConfig {
@@ -14,6 +24,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        /// Remove for future releases
+        buildConfigField("String", "EMAIL", "\"$email\"")
+        buildConfigField("String", "PASSWORD", "\"$password\"")
     }
 
     buildTypes {
@@ -32,10 +46,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -43,13 +59,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Hilt dependencies
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
     // Firebase dependencies
     implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.storage.ktx)
+
+    // Hilt dependencies
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Local modules
+    implementation(project(":core:base"))
 }

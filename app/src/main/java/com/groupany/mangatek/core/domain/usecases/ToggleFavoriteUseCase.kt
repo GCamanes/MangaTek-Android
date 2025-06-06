@@ -1,5 +1,6 @@
 package com.groupany.mangatek.core.domain.usecases
 
+import com.groupany.base.usecases.UseCase
 import com.groupany.mangatek.core.domain.repositories.MangaRepository
 import javax.inject.Inject
 

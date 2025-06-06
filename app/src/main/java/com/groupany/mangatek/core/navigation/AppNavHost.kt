@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
-import com.groupany.mangatek.features.auth.presentation.screens.LoginScreen
+import com.groupany.mangatek.core.presentation.screens.LoginScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
 
 @Composable
