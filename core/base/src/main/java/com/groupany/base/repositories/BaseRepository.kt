@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.repositories
+package com.groupany.base.repositories
 
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.groupany.base.FailureType
+import kotlin.jvm.javaClass
 
 open class BaseRepository {
     protected suspend fun <T> safeCall(

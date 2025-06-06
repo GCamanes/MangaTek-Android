@@ -1,6 +1,6 @@
 package com.groupany.mangatek.features.auth.data.repositories
 
-import com.groupany.mangatek.core.data.repositories.BaseRepository
+import com.groupany.base.repositories.BaseRepository
 import com.groupany.base.FailureType
 import com.groupany.mangatek.features.auth.data.adapter.UserAdapter
 import com.groupany.mangatek.features.auth.data.datasources.AuthDatasource

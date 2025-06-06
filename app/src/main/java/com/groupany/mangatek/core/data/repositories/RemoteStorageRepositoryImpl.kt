@@ -1,5 +1,6 @@
 package com.groupany.mangatek.core.data.repositories
 
+import com.groupany.base.repositories.BaseRepository
 import com.groupany.mangatek.core.data.datasources.RemoteStorageDataSource
 import com.groupany.mangatek.core.domain.repositories.RemoteStorageRepository
 
