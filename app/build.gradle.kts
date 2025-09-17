@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 val localProperties = Properties().apply {
@@ -103,7 +103,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     // Hilt dependencies
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     // Async image
     implementation(libs.coil.compose)

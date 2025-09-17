@@ -4,8 +4,8 @@ import kotlin.apply
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 val localProperties = Properties().apply {
@@ -68,7 +68,7 @@ dependencies {
 
     // Hilt dependencies
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Local modules
