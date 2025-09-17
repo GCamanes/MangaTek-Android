@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.components
+package com.groupany.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.groupany.localization.R as localeR
-import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 import com.groupany.ui.R as uiR
 

@@ -36,7 +36,7 @@ import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.CustomSnackBar
-import com.groupany.mangatek.core.presentation.components.MangaTekTitle
+import com.groupany.ui.components.MangaTekTitle
 import com.groupany.ui.components.SnackBarTypes
 import com.groupany.ui.snackbar.SnackBarHandler
 import com.groupany.ui.snackbar.SnackBarManager
@@ -177,7 +177,7 @@ fun LoginScreen(
                             onValueChange = viewModel::onPasswordChange
                         )
 
-                        VerticalSpacer(CustomSpacerSize.BIG)
+                        VerticalSpacer(CustomSpacerSize.LARGE)
 
                         CustomButton(
                             onClick = { viewModel.loginUser(email, password) },
