@@ -2,6 +2,7 @@ package com.groupany.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -9,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.groupany.ui.constants.UIConstants
 
@@ -39,6 +41,7 @@ fun CustomButton(
         onClick = onClick,
         enabled = enabled && !isLoading,
         colors = colors,
+        shape = RoundedCornerShape(UIConstants.CornerRound),
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = UIConstants.ButtonHeight, max = UIConstants.ButtonHeight)
