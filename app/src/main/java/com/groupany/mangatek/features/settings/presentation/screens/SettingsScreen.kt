@@ -3,16 +3,18 @@ package com.groupany.mangatek.features.settings.presentation.screens
 import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.localization.LocaleHelper
 import com.groupany.localization.R as localeR
@@ -20,7 +22,6 @@ import com.groupany.ui.components.ButtonTypes
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.mangatek.core.navigation.NavHelper
-import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.LanguageButton
 import com.groupany.mangatek.features.settings.presentation.components.SettingsElement
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
@@ -37,7 +38,10 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(localeR.string.settings)) },
+                title = { Text(
+                    stringResource(localeR.string.settings),
+                    style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground))
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
@@ -53,40 +57,51 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).padding(
-                    horizontal = UIConstants.PaddingMedium,
-                    vertical = UIConstants.PaddingBig,
+                .padding(innerPadding)
+                .padding(
+                    bottom = UIConstants.PaddingBig,
+                    start = UIConstants.PaddingMedium,
+                    top = UIConstants.PaddingMedium,
+                    end = UIConstants.PaddingMedium
                 )
         ) {
             Column(
-                modifier = Modifier.weight(1f).fillMaxSize(),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                VerticalSpacer()
-
-                SettingsElement(title = stringResource(localeR.string.version)) {
-                    Text(
-                        appVersion,
-                        style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(UIConstants.CornerRound),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
-                }
+                ) {
+                    SettingsElement(title = stringResource(localeR.string.version)) {
+                        Text(
+                            appVersion,
+                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground)
+                        )
+                    }
 
-                VerticalSpacer(CustomSpacerSize.BIG)
+                    HorizontalDivider(Modifier.fillMaxWidth(), thickness = 1.dp, MaterialTheme.colorScheme.surfaceVariant)
 
-                SettingsElement(title = stringResource(localeR.string.language)) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium)
-                    ) {
-                        LocaleHelper.supportedLanguages.forEach { locale ->
-                            LanguageButton(
-                                iconRes = LocaleHelper.getLocaleFlag(locale),
-                                value = locale,
-                                selectedValue = selectedLocale,
-                                onClick = {
-                                    LocaleHelper.setLocale(context, locale)
-                                    activity?.recreate()
-                                }
-                            )
+                    SettingsElement(title = stringResource(localeR.string.language)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium)
+                        ) {
+                            LocaleHelper.supportedLanguages.forEach { locale ->
+                                LanguageButton(
+                                    iconRes = LocaleHelper.getLocaleFlag(locale),
+                                    value = locale,
+                                    selectedValue = selectedLocale,
+                                    onClick = {
+                                        LocaleHelper.setLocale(context, locale)
+                                        activity?.recreate()
+                                    }
+                                )
+                            }
                         }
                     }
                 }
