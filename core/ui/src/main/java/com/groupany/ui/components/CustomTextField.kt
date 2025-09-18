@@ -34,6 +34,12 @@ fun CustomTextField(
             onValueChange(it)
         },
         label = { Text(label) },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            disabledContainerColor = MaterialTheme.colorScheme.surface,
+
+        ),
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
