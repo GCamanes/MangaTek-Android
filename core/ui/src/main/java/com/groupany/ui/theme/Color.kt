@@ -7,5 +7,5 @@ val SecondaryColor = Color(0xFFF57542) // Orange
 val TertiaryColor = Color(0xFF02539A)  // Dark Blue
 
 val BackgroundColor = Color(0xFF111617)
-val SurfaceColor = Color(0xFF212121)
-val SurfaceVariantColor = Color(0xFF303030)
+val SurfaceColor = Color(0xFF18242A)        // lighter blue-black, more separation
+val SurfaceVariantColor = Color(0xFF2C3A40) // smoky blue-grey, good for cards/layers

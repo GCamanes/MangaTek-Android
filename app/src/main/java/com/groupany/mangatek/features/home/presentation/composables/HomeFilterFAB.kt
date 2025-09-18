@@ -63,7 +63,7 @@ fun HomeFilterFAB(
         }
 
         FloatingActionButton(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
             contentColor = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(UIConstants.ButtonHeight),
             onClick = { isFabExpanded = !isFabExpanded }

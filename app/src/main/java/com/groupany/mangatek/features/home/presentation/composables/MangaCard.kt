@@ -58,7 +58,7 @@ fun MangaCard(
             .height(UIConstants.MangaCardHeight),
         shape = RoundedCornerShape(UIConstants.CornerRound),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Box(

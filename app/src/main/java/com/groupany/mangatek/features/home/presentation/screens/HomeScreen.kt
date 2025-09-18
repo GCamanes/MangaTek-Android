@@ -52,6 +52,9 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         topBar = {
             TopAppBar(
                 title = { MangaTekTitle() },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                ),
                 actions = {
                     IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                         Icon(
@@ -107,7 +110,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
-                                    MaterialTheme.colorScheme.surface,
+                                    MaterialTheme.colorScheme.background,
                                     Color.Transparent,
                                 )
                             )
