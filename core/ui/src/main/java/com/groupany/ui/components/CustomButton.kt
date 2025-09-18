@@ -51,7 +51,7 @@ fun CustomButton(
         } else {
             Text(
                 label,
-                style = MaterialTheme.typography.displaySmall.copy(
+                style = MaterialTheme.typography.headlineLarge.copy(
                     fontSize = 25.sp,
                     color = colors.contentColor
                 )
