@@ -22,7 +22,7 @@ import com.groupany.ui.components.VerticalSpacer
 import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.LanguageButton
-import com.groupany.mangatek.features.settings.presentation.composables.SettingsElement
+import com.groupany.mangatek.features.settings.presentation.components.SettingsElement
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.constants.UIConstants
 
@@ -38,6 +38,9 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(localeR.string.settings)) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                ),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")

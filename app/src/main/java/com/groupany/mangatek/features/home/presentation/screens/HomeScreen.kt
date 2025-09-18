@@ -22,8 +22,8 @@ import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.EmptyError
 import com.groupany.mangatek.core.presentation.screens.CustomError
 import com.groupany.ui.components.MangaTekTitle
-import com.groupany.mangatek.features.home.presentation.composables.HomeFilterFAB
-import com.groupany.mangatek.features.home.presentation.composables.MangaLazyList
+import com.groupany.mangatek.features.home.presentation.components.HomeFilterFAB
+import com.groupany.mangatek.features.home.presentation.components.MangaLazyList
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 import com.groupany.ui.constants.UIConstants
 

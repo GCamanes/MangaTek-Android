@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.settings.presentation.composables
+package com.groupany.mangatek.features.settings.presentation.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

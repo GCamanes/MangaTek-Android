@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.home.presentation.composables
+package com.groupany.mangatek.features.home.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
