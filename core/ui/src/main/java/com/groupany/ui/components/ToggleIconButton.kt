@@ -51,7 +51,7 @@ fun ToggleIconButton(
             if (isSelected) selectedIcon else unselectedIcon,
             contentDescription = contentDescription,
             modifier = Modifier.size(UIConstants.IconHeight),
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onBackground
         )
     }
 }

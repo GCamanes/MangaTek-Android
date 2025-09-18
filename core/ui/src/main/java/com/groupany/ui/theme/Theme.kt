@@ -14,9 +14,9 @@ private val DarkColorScheme = darkColorScheme(
     surfaceVariant = SurfaceVariantColor,
     onPrimary = Color.White,
     onSecondary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
-    onTertiary = Color.White,
+    onBackground = OnBackgroundColor,
+    onSurface = OnSurfaceColor,
+    onTertiary = OnSurfaceVariantColor,
 )
 
 @Composable
