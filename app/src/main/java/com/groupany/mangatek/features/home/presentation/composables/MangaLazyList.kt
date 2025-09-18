@@ -5,22 +5,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import com.groupany.mangatek.core.domain.entities.MangaLightEntity
 import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun MangaLazyList(
-    state: LazyListState,
+    state: LazyGridState,
     mangaList: List<MangaLightEntity> = emptyList(),
     isFavorite: (String) -> Boolean,
     onToggle: (String) -> Unit,
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?
 ) {
-    LazyColumn(
+    LazyVerticalGrid(
         state = state,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
@@ -31,12 +31,14 @@ fun MangaLazyList(
                     + UIConstants.PaddingLarge
                     + UIConstants.PaddingSmall,
         ),
-        verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium)
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingMedium),
+        verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingLarge)
     ) {
-        items(mangaList) {
-            manga -> MangaCard(
-                manga,
-                isFavorite(manga.id),
+        items(mangaList.size) { index ->
+            MangaCard(
+                mangaList[index],
+                isFavorite(mangaList[index].id),
                 onToggle = onToggle,
                 getCachedUrl = getCachedUrl,
                 getDownloadUrl = getDownloadUrl

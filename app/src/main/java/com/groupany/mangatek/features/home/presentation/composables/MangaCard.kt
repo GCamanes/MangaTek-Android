@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
@@ -52,20 +51,19 @@ fun MangaCard(
         value = getCachedUrl(manga.coverPath) ?: getDownloadUrl(manga.coverPath)
     }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(UIConstants.MangaCardHeight),
-        shape = RoundedCornerShape(UIConstants.CornerRound),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
-    ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.TopEnd,
+    Column {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth().aspectRatio(0.7f),
+            shape = RoundedCornerShape(UIConstants.CornerRound),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.background
+            )
         ) {
-            Row {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.TopEnd
+            ) {
                 if (imageUrl != null) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
@@ -74,67 +72,45 @@ fun MangaCard(
                             .build(),
                         contentDescription = manga.title,
                         modifier = Modifier
-                            .width(UIConstants.MangaCardWidth)
-                            .height(UIConstants.MangaCardHeight),
-                        contentScale = ContentScale.FillHeight
+                            .fillMaxWidth(),
+                        contentScale = ContentScale.Crop
                     )
                 } else {
                     Box(
-                        modifier = Modifier
-                            .width(UIConstants.MangaCardWidth)
-                            .height(UIConstants.MangaCardHeight),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(modifier = Modifier.size(30.dp))
                     }
                 }
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = UIConstants.PaddingSmall)
+                ToggleIconButton(
+                    isSelected = isFavorite,
+                    selectedIcon = Icons.Outlined.Favorite,
+                    unselectedIcon = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "add to favorites"
+                ) { onToggle(manga.id) }
+
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.BottomEnd,
                 ) {
-                    Text(
-                        modifier = Modifier.padding(start = UIConstants.PaddingSmall, end = 48.dp),
-                        text = manga.title,
-                        maxLines = 2,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    VerticalSpacer(CustomSpacerSize.SMALL)
-
-                    FlowRow (
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = UIConstants.PaddingSmall)
-                    ){
-                        manga.getFilteredAuthors().forEach { author ->
-                            Box (modifier = Modifier.padding(end = UIConstants.PaddingMedium)){
-                                Text(
-                                    author,
-                                    maxLines = 1,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                            }
-                        }
-                    }
+                    MangaStatus(manga)
                 }
             }
-            ToggleIconButton(
-                isSelected = isFavorite,
-                selectedIcon = Icons.Outlined.Favorite,
-                unselectedIcon = Icons.Outlined.FavoriteBorder,
-                contentDescription = "add to favorites"
-            ) { onToggle(manga.id) }
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.BottomEnd,
-            ) {
-                MangaStatus(manga)
-            }
         }
+
+        VerticalSpacer(CustomSpacerSize.EXTRA_SMALL)
+
+        Text(
+            modifier = Modifier.padding(horizontal = UIConstants.PaddingSmall),
+            text = manga.title,
+            maxLines = 2,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
+
 }
 
 @Composable

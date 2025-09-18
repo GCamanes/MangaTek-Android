@@ -2,7 +2,7 @@ package com.groupany.mangatek.features.home.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -31,7 +31,7 @@ import com.groupany.ui.constants.UIConstants
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
-    val listState = rememberLazyListState()
+    val listState = rememberLazyGridState()
 
     // Convert padding value to pixels (Int)
     val maxOffsetPx = with(LocalDensity.current) { UIConstants.PaddingMedium.roundToPx() }
