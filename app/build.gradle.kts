@@ -90,12 +90,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.material)
-    // Firebase dependencies
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.google.firebase.analytics)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.storage.ktx)
+
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.navigation.animation)
@@ -112,6 +107,7 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:localization"))
     implementation(project(":core:ui"))
+    implementation(project(":core:firebase"))
     implementation(project(":authentication"))
     implementation(project(":manga"))
 }

@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.firebase.data.datasources
 
 interface RemoteStorageDataSource {
     suspend fun getDownloadUrl(path: String): String

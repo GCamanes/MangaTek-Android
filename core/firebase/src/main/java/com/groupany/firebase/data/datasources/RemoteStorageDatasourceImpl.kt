@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.firebase.data.datasources
 
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await

@@ -22,6 +22,7 @@ fun LanguageButton(
     iconRes: Int, // Pass the drawable resource
     value: String,
     selectedValue: String,
+    language: String,
     onClick: (String) -> Unit
 ) {
     val isSelected = value == selectedValue
@@ -30,14 +31,17 @@ fun LanguageButton(
 
     Box(
         modifier = Modifier
-            .border(BorderStroke(borderWidth, borderColor), shape = RoundedCornerShape(UIConstants.PaddingSmall))
+            .border(
+                BorderStroke(borderWidth, borderColor),
+                shape = RoundedCornerShape(UIConstants.PaddingSmall)
+            )
             .clickable { onClick(value) }
             .padding(UIConstants.PaddingSmall),
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = iconRes),
-            contentDescription = "Icon",
+            contentDescription = language,
             modifier = Modifier.size(40.dp)
         )
     }

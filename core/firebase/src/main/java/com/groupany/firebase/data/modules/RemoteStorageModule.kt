@@ -1,9 +1,9 @@
-package com.groupany.mangatek.core.data.modules
+package com.groupany.firebase.data.modules
 
-import com.groupany.mangatek.core.data.datasources.RemoteStorageDataSource
-import com.groupany.mangatek.core.data.datasources.RemoteStorageDataSourceImpl
-import com.groupany.mangatek.core.data.repositories.RemoteStorageRepositoryImpl
-import com.groupany.mangatek.core.domain.repositories.RemoteStorageRepository
+import com.groupany.firebase.data.datasources.RemoteStorageDataSource
+import com.groupany.firebase.data.datasources.RemoteStorageDataSourceImpl
+import com.groupany.firebase.data.repositories.RemoteStorageRepositoryImpl
+import com.groupany.firebase.domain.repositories.RemoteStorageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

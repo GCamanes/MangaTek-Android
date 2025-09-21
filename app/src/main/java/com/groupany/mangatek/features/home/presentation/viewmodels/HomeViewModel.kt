@@ -4,20 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.base.CustomFailure
 import com.groupany.base.CustomResult
+import com.groupany.firebase.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.usecases.GetFavoritesUseCase
 import com.groupany.manga.domain.usecases.GetMangaListUseCase
 import com.groupany.manga.domain.usecases.ToggleFavoriteUseCase
-import com.groupany.mangatek.core.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.mangatek.features.home.data.enums.HomeFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
-import kotlin.collections.filter
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

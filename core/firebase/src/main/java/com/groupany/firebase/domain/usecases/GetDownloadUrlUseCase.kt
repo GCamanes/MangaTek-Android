@@ -1,8 +1,8 @@
-package com.groupany.mangatek.core.domain.usecases
+package com.groupany.firebase.domain.usecases
 
 import com.groupany.base.CustomResult
 import com.groupany.base.usecases.UseCase
-import com.groupany.mangatek.core.domain.repositories.RemoteStorageRepository
+import com.groupany.firebase.domain.repositories.RemoteStorageRepository
 import javax.inject.Inject
 
 class GetDownloadedUrlUseCase @Inject constructor(private val repo: RemoteStorageRepository): UseCase<String, CustomResult<String>>() {

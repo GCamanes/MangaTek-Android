@@ -1,8 +1,8 @@
-package com.groupany.mangatek.core.data.repositories
+package com.groupany.firebase.data.repositories
 
 import com.groupany.base.repositories.BaseRepository
-import com.groupany.mangatek.core.data.datasources.RemoteStorageDataSource
-import com.groupany.mangatek.core.domain.repositories.RemoteStorageRepository
+import com.groupany.firebase.data.datasources.RemoteStorageDataSource
+import com.groupany.firebase.domain.repositories.RemoteStorageRepository
 
 class RemoteStorageRepositoryImpl(
     private val remoteDataSource: RemoteStorageDataSource,
