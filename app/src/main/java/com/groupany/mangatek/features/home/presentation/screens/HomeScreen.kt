@@ -20,7 +20,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.EmptyError
-import com.groupany.mangatek.core.presentation.screens.CustomError
+import com.groupany.ui.components.CustomError
 import com.groupany.ui.components.MangaTekTitle
 import com.groupany.mangatek.features.home.presentation.components.HomeFilterFAB
 import com.groupany.mangatek.features.home.presentation.components.MangaLazyList

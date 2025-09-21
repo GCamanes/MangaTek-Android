@@ -55,6 +55,6 @@ dependencies {
     // Icons dependencies
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(project(":core:base"))
     implementation(project(":core:localization"))
-
 }

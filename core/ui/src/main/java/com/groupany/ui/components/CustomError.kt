@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.screens
+package com.groupany.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -18,9 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.groupany.base.CustomFailure
 import com.groupany.localization.extensions.trad
 import com.groupany.ui.R
-import com.groupany.ui.components.CustomButton
-import com.groupany.ui.components.CustomSpacerSize
-import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
 @Composable
