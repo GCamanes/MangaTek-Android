@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.base.CustomFailure
 import com.groupany.base.CustomResult
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.usecases.GetFavoritesUseCase
+import com.groupany.manga.domain.usecases.GetMangaListUseCase
+import com.groupany.manga.domain.usecases.ToggleFavoriteUseCase
 import com.groupany.mangatek.core.domain.usecases.GetDownloadedUrlUseCase
-import com.groupany.mangatek.core.domain.usecases.GetFavoritesUseCase
-import com.groupany.mangatek.core.domain.usecases.GetMangaListUseCase
-import com.groupany.mangatek.core.domain.usecases.ToggleFavoriteUseCase
 import com.groupany.mangatek.features.home.data.enums.HomeFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

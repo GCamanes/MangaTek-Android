@@ -1,10 +1,10 @@
-package com.groupany.mangatek.core.data.repositories
+package com.groupany.manga.data.repositories
 
-import com.groupany.mangatek.core.data.datasources.MangaLocalDataSource
-import com.groupany.mangatek.core.data.datasources.MangaRemoteDataSource
-import com.groupany.mangatek.core.data.mappers.MangaMapper
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
-import com.groupany.mangatek.core.domain.repositories.MangaRepository
+import com.groupany.manga.data.datasources.MangaLocalDataSource
+import com.groupany.manga.data.datasources.MangaRemoteDataSource
+import com.groupany.manga.data.mappers.MangaMapper
+import com.groupany.manga.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

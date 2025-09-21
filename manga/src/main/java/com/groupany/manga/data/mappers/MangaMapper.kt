@@ -1,7 +1,7 @@
-package com.groupany.mangatek.core.data.mappers
+package com.groupany.manga.data.mappers
 
-import com.groupany.mangatek.core.data.models.MangaLightModel
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.manga.data.models.MangaLightModel
+import com.groupany.manga.domain.entities.MangaLightEntity
 
 object MangaMapper {
     fun toModelLightEntity(model: MangaLightModel): MangaLightEntity = MangaLightEntity(

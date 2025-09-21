@@ -26,6 +26,7 @@ import com.groupany.mangatek.features.home.presentation.components.HomeFilterFAB
 import com.groupany.mangatek.features.home.presentation.components.MangaLazyList
 import com.groupany.mangatek.features.home.presentation.viewmodels.HomeViewModel
 import com.groupany.ui.constants.UIConstants
+import kotlin.collections.isNotEmpty
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.authentication.domain.usecases.LogoutUseCase
 import com.groupany.base.usecases.GetAppVersionUseCase
-import com.groupany.mangatek.core.domain.usecases.ClearFavoritesUseCase
+import com.groupany.manga.domain.usecases.ClearFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -113,6 +113,7 @@ dependencies {
     implementation(project(":core:localization"))
     implementation(project(":core:ui"))
     implementation(project(":authentication"))
+    implementation(project(":manga"))
 }
 
 kapt {

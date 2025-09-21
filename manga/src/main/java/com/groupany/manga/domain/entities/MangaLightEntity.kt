@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.domain.entities
+package com.groupany.manga.domain.entities
 
 val filteredAuthors = listOf(
     "Young Magazine",

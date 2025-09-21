@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.ui.constants.UIConstants
 
 @Composable

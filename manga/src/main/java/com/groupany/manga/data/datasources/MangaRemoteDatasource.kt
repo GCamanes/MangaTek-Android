@@ -1,6 +1,6 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.manga.data.datasources
 
-import com.groupany.mangatek.core.data.models.MangaLightModel
+import com.groupany.manga.data.models.MangaLightModel
 import kotlinx.coroutines.flow.Flow
 
 interface MangaRemoteDataSource {

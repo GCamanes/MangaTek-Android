@@ -34,7 +34,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer

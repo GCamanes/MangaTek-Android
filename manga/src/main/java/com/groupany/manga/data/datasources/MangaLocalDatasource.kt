@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.manga.data.datasources
 
 interface MangaLocalDataSource {
     fun getFavorites(): Set<String>

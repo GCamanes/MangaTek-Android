@@ -1,6 +1,6 @@
-package com.groupany.mangatek.core.domain.repositories
+package com.groupany.manga.domain.repositories
 
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.entities.MangaLightEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MangaRepository {

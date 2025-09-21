@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.manga.data.datasources
 
 import android.content.Context
 import android.content.SharedPreferences

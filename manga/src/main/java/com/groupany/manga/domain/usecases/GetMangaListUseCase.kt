@@ -1,9 +1,9 @@
-package com.groupany.mangatek.core.domain.usecases
+package com.groupany.manga.domain.usecases
 
 import com.groupany.base.CustomResult
 import com.groupany.base.usecases.NoParamFlowUseCase
-import com.groupany.mangatek.core.domain.entities.MangaLightEntity
-import com.groupany.mangatek.core.domain.repositories.MangaRepository
+import com.groupany.manga.domain.entities.MangaLightEntity
+import com.groupany.manga.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.data.models
+package com.groupany.manga.data.models
 
 data class MangaLightModel(
     val id: String = "",

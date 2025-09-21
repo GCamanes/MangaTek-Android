@@ -1,14 +1,14 @@
-package com.groupany.mangatek.core.data.modules
+package com.groupany.manga.data.modules
 
 import android.content.Context
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.groupany.mangatek.core.data.datasources.MangaLocalDataSource
-import com.groupany.mangatek.core.data.datasources.MangaLocalDataSourceImpl
-import com.groupany.mangatek.core.data.datasources.MangaRemoteDataSource
-import com.groupany.mangatek.core.data.datasources.MangaRemoteDataSourceImpl
-import com.groupany.mangatek.core.data.repositories.MangaRepositoryImpl
-import com.groupany.mangatek.core.domain.repositories.MangaRepository
+import com.groupany.manga.data.datasources.MangaLocalDataSource
+import com.groupany.manga.data.datasources.MangaLocalDataSourceImpl
+import com.groupany.manga.data.datasources.MangaRemoteDataSource
+import com.groupany.manga.data.datasources.MangaRemoteDataSourceImpl
+import com.groupany.manga.data.repositories.MangaRepositoryImpl
+import com.groupany.manga.domain.repositories.MangaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

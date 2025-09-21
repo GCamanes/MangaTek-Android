@@ -1,7 +1,7 @@
-package com.groupany.mangatek.core.domain.usecases
+package com.groupany.manga.domain.usecases
 
 import com.groupany.base.usecases.BlankUseCase
-import com.groupany.mangatek.core.domain.repositories.MangaRepository
+import com.groupany.manga.domain.repositories.MangaRepository
 import javax.inject.Inject
 
 class ClearFavoritesUseCase @Inject constructor(private val repo: MangaRepository): BlankUseCase() {

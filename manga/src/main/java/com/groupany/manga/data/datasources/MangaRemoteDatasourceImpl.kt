@@ -1,7 +1,7 @@
-package com.groupany.mangatek.core.data.datasources
+package com.groupany.manga.data.datasources
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.groupany.mangatek.core.data.models.MangaLightModel
+import com.groupany.manga.data.models.MangaLightModel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
