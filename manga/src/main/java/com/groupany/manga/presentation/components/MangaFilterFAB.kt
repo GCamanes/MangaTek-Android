@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.home.presentation.components
+package com.groupany.manga.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
-import com.groupany.mangatek.features.home.data.enums.MangaFilter
+import com.groupany.manga.domain.enums.MangaFilter
 import com.groupany.ui.constants.UIConstants
 
 @Composable

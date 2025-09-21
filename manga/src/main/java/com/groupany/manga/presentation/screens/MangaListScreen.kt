@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.home.presentation.screens
+package com.groupany.manga.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,9 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.groupany.mangatek.features.home.presentation.components.MangaFilterFAB
-import com.groupany.mangatek.features.home.presentation.components.MangaLazyList
-import com.groupany.mangatek.features.home.presentation.viewmodels.MangaListViewModel
+import com.groupany.manga.presentation.components.MangaFilterFAB
+import com.groupany.manga.presentation.components.MangaLazyList
+import com.groupany.manga.presentation.viewmodels.MangaListViewModel
 import com.groupany.ui.components.CustomError
 import com.groupany.ui.components.EmptyError
 import com.groupany.ui.components.MangaTekTitle

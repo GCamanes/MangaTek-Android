@@ -22,7 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
-import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
+import com.groupany.manga.presentation.screens.HomeScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.constants.UIConstants
 

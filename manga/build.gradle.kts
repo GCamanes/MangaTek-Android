@@ -62,8 +62,15 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Async image
+    implementation(libs.coil.compose)
+
+    // Icons dependencies
+    implementation(libs.androidx.material.icons.extended)
+
     // Local modules
     implementation(project(":core:base"))
     implementation(project(":core:ui"))
     implementation(project(":core:localization"))
+    implementation(project(":core:firebase"))
 }

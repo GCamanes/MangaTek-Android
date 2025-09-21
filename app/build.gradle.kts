@@ -94,20 +94,16 @@ dependencies {
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.navigation.animation)
-    // Icons dependencies
-    implementation(libs.androidx.material.icons.extended)
+
     // Hilt dependencies
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-    // Async image
-    implementation(libs.coil.compose)
 
     // Local modules
     implementation(project(":core:base"))
     implementation(project(":core:localization"))
     implementation(project(":core:ui"))
-    implementation(project(":core:firebase"))
     implementation(project(":authentication"))
     implementation(project(":manga"))
 }
