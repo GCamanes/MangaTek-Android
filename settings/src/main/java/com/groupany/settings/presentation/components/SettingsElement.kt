@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.settings.presentation.components
+package com.groupany.settings.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +16,9 @@ fun SettingsElement(
     title: String,
     content: @Composable () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth().padding(UIConstants.PaddingMedium)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(UIConstants.PaddingMedium)) {
         Text(
             title,
             style = MaterialTheme.typography.headlineSmall.copy(color = MaterialTheme.colorScheme.onSurface)

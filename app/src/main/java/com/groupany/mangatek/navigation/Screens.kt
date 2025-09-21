@@ -9,6 +9,6 @@ sealed class NavParam(val name: String) {
 
 sealed class Screen(val route: String) {
     object Login : Screen("login/${NavParam.AutoAuth.asParam}")
-    object Home : Screen("home")
+    object MangaList : Screen("manga-list")
     object Settings: Screen ("settings")
 }

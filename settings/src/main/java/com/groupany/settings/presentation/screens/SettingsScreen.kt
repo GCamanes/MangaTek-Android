@@ -1,4 +1,4 @@
-package com.groupany.mangatek.features.settings.presentation.screens
+package com.groupany.settings.presentation.screens
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
@@ -35,8 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.groupany.localization.LocaleHelper
-import com.groupany.mangatek.features.settings.presentation.components.SettingsElement
-import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
+import com.groupany.settings.presentation.components.SettingsElement
+import com.groupany.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.components.ButtonTypes
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.LanguageButton

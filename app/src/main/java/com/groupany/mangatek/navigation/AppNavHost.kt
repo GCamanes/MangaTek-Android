@@ -23,7 +23,7 @@ import androidx.navigation.navArgument
 import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
 import com.groupany.manga.presentation.screens.MangaListScreen
-import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
+import com.groupany.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.constants.UIConstants
 
 @Composable
@@ -48,7 +48,7 @@ fun AppNavHost(navController: NavHostController) {
             )
         }
         composable(
-            Screen.Home.route,
+            Screen.MangaList.route,
             enterTransition = {
                 when (initialState.destination.route) {
                     Screen.Login.route -> fadeIn(animationSpec = tween(3000))
@@ -85,7 +85,7 @@ fun AppNavHost(navController: NavHostController) {
 
 object NavHelper {
     fun gotToHome(navController: NavHostController) {
-        navController.navigate(Screen.Home.route) {
+        navController.navigate(Screen.MangaList.route) {
             popUpTo(Screen.Login.route) { inclusive = true }
             launchSingleTop = true
         }
