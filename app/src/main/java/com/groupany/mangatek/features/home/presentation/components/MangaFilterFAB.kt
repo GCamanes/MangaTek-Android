@@ -26,14 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
-import com.groupany.mangatek.features.home.data.enums.HomeFilter
+import com.groupany.mangatek.features.home.data.enums.MangaFilter
 import com.groupany.ui.constants.UIConstants
 
 @Composable
-fun HomeFilterFAB(
-    filter: HomeFilter,
+fun MangaFilterFAB(
+    filter: MangaFilter,
     modifier: Modifier = Modifier,
-    onClick: (HomeFilter) -> Unit,
+    onClick: (MangaFilter) -> Unit,
 ) {
     var isFabExpanded by remember { mutableStateOf(false) }
 
@@ -43,23 +43,23 @@ fun HomeFilterFAB(
     ) {
         SmallFAB(
             visible = isFabExpanded,
-            selected = filter == HomeFilter.FAVORITES,
+            selected = filter == MangaFilter.FAVORITES,
             icon = Icons.Default.Favorite,
             description = "Favorites",
             index = 1,
         ) {
             isFabExpanded = false
-            onClick(HomeFilter.FAVORITES)
+            onClick(MangaFilter.FAVORITES)
         }
 
         SmallFAB(
             visible = isFabExpanded,
-            selected = filter == HomeFilter.ALL,
+            selected = filter == MangaFilter.ALL,
             icon = Icons.Default.Menu,
             description = "All",
         ) {
             isFabExpanded = false
-            onClick(HomeFilter.ALL)
+            onClick(MangaFilter.ALL)
         }
 
         FloatingActionButton(

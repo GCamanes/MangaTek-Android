@@ -6,15 +6,25 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
 import com.groupany.authentication.presentation.screens.LoginScreen
+import com.groupany.localization.R
+import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
+import com.groupany.ui.constants.UIConstants
 
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -43,7 +53,16 @@ fun AppNavHost(navController: NavHostController) {
                 }
             },
         ) {
-            HomeScreen(navController)
+            HomeScreen(actions = {
+                IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
+                    Icon(
+                        Icons.Outlined.Settings,
+                        contentDescription = stringResource(R.string.settings),
+                        modifier = Modifier.size(UIConstants.IconHeight),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            })
         }
         composable(Screen.Settings.route,
             enterTransition = {
