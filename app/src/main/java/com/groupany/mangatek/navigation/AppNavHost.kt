@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.navigation
+package com.groupany.mangatek.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.tween

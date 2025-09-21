@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.toArgb
 
 import androidx.navigation.compose.rememberNavController
 import com.groupany.localization.LocaleHelper
-import com.groupany.mangatek.core.navigation.AppNavHost
+import com.groupany.mangatek.navigation.AppNavHost
 import com.groupany.ui.theme.MangaTekTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp

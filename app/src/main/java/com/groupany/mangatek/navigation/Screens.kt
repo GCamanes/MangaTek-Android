@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.navigation
+package com.groupany.mangatek.navigation
 
 sealed class NavParam(val name: String) {
     object AutoAuth : NavParam("autoAuth")
