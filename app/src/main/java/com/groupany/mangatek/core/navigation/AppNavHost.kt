@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.groupany.mangatek.features.home.presentation.screens.HomeScreen
-import com.groupany.mangatek.core.presentation.screens.LoginScreen
+import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
 
 @Composable
@@ -32,7 +32,7 @@ fun AppNavHost(navController: NavHostController) {
             exitTransition = { fadeOut(animationSpec = tween(1000)) }
         ) { backStackEntry ->
             val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
-            LoginScreen(navController, autoAuth)
+            LoginScreen(autoAuth, onSuccess = { NavHelper.gotToHome(navController) })
         }
         composable(
             Screen.Home.route,
@@ -54,6 +54,26 @@ fun AppNavHost(navController: NavHostController) {
             }
         ) {
             SettingsScreen(navController)
+        }
+    }
+}
+
+object NavHelper {
+    fun gotToHome(navController: NavHostController) {
+        navController.navigate(Screen.Home.route) {
+            popUpTo(Screen.Login.route) { inclusive = true }
+            launchSingleTop = true
+        }
+    }
+
+    fun gotToSettings(navController: NavHostController) {
+        navController.navigate(Screen.Settings.route)
+    }
+
+    fun backToLogin(navController: NavHostController) {
+        val route = Screen.Login.route.replace(NavParam.AutoAuth.asParam, "false")
+        navController.navigate(route) {
+            popUpTo(0) { inclusive = true } // Clears the entire back stack
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.groupany.mangatek.core.presentation.screens
+package com.groupany.authentication.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -24,9 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.groupany.authentication.presentation.viewmodels.LoginViewModel
 import com.groupany.localization.extensions.trad
 import com.groupany.ui.components.CustomTextField
@@ -34,7 +33,6 @@ import com.groupany.localization.R as localeR
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.VerticalSpacer
-import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.ui.components.CustomSnackBar
 import com.groupany.ui.components.MangaTekTitle
 import com.groupany.ui.components.SnackBarTypes
@@ -45,8 +43,8 @@ import com.groupany.ui.R as uiR
 
 @Composable
 fun LoginScreen(
-    navController: NavHostController,
     autoAuth: Boolean,
+    onSuccess: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -80,7 +78,7 @@ fun LoginScreen(
         snapshotFlow { currentUserState }
             .collect { state ->
                 if (state.isSuccess()) {
-                    NavHelper.gotToHome(navController)
+                    onSuccess()
                 } else if (state.isFailure()) {
                     isFormVisible = true
                 }
@@ -91,7 +89,7 @@ fun LoginScreen(
         snapshotFlow { loginState }
             .collect { state ->
                 if (state.isSuccess()) {
-                    NavHelper.gotToHome(navController)
+                    onSuccess()
                 } else if (state.isFailure()) {
                     SnackBarManager.showSnackBar(
                         state.failureOrNull!!.trad(context),
