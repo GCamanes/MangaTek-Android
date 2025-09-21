@@ -21,3 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "MangaTek"
 include(":app")
+include(":core:ui")
+include(":core:localization")
+include(":core:base")
+include(":authentication")
+include(":manga")
+include(":core:firebase")
+include(":settings")
