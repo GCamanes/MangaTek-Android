@@ -38,7 +38,7 @@ import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
+fun MangaListScreen(
     actions: @Composable RowScope.() -> Unit = {},
     viewModel: MangaListViewModel = hiltViewModel()
 ) {

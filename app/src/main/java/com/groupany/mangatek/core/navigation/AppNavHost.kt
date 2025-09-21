@@ -22,7 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
-import com.groupany.manga.presentation.screens.HomeScreen
+import com.groupany.manga.presentation.screens.MangaListScreen
 import com.groupany.mangatek.features.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.constants.UIConstants
 
@@ -42,7 +42,10 @@ fun AppNavHost(navController: NavHostController) {
             exitTransition = { fadeOut(animationSpec = tween(1000)) }
         ) { backStackEntry ->
             val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
-            LoginScreen(autoAuth, onSuccess = { NavHelper.gotToHome(navController) })
+            LoginScreen(
+                autoAuth,
+                onSuccess = { NavHelper.gotToHome(navController) },
+            )
         }
         composable(
             Screen.Home.route,
@@ -53,7 +56,7 @@ fun AppNavHost(navController: NavHostController) {
                 }
             },
         ) {
-            HomeScreen(actions = {
+            MangaListScreen(actions = {
                 IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
                     Icon(
                         Icons.Outlined.Settings,
@@ -72,7 +75,10 @@ fun AppNavHost(navController: NavHostController) {
                 slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
             }
         ) {
-            SettingsScreen(navController)
+            SettingsScreen(
+                onBack = { navController.popBackStack() },
+                onLogout = { NavHelper.backToLogin(navController) },
+            )
         }
     }
 }

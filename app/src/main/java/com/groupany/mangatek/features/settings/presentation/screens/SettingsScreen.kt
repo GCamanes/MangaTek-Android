@@ -34,9 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.groupany.localization.LocaleHelper
-import com.groupany.mangatek.core.navigation.NavHelper
 import com.groupany.mangatek.features.settings.presentation.components.SettingsElement
 import com.groupany.mangatek.features.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.components.ButtonTypes
@@ -48,7 +46,11 @@ import com.groupany.localization.R as localeR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(
+    onBack: () -> Unit,
+    onLogout: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
     val activity = context as? Activity // Needed to recreate activity
     var selectedLocale by remember { mutableStateOf(LocaleHelper.getCurrentLocale(context)) }
@@ -65,7 +67,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -132,7 +134,7 @@ fun SettingsScreen(navController: NavHostController, viewModel: SettingsViewMode
             CustomButton(
                 onClick = {
                     viewModel.logoutUser()
-                    NavHelper.backToLogin(navController)
+                    onLogout()
                 },
                 label = stringResource(localeR.string.logout),
                 buttonType = ButtonTypes.SECONDARY
