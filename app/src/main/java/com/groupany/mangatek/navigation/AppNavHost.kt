@@ -1,5 +1,6 @@
 package com.groupany.mangatek.navigation
 
+import android.net.Uri
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -73,27 +74,40 @@ fun AppNavHost(navController: NavHostController) {
                 }
             },
         ) {
-            MangaListScreen(actions = {
-                IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
-                    Icon(
-                        Icons.Outlined.Settings,
-                        contentDescription = stringResource(R.string.settings),
-                        modifier = Modifier.size(UIConstants.IconHeight),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+            MangaListScreen(
+                actions = {
+                    IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
+                        Icon(
+                            Icons.Outlined.Settings,
+                            contentDescription = stringResource(R.string.settings),
+                            modifier = Modifier.size(UIConstants.IconHeight),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                },
+                onMangaClick = { id, title ->
+                    NavHelper.gotToMangaDetail(navController, id, title)
                 }
-            })
+            )
         }
         composable(
             Screen.MangaDetail.route,
+            arguments = listOf(
+                navArgument(NavParam.Id.name) { type = NavType.StringType },
+                navArgument(NavParam.Title.name) { type = NavType.StringType },
+            ),
             enterTransition = {
                 slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
             },
             exitTransition = {
                 slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(700))
             }
-        ) {
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
+            val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
             MangaDetailScreen(
+                id = id,
+                title = title,
                 onBack = { navController.popBackStack() },
             )
         }
@@ -112,8 +126,17 @@ object NavHelper {
         }
     }
 
-    fun gotToMangaDetail(navController: NavHostController) {
-        navController.navigate(Screen.MangaDetail.route)
+    fun gotToMangaDetail(
+        navController: NavHostController,
+        id: String,
+        title: String,
+    ) {
+        val encodedTitle = Uri.encode(title)
+        val route = Screen.MangaDetail.route
+            .replace(NavParam.Id.asParam, id)
+            .replace(NavParam.Title.asParam, encodedTitle)
+
+        navController.navigate(route)
     }
 
     fun backToLogin(navController: NavHostController) {

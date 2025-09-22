@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
@@ -23,6 +25,8 @@ import com.groupany.ui.components.ScreenTitle
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaDetailScreen(
+    id: String,
+    title: String,
     onBack: () -> Unit,
     viewModel: MangaDetailViewModel = hiltViewModel()
 ) {
@@ -32,7 +36,7 @@ fun MangaDetailScreen(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             TopAppBar(
-                title = { ScreenTitle(title = "Test title") },
+                title = { ScreenTitle(title = title) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
@@ -46,7 +50,7 @@ fun MangaDetailScreen(
                 .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
-
+            Text(id, style = TextStyle(color = MaterialTheme.colorScheme.onBackground))
         }
     }
 }

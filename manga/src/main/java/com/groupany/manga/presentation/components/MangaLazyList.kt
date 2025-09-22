@@ -16,6 +16,7 @@ fun MangaLazyList(
     state: LazyGridState,
     mangaList: List<MangaLightEntity> = emptyList(),
     isFavorite: (String) -> Boolean,
+    onMangaClick: (id: String, title: String) -> Unit,
     onToggle: (String) -> Unit,
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?
@@ -39,6 +40,7 @@ fun MangaLazyList(
             MangaCard(
                 mangaList[index],
                 isFavorite(mangaList[index].id),
+                onClick = { onMangaClick(mangaList[index].id, mangaList[index].title) },
                 onToggle = onToggle,
                 getCachedUrl = getCachedUrl,
                 getDownloadUrl = getDownloadUrl
