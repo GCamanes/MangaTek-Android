@@ -85,8 +85,8 @@ fun AppNavHost(navController: NavHostController) {
                         )
                     }
                 },
-                onMangaClick = { id, title ->
-                    NavHelper.gotToMangaDetail(navController, id, title)
+                onMangaClick = { id, title, coverUrl ->
+                    NavHelper.gotToMangaDetail(navController, id, title, coverUrl)
                 }
             )
         }
@@ -95,6 +95,7 @@ fun AppNavHost(navController: NavHostController) {
             arguments = listOf(
                 navArgument(NavParam.Id.name) { type = NavType.StringType },
                 navArgument(NavParam.Title.name) { type = NavType.StringType },
+                navArgument(NavParam.Url.name) { type = NavType.StringType },
             ),
             enterTransition = {
                 slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
@@ -105,9 +106,11 @@ fun AppNavHost(navController: NavHostController) {
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
             val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
+            val coverUrl = backStackEntry.arguments?.getString(NavParam.Url.name)!!
             MangaDetailScreen(
                 id = id,
                 title = title,
+                coverUrl = coverUrl,
                 onBack = { navController.popBackStack() },
             )
         }
@@ -130,11 +133,14 @@ object NavHelper {
         navController: NavHostController,
         id: String,
         title: String,
+        coverUrl: String,
     ) {
         val encodedTitle = Uri.encode(title)
+        val encodedCoverUrl = Uri.encode(coverUrl)
         val route = Screen.MangaDetail.route
             .replace(NavParam.Id.asParam, id)
             .replace(NavParam.Title.asParam, encodedTitle)
+            .replace(NavParam.Url.asParam, encodedCoverUrl)
 
         navController.navigate(route)
     }

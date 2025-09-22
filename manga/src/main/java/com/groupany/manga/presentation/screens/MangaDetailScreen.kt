@@ -1,6 +1,7 @@
 package com.groupany.manga.presentation.screens
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,7 +14,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -27,6 +27,7 @@ import com.groupany.ui.components.ScreenTitle
 fun MangaDetailScreen(
     id: String,
     title: String,
+    coverUrl: String,
     onBack: () -> Unit,
     viewModel: MangaDetailViewModel = hiltViewModel()
 ) {
@@ -44,13 +45,14 @@ fun MangaDetailScreen(
             )
         },
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(id, style = TextStyle(color = MaterialTheme.colorScheme.onBackground))
+            Text(coverUrl, style = TextStyle(color = MaterialTheme.colorScheme.onBackground))
         }
     }
 }

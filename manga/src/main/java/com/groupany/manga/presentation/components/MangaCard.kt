@@ -60,6 +60,7 @@ fun MangaCard(
     Column(
         modifier = Modifier
             .clickable(
+                enabled = imageUrl != null,
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onClick() }) {

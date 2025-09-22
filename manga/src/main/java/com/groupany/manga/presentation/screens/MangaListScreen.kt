@@ -40,7 +40,7 @@ import com.groupany.ui.constants.UIConstants
 @Composable
 fun MangaListScreen(
     actions: @Composable RowScope.() -> Unit = {},
-    onMangaClick: (id: String, title: String) -> Unit,
+    onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
     viewModel: MangaListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
