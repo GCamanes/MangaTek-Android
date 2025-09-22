@@ -4,7 +4,9 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -22,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
+import com.groupany.manga.presentation.screens.MangaDetailScreen
 import com.groupany.manga.presentation.screens.MangaListScreen
 import com.groupany.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.constants.UIConstants
@@ -44,7 +47,21 @@ fun AppNavHost(navController: NavHostController) {
             val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
             LoginScreen(
                 autoAuth,
-                onSuccess = { NavHelper.gotToHome(navController) },
+                onSuccess = { NavHelper.gotToMangaList(navController) },
+            )
+        }
+        composable(
+            Screen.Settings.route,
+            enterTransition = {
+                slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
+            },
+            exitTransition = {
+                slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
+            }
+        ) {
+            SettingsScreen(
+                onBack = { navController.popBackStack() },
+                onLogout = { NavHelper.backToLogin(navController) },
             )
         }
         composable(
@@ -67,32 +84,36 @@ fun AppNavHost(navController: NavHostController) {
                 }
             })
         }
-        composable(Screen.Settings.route,
+        composable(
+            Screen.MangaDetail.route,
             enterTransition = {
-                slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
+                slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
             },
             exitTransition = {
-                slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
+                slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(700))
             }
         ) {
-            SettingsScreen(
+            MangaDetailScreen(
                 onBack = { navController.popBackStack() },
-                onLogout = { NavHelper.backToLogin(navController) },
             )
         }
     }
 }
 
 object NavHelper {
-    fun gotToHome(navController: NavHostController) {
+    fun gotToSettings(navController: NavHostController) {
+        navController.navigate(Screen.Settings.route)
+    }
+
+    fun gotToMangaList(navController: NavHostController) {
         navController.navigate(Screen.MangaList.route) {
             popUpTo(Screen.Login.route) { inclusive = true }
             launchSingleTop = true
         }
     }
 
-    fun gotToSettings(navController: NavHostController) {
-        navController.navigate(Screen.Settings.route)
+    fun gotToMangaDetail(navController: NavHostController) {
+        navController.navigate(Screen.MangaDetail.route)
     }
 
     fun backToLogin(navController: NavHostController) {

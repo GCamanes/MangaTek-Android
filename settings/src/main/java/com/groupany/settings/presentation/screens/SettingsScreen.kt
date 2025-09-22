@@ -9,14 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,8 +34,10 @@ import com.groupany.localization.LocaleHelper
 import com.groupany.settings.presentation.components.SettingsElement
 import com.groupany.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.components.ButtonTypes
+import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.CustomButton
 import com.groupany.ui.components.LanguageButton
+import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 import com.groupany.localization.R as localeR
@@ -59,18 +57,11 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(
-                    stringResource(localeR.string.settings),
-                    style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground))
-                },
+                title = { ScreenTitle(title = stringResource(localeR.string.settings)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
+                navigationIcon = { CustomBackButton(onClick = onBack) },
             )
         },
         contentWindowInsets = WindowInsets(0.dp),
