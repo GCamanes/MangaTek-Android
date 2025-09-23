@@ -7,9 +7,7 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -103,12 +101,6 @@ fun AppNavHost(navController: NavHostController) {
                     navArgument(NavParam.Title.name) { type = NavType.StringType },
                     navArgument(NavParam.Url.name) { type = NavType.StringType },
                 ),
-                enterTransition = {
-                    slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
-                },
-                exitTransition = {
-                    slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(700))
-                }
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
                 val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!

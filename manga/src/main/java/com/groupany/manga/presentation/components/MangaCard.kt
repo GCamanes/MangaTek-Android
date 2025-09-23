@@ -82,11 +82,10 @@ fun MangaCard(
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(imageUrl)
-                            .crossfade(500)
+                            .crossfade(300)
                             .build(),
                         contentDescription = manga.title,
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
                 } else {
