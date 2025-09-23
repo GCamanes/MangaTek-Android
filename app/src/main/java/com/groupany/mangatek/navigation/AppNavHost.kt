@@ -2,6 +2,7 @@ package com.groupany.mangatek.navigation
 
 import android.net.Uri
 import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
@@ -72,12 +73,9 @@ fun AppNavHost(navController: NavHostController) {
             }
             composable(
                 Screen.MangaList.route,
-                enterTransition = {
-                    when (initialState.destination.route) {
-                        Screen.Login.route -> fadeIn(animationSpec = tween(3000))
-                        else -> EnterTransition.None // No animation when coming from Settings
-                    }
-                },
+                enterTransition = { fadeIn(animationSpec = tween(3000)) },
+                popEnterTransition = { EnterTransition.None },
+                popExitTransition = { ExitTransition.None },
             ) {
                 MangaListScreen(
                     actions = {
