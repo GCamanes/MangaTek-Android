@@ -34,7 +34,10 @@ import com.groupany.ui.constants.UIConstants
 @Composable
 fun AppNavHost(navController: NavHostController) {
     SharedTransitionLayout {
-        NavHost(navController = navController, startDestination = Screen.Login.route) {
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Login.route,
+        ) {
             composable(
                 Screen.Login.route,
                 arguments = listOf(
@@ -50,7 +53,7 @@ fun AppNavHost(navController: NavHostController) {
                 val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
                 LoginScreen(
                     autoAuth,
-                    onSuccess = { NavHelper.gotToMangaList(navController) },
+                    onSuccess = { NavHelper.goToMangaList(navController) },
                 )
             }
             composable(
@@ -63,7 +66,7 @@ fun AppNavHost(navController: NavHostController) {
                 }
             ) {
                 SettingsScreen(
-                    onBack = { navController.popBackStack() },
+                    onBack = { navController.navigateUp() },
                     onLogout = { NavHelper.backToLogin(navController) },
                 )
             }
@@ -78,7 +81,7 @@ fun AppNavHost(navController: NavHostController) {
             ) {
                 MangaListScreen(
                     actions = {
-                        IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
+                        IconButton(onClick = { NavHelper.goToSettings(navController) }) {
                             Icon(
                                 Icons.Outlined.Settings,
                                 contentDescription = stringResource(R.string.settings),
@@ -88,7 +91,7 @@ fun AppNavHost(navController: NavHostController) {
                         }
                     },
                     onMangaClick = { id, title, coverUrl ->
-                        NavHelper.gotToMangaDetail(navController, id, title, coverUrl)
+                        NavHelper.goToMangaDetail(navController, id, title, coverUrl)
                     },
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedContentScope = this@composable,
@@ -109,7 +112,7 @@ fun AppNavHost(navController: NavHostController) {
                     id = id,
                     title = title,
                     coverUrl = coverUrl,
-                    onBack = { navController.popBackStack() },
+                    onBack = { navController.navigateUp() },
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedContentScope = this@composable,
                 )
@@ -119,18 +122,20 @@ fun AppNavHost(navController: NavHostController) {
 }
 
 object NavHelper {
-    fun gotToSettings(navController: NavHostController) {
-        navController.navigate(Screen.Settings.route)
+    fun goToSettings(navController: NavHostController) {
+        navController.navigate(Screen.Settings.route) {
+            launchSingleTop = true
+        }
     }
 
-    fun gotToMangaList(navController: NavHostController) {
+    fun goToMangaList(navController: NavHostController) {
         navController.navigate(Screen.MangaList.route) {
             popUpTo(Screen.Login.route) { inclusive = true }
             launchSingleTop = true
         }
     }
 
-    fun gotToMangaDetail(
+    fun goToMangaDetail(
         navController: NavHostController,
         id: String,
         title: String,
@@ -143,7 +148,9 @@ object NavHelper {
             .replace(NavParam.Title.asParam, encodedTitle)
             .replace(NavParam.Url.asParam, encodedCoverUrl)
 
-        navController.navigate(route)
+        navController.navigate(route) {
+            launchSingleTop = true
+        }
     }
 
     fun backToLogin(navController: NavHostController) {
