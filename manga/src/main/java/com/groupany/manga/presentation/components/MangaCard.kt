@@ -46,6 +46,7 @@ import com.groupany.ui.constants.UIConstants
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MangaCard(
+    modifier: Modifier = Modifier,
     manga: MangaLightEntity,
     isFavorite: Boolean = false,
     onClick: () -> Unit,
@@ -58,7 +59,7 @@ fun MangaCard(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .clickable(
                 enabled = imageUrl != null,
                 indication = null,

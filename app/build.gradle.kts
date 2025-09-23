@@ -95,7 +95,6 @@ dependencies {
 
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.accompanist.navigation.animation)
 
     // Hilt dependencies
     implementation(libs.hilt.android)

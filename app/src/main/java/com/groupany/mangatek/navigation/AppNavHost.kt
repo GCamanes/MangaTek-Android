@@ -2,6 +2,8 @@ package com.groupany.mangatek.navigation
 
 import android.net.Uri
 import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,89 +32,96 @@ import com.groupany.manga.presentation.screens.MangaListScreen
 import com.groupany.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.constants.UIConstants
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun AppNavHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screen.Login.route) {
-        composable(
-            Screen.Login.route,
-            arguments = listOf(
-                navArgument(NavParam.AutoAuth.name) {
-                    type = NavType.BoolType
-                    defaultValue = true
-                    nullable = false
-                }
-            ),
-            enterTransition = { fadeIn(animationSpec = tween(1000)) },
-            exitTransition = { fadeOut(animationSpec = tween(1000)) }
-        ) { backStackEntry ->
-            val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
-            LoginScreen(
-                autoAuth,
-                onSuccess = { NavHelper.gotToMangaList(navController) },
-            )
-        }
-        composable(
-            Screen.Settings.route,
-            enterTransition = {
-                slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
-            },
-            exitTransition = {
-                slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
+    SharedTransitionLayout {
+        NavHost(navController = navController, startDestination = Screen.Login.route) {
+            composable(
+                Screen.Login.route,
+                arguments = listOf(
+                    navArgument(NavParam.AutoAuth.name) {
+                        type = NavType.BoolType
+                        defaultValue = true
+                        nullable = false
+                    }
+                ),
+                enterTransition = { fadeIn(animationSpec = tween(1000)) },
+                exitTransition = { fadeOut(animationSpec = tween(1000)) }
+            ) { backStackEntry ->
+                val autoAuth = backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
+                LoginScreen(
+                    autoAuth,
+                    onSuccess = { NavHelper.gotToMangaList(navController) },
+                )
             }
-        ) {
-            SettingsScreen(
-                onBack = { navController.popBackStack() },
-                onLogout = { NavHelper.backToLogin(navController) },
-            )
-        }
-        composable(
-            Screen.MangaList.route,
-            enterTransition = {
-                when (initialState.destination.route) {
-                    Screen.Login.route -> fadeIn(animationSpec = tween(3000))
-                    else -> EnterTransition.None // No animation when coming from Settings
+            composable(
+                Screen.Settings.route,
+                enterTransition = {
+                    slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
+                },
+                exitTransition = {
+                    slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
                 }
-            },
-        ) {
-            MangaListScreen(
-                actions = {
-                    IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
-                        Icon(
-                            Icons.Outlined.Settings,
-                            contentDescription = stringResource(R.string.settings),
-                            modifier = Modifier.size(UIConstants.IconHeight),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+            ) {
+                SettingsScreen(
+                    onBack = { navController.popBackStack() },
+                    onLogout = { NavHelper.backToLogin(navController) },
+                )
+            }
+            composable(
+                Screen.MangaList.route,
+                enterTransition = {
+                    when (initialState.destination.route) {
+                        Screen.Login.route -> fadeIn(animationSpec = tween(3000))
+                        else -> EnterTransition.None // No animation when coming from Settings
                     }
                 },
-                onMangaClick = { id, title, coverUrl ->
-                    NavHelper.gotToMangaDetail(navController, id, title, coverUrl)
-                }
-            )
-        }
-        composable(
-            Screen.MangaDetail.route,
-            arguments = listOf(
-                navArgument(NavParam.Id.name) { type = NavType.StringType },
-                navArgument(NavParam.Title.name) { type = NavType.StringType },
-                navArgument(NavParam.Url.name) { type = NavType.StringType },
-            ),
-            enterTransition = {
-                slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
-            },
-            exitTransition = {
-                slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(700))
+            ) {
+                MangaListScreen(
+                    actions = {
+                        IconButton(onClick = { NavHelper.gotToSettings(navController) }) {
+                            Icon(
+                                Icons.Outlined.Settings,
+                                contentDescription = stringResource(R.string.settings),
+                                modifier = Modifier.size(UIConstants.IconHeight),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    },
+                    onMangaClick = { id, title, coverUrl ->
+                        NavHelper.gotToMangaDetail(navController, id, title, coverUrl)
+                    },
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedContentScope = this@composable,
+                )
             }
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
-            val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
-            val coverUrl = backStackEntry.arguments?.getString(NavParam.Url.name)!!
-            MangaDetailScreen(
-                id = id,
-                title = title,
-                coverUrl = coverUrl,
-                onBack = { navController.popBackStack() },
-            )
+            composable(
+                Screen.MangaDetail.route,
+                arguments = listOf(
+                    navArgument(NavParam.Id.name) { type = NavType.StringType },
+                    navArgument(NavParam.Title.name) { type = NavType.StringType },
+                    navArgument(NavParam.Url.name) { type = NavType.StringType },
+                ),
+                enterTransition = {
+                    slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(700))
+                },
+                exitTransition = {
+                    slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(700))
+                }
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
+                val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
+                val coverUrl = backStackEntry.arguments?.getString(NavParam.Url.name)!!
+                MangaDetailScreen(
+                    id = id,
+                    title = title,
+                    coverUrl = coverUrl,
+                    onBack = { navController.popBackStack() },
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedContentScope = this@composable,
+                )
+            }
         }
     }
 }

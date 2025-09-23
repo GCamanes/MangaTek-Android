@@ -1,5 +1,8 @@
 package com.groupany.manga.presentation.screens
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -36,12 +39,14 @@ import com.groupany.ui.components.EmptyError
 import com.groupany.ui.components.MangaTekTitle
 import com.groupany.ui.constants.UIConstants
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun MangaListScreen(
     actions: @Composable RowScope.() -> Unit = {},
     onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
-    viewModel: MangaListViewModel = hiltViewModel()
+    viewModel: MangaListViewModel = hiltViewModel(),
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyGridState()
@@ -102,6 +107,8 @@ fun MangaListScreen(
                             onToggle = viewModel::toggleFavorite,
                             getCachedUrl = viewModel::getCachedUrl,
                             getDownloadUrl = viewModel::getDownloadUrl,
+                            sharedTransitionScope = sharedTransitionScope,
+                            animatedContentScope = animatedContentScope,
                         )
                         else EmptyError()
                     }
