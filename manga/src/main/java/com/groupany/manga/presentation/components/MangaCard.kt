@@ -43,7 +43,7 @@ import coil.request.ImageRequest
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
-import com.groupany.ui.animation.AnimationUtils.boundsTransform
+import com.groupany.ui.animation.AnimationUtils.boundsTransformWithBounce
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
@@ -88,7 +88,7 @@ fun MangaCard(
                 .sharedBounds(
                     sharedTransitionScope.rememberSharedContentState(key = manga.id),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransform,
+                    boundsTransform = boundsTransformWithBounce,
                     clipInOverlayDuringTransition = OverlayClip(
                         RoundedCornerShape(roundedCornerAnim),
                     ),

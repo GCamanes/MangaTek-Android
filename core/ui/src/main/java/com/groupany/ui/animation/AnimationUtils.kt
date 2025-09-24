@@ -20,13 +20,24 @@ object AnimationUtils {
         stiffness = 150f,
     )
 
+    fun <T> spatialNotExpressiveSpring() = spring<T>(
+        dampingRatio = 1f,
+        stiffness = 150f,
+    )
+
     fun <T> nonSpatialExpressiveSpring() = spring<T>(
         dampingRatio = 1f,
         stiffness = 1600f,
     )
 
     @OptIn(ExperimentalSharedTransitionApi::class)
-    val boundsTransform = BoundsTransform { _, _ ->
+    val boundsTransformWithBounce = BoundsTransform { _, _ ->
         spatialExpressiveSpring()
     }
+
+    @OptIn(ExperimentalSharedTransitionApi::class)
+    val boundsTransformWithoutBounce = BoundsTransform { _, _ ->
+        spatialNotExpressiveSpring()
+    }
+
 }

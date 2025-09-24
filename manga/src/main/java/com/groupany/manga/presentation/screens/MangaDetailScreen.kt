@@ -34,7 +34,7 @@ import coil.request.ImageRequest
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
-import com.groupany.ui.animation.AnimationUtils.boundsTransform
+import com.groupany.ui.animation.AnimationUtils.boundsTransformWithoutBounce
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.ScreenTitle
@@ -73,7 +73,7 @@ fun MangaDetailScreen(
                 .sharedBounds(
                     sharedTransitionScope.rememberSharedContentState(key = id),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransform,
+                    boundsTransform = boundsTransformWithoutBounce,
                     clipInOverlayDuringTransition = OverlayClip(
                         RoundedCornerShape(roundedCornerAnim),
                     ),
