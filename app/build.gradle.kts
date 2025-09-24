@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
 }
 
 val localProperties = Properties().apply {
@@ -99,7 +99,7 @@ dependencies {
 
     // Hilt dependencies
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Local modules
@@ -109,8 +109,4 @@ dependencies {
     implementation(project(":authentication"))
     implementation(project(":manga"))
     implementation(project(":settings"))
-}
-
-kapt {
-    correctErrorTypes = true
 }
