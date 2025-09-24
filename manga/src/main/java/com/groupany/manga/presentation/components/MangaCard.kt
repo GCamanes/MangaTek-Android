@@ -1,5 +1,10 @@
 package com.groupany.manga.presentation.components
 
+import androidx.compose.animation.EnterExitState
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,15 +43,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.groupany.manga.domain.entities.MangaLightEntity
+import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
+import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
+import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun MangaCard(
-    modifier: Modifier = Modifier,
     manga: MangaLightEntity,
     isFavorite: Boolean = false,
     onClick: () -> Unit,
@@ -58,79 +65,105 @@ fun MangaCard(
         value = getCachedUrl(manga.coverPath) ?: getDownloadUrl(manga.coverPath)
     }
 
-    Column(
-        modifier = modifier
-            .clickable(
-                enabled = imageUrl != null,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { onClick() }) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(0.7f),
-            shape = RoundedCornerShape(UIConstants.CornerRound),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                if (imageUrl != null) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(imageUrl)
-                            .crossfade(300)
-                            .build(),
-                        contentDescription = manga.title,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator(modifier = Modifier.size(30.dp))
-                    }
-                }
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No Scope found")
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No Scope found")
 
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(bottomStart = UIConstants.CornerRound))
-                        .background(color = Color.Black.copy(alpha = 0.7f))
-                ) {
-                    ToggleIconButton(
-                        isSelected = isFavorite,
-                        selectedIcon = Icons.Outlined.Favorite,
-                        unselectedIcon = Icons.Outlined.FavoriteBorder,
-                        contentDescription = "add to favorites"
-                    ) { onToggle(manga.id) }
-                }
-
-
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.BottomEnd,
-                ) {
-                    MangaStatus(manga)
+    with(sharedTransitionScope) {
+        val roundedCornerAnim by animatedVisibilityScope.transition
+            .animateDp(label = "rounded corner") { enterExit: EnterExitState ->
+                when (enterExit) {
+                    EnterExitState.PreEnter -> 0.dp
+                    EnterExitState.Visible -> UIConstants.CornerRound
+                    EnterExitState.PostExit -> 0.dp
                 }
             }
+
+        Column(
+            modifier = Modifier
+                .clickable(
+                    enabled = imageUrl != null,
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { onClick() }
+                .sharedBounds(
+                    sharedTransitionScope.rememberSharedContentState(key = manga.id),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = boundsTransform,
+                    clipInOverlayDuringTransition = OverlayClip(
+                        RoundedCornerShape(roundedCornerAnim),
+                    ),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ),
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(0.7f),
+                shape = RoundedCornerShape(roundedCornerAnim),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.TopEnd
+                ) {
+                    if (imageUrl != null) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(imageUrl)
+                                .crossfade(300)
+                                .build(),
+                            contentDescription = manga.title,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator(modifier = Modifier.size(30.dp))
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(bottomStart = UIConstants.CornerRound))
+                            .background(color = Color.Black.copy(alpha = 0.7f))
+                    ) {
+                        ToggleIconButton(
+                            isSelected = isFavorite,
+                            selectedIcon = Icons.Outlined.Favorite,
+                            unselectedIcon = Icons.Outlined.FavoriteBorder,
+                            contentDescription = "add to favorites"
+                        ) { onToggle(manga.id) }
+                    }
+
+
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomEnd,
+                    ) {
+                        MangaStatus(manga)
+                    }
+                }
+            }
+
+            VerticalSpacer(CustomSpacerSize.EXTRA_SMALL)
+
+            Text(
+                modifier = Modifier.padding(horizontal = UIConstants.PaddingSmall),
+                text = manga.title,
+                maxLines = 2,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
         }
-
-        VerticalSpacer(CustomSpacerSize.EXTRA_SMALL)
-
-        Text(
-            modifier = Modifier.padding(horizontal = UIConstants.PaddingSmall),
-            text = manga.title,
-            maxLines = 2,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground
-        )
     }
-
 }
 
 @Composable

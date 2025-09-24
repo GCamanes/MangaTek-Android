@@ -36,7 +36,8 @@ import com.groupany.localization.R
 import com.groupany.manga.presentation.screens.MangaDetailScreen
 import com.groupany.manga.presentation.screens.MangaListScreen
 import com.groupany.settings.presentation.screens.SettingsScreen
-import com.groupany.ui.animation.AnimationUtils
+import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
+import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -44,7 +45,7 @@ import com.groupany.ui.constants.UIConstants
 fun AppNavHost(navController: NavHostController) {
     SharedTransitionLayout {
         CompositionLocalProvider(
-            AnimationUtils.LocalSharedTransitionScope provides this,
+            LocalSharedTransitionScope provides this,
         ) {
             NavHost(
                 navController = navController,
@@ -179,12 +180,12 @@ fun NavGraphBuilder.composableWithCompositionLocal(
     enterTransition: (
     @JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
     )? = {
-        fadeIn(AnimationUtils.nonSpatialExpressiveSpring())
+        fadeIn()
     },
     exitTransition: (
     @JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
     )? = {
-        fadeOut(AnimationUtils.nonSpatialExpressiveSpring())
+        fadeOut()
     },
     popEnterTransition: (
     @JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
@@ -206,7 +207,7 @@ fun NavGraphBuilder.composableWithCompositionLocal(
         popExitTransition,
     ) {
         CompositionLocalProvider(
-            AnimationUtils.LocalNavAnimatedVisibilityScope provides this@composable,
+            LocalNavAnimatedVisibilityScope provides this@composable,
         ) {
             content(it)
         }

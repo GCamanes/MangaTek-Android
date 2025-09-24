@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.groupany.manga.domain.entities.MangaLightEntity
-import com.groupany.ui.animation.AnimationUtils
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -24,11 +23,6 @@ fun MangaLazyList(
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?,
 ) {
-    val sharedTransitionScope = AnimationUtils.LocalSharedTransitionScope.current
-        ?: throw IllegalStateException("No Scope found")
-    val animatedVisibilityScope = AnimationUtils.LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No Scope found")
-
     LazyVerticalGrid(
         state = state,
         modifier = Modifier.fillMaxSize(),
@@ -45,27 +39,20 @@ fun MangaLazyList(
         verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingLarge)
     ) {
         items(mangaList.size) { index ->
-            with(sharedTransitionScope) {
-                MangaCard(
-                    modifier = Modifier
-                        .sharedBounds(
-                            sharedTransitionScope.rememberSharedContentState(key = mangaList[index].id),
-                            animatedVisibilityScope = animatedVisibilityScope
-                        ),
-                    mangaList[index],
-                    isFavorite(mangaList[index].id),
-                    onClick = {
-                        onMangaClick(
-                            mangaList[index].id,
-                            mangaList[index].title,
-                            getCachedUrl(mangaList[index].coverPath)!!,
-                        )
-                    },
-                    onToggle = onToggle,
-                    getCachedUrl = getCachedUrl,
-                    getDownloadUrl = getDownloadUrl
-                )
-            }
+            MangaCard(
+                mangaList[index],
+                isFavorite(mangaList[index].id),
+                onClick = {
+                    onMangaClick(
+                        mangaList[index].id,
+                        mangaList[index].title,
+                        getCachedUrl(mangaList[index].coverPath)!!,
+                    )
+                },
+                onToggle = onToggle,
+                getCachedUrl = getCachedUrl,
+                getDownloadUrl = getDownloadUrl
+            )
         }
     }
 }
