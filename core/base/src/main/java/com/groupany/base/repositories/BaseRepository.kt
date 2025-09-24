@@ -7,13 +7,12 @@ import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.groupany.base.FailureType
-import kotlin.jvm.javaClass
 
 open class BaseRepository {
     protected suspend fun <T> safeCall(
         call: suspend () -> T
     ): T {
-        return try {
+        try {
             return call()
         } catch (e: Exception) {
             throw  handleException(e)
