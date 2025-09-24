@@ -51,8 +51,8 @@ dependencies {
 
     // Firebase dependencies
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 
     // Local modules
     implementation(project(":core:base"))
