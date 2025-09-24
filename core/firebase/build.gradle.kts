@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.groupany.firebase"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 30

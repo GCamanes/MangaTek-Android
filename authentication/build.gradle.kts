@@ -17,7 +17,7 @@ val password: String = localProperties.getProperty("LOGIN_PASSWORD") ?: ""
 
 android {
     namespace = "com.groupany.authentication"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 30

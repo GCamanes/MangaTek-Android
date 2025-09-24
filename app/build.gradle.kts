@@ -18,12 +18,12 @@ val password: String = localProperties.getProperty("LOGIN_PASSWORD") ?: ""
 
 android {
     namespace = "com.groupany.mangatek"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "fr.groupany.mangatek"
         minSdk = 30
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
 
