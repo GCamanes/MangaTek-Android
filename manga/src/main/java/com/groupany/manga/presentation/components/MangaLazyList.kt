@@ -46,7 +46,7 @@ fun MangaLazyList(
             with(sharedTransitionScope) {
                 MangaCard(
                     modifier = Modifier
-                        .sharedElement(
+                        .sharedBounds(
                             sharedTransitionScope.rememberSharedContentState(key = mangaList[index].id),
                             animatedVisibilityScope = animatedContentScope
                         ),

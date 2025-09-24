@@ -43,7 +43,14 @@ fun MangaDetailScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     with(sharedTransitionScope) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .sharedBounds(
+                    sharedTransitionScope.rememberSharedContentState(key = id),
+                    animatedVisibilityScope = animatedContentScope
+                )
+        ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(coverUrl)
@@ -52,11 +59,7 @@ fun MangaDetailScreen(
                 contentDescription = title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(0.7f)
-                    .sharedElement(
-                        sharedTransitionScope.rememberSharedContentState(key = id),
-                        animatedVisibilityScope = animatedContentScope
-                    ),
+                    .aspectRatio(0.7f),
                 contentScale = ContentScale.Crop
             )
 
