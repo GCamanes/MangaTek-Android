@@ -65,6 +65,12 @@ class MangaListViewModel @Inject constructor(
         }
     }
 
+    fun refreshFavorites() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(favorites = getFavoritesUseCase()) }
+        }
+    }
+
     fun updateFilter(filter: MangaFilter) {
         viewModelScope.launch {
             _uiState.update { it.copy(filter = filter) }

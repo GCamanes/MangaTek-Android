@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -35,6 +38,7 @@ import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.ScreenTitle
+import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -110,6 +114,14 @@ fun MangaDetailScreen(
                             navigationIconContentColor = Color.White,
                             titleContentColor = Color.White
                         ),
+                        actions = {
+                            ToggleIconButton(
+                                isSelected = uiState.isFavorite(id),
+                                selectedIcon = Icons.Outlined.Favorite,
+                                unselectedIcon = Icons.Outlined.FavoriteBorder,
+                                contentDescription = "add to favorites"
+                            ) { viewModel.toggleFavorite(id) }
+                        },
                         navigationIcon = { CustomBackButton(onClick = onBack) },
                     )
                 },

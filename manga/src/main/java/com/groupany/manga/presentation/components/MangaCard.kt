@@ -34,8 +34,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -130,19 +128,12 @@ fun MangaCard(
                         }
                     }
 
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(bottomStart = UIConstants.CornerRound))
-                            .background(color = Color.Black.copy(alpha = 0.7f))
-                    ) {
-                        ToggleIconButton(
-                            isSelected = isFavorite,
-                            selectedIcon = Icons.Outlined.Favorite,
-                            unselectedIcon = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "add to favorites"
-                        ) { onToggle(manga.id) }
-                    }
-
+                    ToggleIconButton(
+                        isSelected = isFavorite,
+                        selectedIcon = Icons.Outlined.Favorite,
+                        unselectedIcon = Icons.Outlined.FavoriteBorder,
+                        contentDescription = "add to favorites"
+                    ) { onToggle(manga.id) }
 
                     Box(
                         modifier = Modifier.fillMaxSize(),
