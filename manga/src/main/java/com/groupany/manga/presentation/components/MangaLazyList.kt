@@ -1,8 +1,6 @@
 package com.groupany.manga.presentation.components
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.groupany.manga.domain.entities.MangaLightEntity
+import com.groupany.ui.animation.AnimationUtils
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -24,9 +23,12 @@ fun MangaLazyList(
     onToggle: (String) -> Unit,
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
 ) {
+    val sharedTransitionScope = AnimationUtils.LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No Scope found")
+    val animatedVisibilityScope = AnimationUtils.LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No Scope found")
+
     LazyVerticalGrid(
         state = state,
         modifier = Modifier.fillMaxSize(),
@@ -48,7 +50,7 @@ fun MangaLazyList(
                     modifier = Modifier
                         .sharedBounds(
                             sharedTransitionScope.rememberSharedContentState(key = mangaList[index].id),
-                            animatedVisibilityScope = animatedContentScope
+                            animatedVisibilityScope = animatedVisibilityScope
                         ),
                     mangaList[index],
                     isFavorite(mangaList[index].id),
