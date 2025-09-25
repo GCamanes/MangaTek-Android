@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 
 class GetAllFavoritesUseCase @Inject constructor(private val repository: MangaRepository) :
-    NoParamFlowUseCase<CustomResult<List<String>>>() {
-    override suspend fun invoke(): Flow<CustomResult<List<String>>> {
+    NoParamFlowUseCase<CustomResult<Set<String>>>() {
+    override suspend fun invoke(): Flow<CustomResult<Set<String>>> {
         return safeCallFlow {
             repository.getAllFavorites()
         }

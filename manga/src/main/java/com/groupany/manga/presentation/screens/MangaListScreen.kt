@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -30,9 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.groupany.manga.presentation.components.MangaFilterFAB
 import com.groupany.manga.presentation.components.MangaLazyList
 import com.groupany.manga.presentation.viewmodels.MangaListViewModel
@@ -50,7 +46,6 @@ fun MangaListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyGridState()
-    val lifecycleOwner = LocalLifecycleOwner.current
 
     // Convert padding value to pixels (Int)
     val maxOffsetPx = with(LocalDensity.current) { UIConstants.PaddingMedium.roundToPx() }
@@ -64,17 +59,6 @@ fun MangaListScreen(
                 0f + (offset.toFloat() / maxOffsetPx.toFloat())
             }
         }
-    }
-
-    LaunchedEffect(lifecycleOwner) {
-        lifecycleOwner.lifecycle.addObserver(
-            LifecycleEventObserver { _, event ->
-                if (event == Lifecycle.Event.ON_RESUME) {
-                    // ✅ Called when returning to this screen
-                    viewModel.refreshFavorites()
-                }
-            }
-        )
     }
 
     Scaffold(

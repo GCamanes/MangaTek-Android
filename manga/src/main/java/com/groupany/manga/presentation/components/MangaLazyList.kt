@@ -19,7 +19,7 @@ fun MangaLazyList(
     mangaList: List<MangaLightEntity> = emptyList(),
     isFavorite: (String) -> Boolean,
     onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
-    onToggle: (String) -> Unit,
+    onToggle: suspend (String) -> Unit,
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?,
 ) {

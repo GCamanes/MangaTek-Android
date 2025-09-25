@@ -25,7 +25,7 @@ fun ToggleIconButton(
     selectedIcon: ImageVector,
     unselectedIcon: ImageVector,
     contentDescription: String?,
-    onToggle: () -> Unit
+    onToggle: suspend () -> Unit
 ) {
     val scale = remember { Animatable(1f) }
     var enabled by remember { mutableStateOf(true) }

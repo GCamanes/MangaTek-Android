@@ -7,9 +7,9 @@ import com.groupany.base.CustomResult
 import com.groupany.firebase.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.enums.MangaFilter
-import com.groupany.manga.domain.usecases.GetFavoritesUseCase
+import com.groupany.manga.domain.usecases.GetAllFavoritesUseCase
 import com.groupany.manga.domain.usecases.GetMangaListUseCase
-import com.groupany.manga.domain.usecases.ToggleFavoriteUseCase
+import com.groupany.manga.domain.usecases.ToggleAFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +22,8 @@ import javax.inject.Inject
 class MangaListViewModel @Inject constructor(
     private val getMangaListUseCase: GetMangaListUseCase,
     private val getDownloadedUrlUseCase: GetDownloadedUrlUseCase,
-    private val getFavoritesUseCase: GetFavoritesUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val getAllFavoritesUseCase: GetAllFavoritesUseCase,
+    private val toggleAFavoriteUseCase: ToggleAFavoriteUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MangaListUiState())
     val uiState: StateFlow<MangaListUiState> = _uiState
@@ -36,7 +36,6 @@ class MangaListViewModel @Inject constructor(
 
     fun loadUiState() {
         viewModelScope.launch {
-            _uiState.update { it.copy(favorites = getFavoritesUseCase()) }
             getMangaListUseCase()
                 .onStart {
                     _uiState.update { it.copy(isLoading = true, failure = null) }
@@ -57,18 +56,26 @@ class MangaListViewModel @Inject constructor(
                     }
                 }
         }
-    }
-
-    fun toggleFavorite(id: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(favorites = toggleFavoriteUseCase(id)) }
+            getAllFavoritesUseCase()
+                .collect { result ->
+                    _uiState.update {
+                        when (result) {
+                            is CustomResult.Success -> it.copy(
+                                favorites = result.value,
+                            )
+
+                            is CustomResult.Failure -> it.copy(
+                                favorites = emptySet(),
+                            )
+                        }
+                    }
+                }
         }
     }
 
-    fun refreshFavorites() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(favorites = getFavoritesUseCase()) }
-        }
+    suspend fun toggleFavorite(id: String) {
+        toggleAFavoriteUseCase.invoke(id)
     }
 
     fun updateFilter(filter: MangaFilter) {
@@ -92,7 +99,7 @@ class MangaListViewModel @Inject constructor(
 
 data class MangaListUiState(
     val mangaList: List<MangaLightEntity> = emptyList(),
-    val favorites: Set<String> = emptySet<String>(),
+    val favorites: Set<String> = emptySet(),
     val failure: CustomFailure? = null,
     val isLoading: Boolean = false,
     val filter: MangaFilter = MangaFilter.ALL,

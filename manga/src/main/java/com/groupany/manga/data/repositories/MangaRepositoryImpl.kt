@@ -30,8 +30,10 @@ class MangaRepositoryImpl(
     override fun toggleFavorite(id: String): Set<String> = localDataSource.toggleFavorite(id)
 
     override fun clearFavorites() { localDataSource.clearFavorites() }
-    override fun getAllFavorites(): Flow<List<String>> {
-        return dao.getAllFavorites().map { list -> list.map { it.mangaId } }
+    override fun getAllFavorites(): Flow<Set<String>> {
+        return dao.getAllFavorites().map { list ->
+            list.map { it.mangaId }.toSet()
+        }
     }
 
     override fun isFavorite(id: String): Flow<Boolean> {

@@ -55,7 +55,7 @@ fun MangaCard(
     manga: MangaLightEntity,
     isFavorite: Boolean = false,
     onClick: () -> Unit,
-    onToggle: (String) -> Unit,
+    onToggle: suspend (String) -> Unit,
     getCachedUrl: (String) -> String?,
     getDownloadUrl: suspend (String) -> String?
 ) {

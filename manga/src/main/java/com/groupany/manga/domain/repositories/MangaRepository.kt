@@ -9,7 +9,7 @@ interface MangaRepository {
     fun toggleFavorite(id: String): Set<String>
     fun clearFavorites()
 
-    fun getAllFavorites(): Flow<List<String>>
+    fun getAllFavorites(): Flow<Set<String>>
     fun isFavorite(id: String): Flow<Boolean>
     suspend fun toggleAFavorite(favorite: String)
     suspend fun clearAllFavorites()
