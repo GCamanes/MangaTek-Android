@@ -21,4 +21,7 @@ interface FavoriteDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE mangaId = :id)")
     fun isFavorite(id: String): Flow<Boolean>
+
+    @Query("DELETE FROM favorites")
+    suspend fun clearAllFavorites()   // <-- New method
 }

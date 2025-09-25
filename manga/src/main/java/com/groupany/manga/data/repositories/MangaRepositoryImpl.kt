@@ -4,6 +4,7 @@ import com.groupany.manga.data.datasources.FavoriteDao
 import com.groupany.manga.data.datasources.MangaLocalDataSource
 import com.groupany.manga.data.datasources.MangaRemoteDataSource
 import com.groupany.manga.data.mappers.MangaMapper
+import com.groupany.manga.data.models.FavoriteModel
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow
@@ -29,18 +30,22 @@ class MangaRepositoryImpl(
 
     override fun clearFavorites() { localDataSource.clearFavorites() }
     override fun getAllFavorites(): Flow<List<String>> {
-        TODO("Not yet implemented")
+        return dao.getAllFavorites().map { list -> list.map { it.mangaId } }
     }
 
     override fun isFavorite(id: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+        return dao.isFavorite(id)
     }
 
     override suspend fun addFavorite(favorite: String) {
-        TODO("Not yet implemented")
+        dao.addFavorite(FavoriteModel(mangaId = favorite))
     }
 
     override suspend fun removeFavorite(favorite: String) {
-        TODO("Not yet implemented")
+        dao.removeFavorite(FavoriteModel(mangaId = favorite))
+    }
+
+    override suspend fun clearAllFavorites() {
+        dao.clearAllFavorites()
     }
 }
