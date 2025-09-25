@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.authentication.domain.usecases.LogoutUseCase
 import com.groupany.base.usecases.GetAppVersionUseCase
-import com.groupany.manga.domain.usecases.ClearFavoritesUseCase
+import com.groupany.manga.domain.usecases.ClearAllFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
-    private val clearFavoritesUseCase: ClearFavoritesUseCase,
-    private val getAppVersionUseCase: GetAppVersionUseCase
+    private val getAppVersionUseCase: GetAppVersionUseCase,
+    private val clearAllFavoritesUseCase: ClearAllFavoritesUseCase,
 ) : ViewModel() {
     private val _appVersion = MutableStateFlow("")
     val appVersion: StateFlow<String> = _appVersion.asStateFlow()
@@ -27,7 +27,7 @@ class SettingsViewModel @Inject constructor(
 
     fun logoutUser() {
         viewModelScope.launch {
-            clearFavoritesUseCase()
+            clearAllFavoritesUseCase()
             logoutUseCase()
         }
     }

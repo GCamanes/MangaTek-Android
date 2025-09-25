@@ -6,8 +6,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.groupany.manga.data.database.MangaDatabase
 import com.groupany.manga.data.datasources.FavoriteDao
-import com.groupany.manga.data.datasources.MangaLocalDataSource
-import com.groupany.manga.data.datasources.MangaLocalDataSourceImpl
 import com.groupany.manga.data.datasources.MangaRemoteDataSource
 import com.groupany.manga.data.datasources.MangaRemoteDataSourceImpl
 import com.groupany.manga.data.repositories.MangaRepositoryImpl
@@ -30,12 +28,6 @@ object MangaModule {
 
     @Provides
     @Singleton
-    fun provideMangaLocalDatasource(@ApplicationContext appContext: Context): MangaLocalDataSource {
-        return MangaLocalDataSourceImpl(appContext)
-    }
-
-    @Provides
-    @Singleton
     fun provideDatabase(@ApplicationContext context: Context): MangaDatabase =
         Room.databaseBuilder(context, MangaDatabase::class.java, "app_db").build()
 
@@ -46,12 +38,10 @@ object MangaModule {
     @Singleton
     fun provideMangaRepository(
         remoteDatasource: MangaRemoteDataSource,
-        localDatasource: MangaLocalDataSource,
         favoriteDao: FavoriteDao,
     ): MangaRepository {
         return MangaRepositoryImpl(
             remoteDatasource,
-            localDatasource,
             dao = favoriteDao,
         )
     }
