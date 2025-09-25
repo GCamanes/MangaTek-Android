@@ -64,6 +64,11 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx) // Kotlin Extensions and Coroutines support
+
     // Async image
     implementation(libs.coil.compose)
 
@@ -75,4 +80,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:localization"))
     implementation(project(":core:firebase"))
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }

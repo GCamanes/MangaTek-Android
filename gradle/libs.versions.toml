@@ -14,13 +14,14 @@ junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
-composeBom = "2025.09.00"
+composeBom = "2025.09.01"
 material = "1.13.0"
-material3 = "1.3.2"
+material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
-navigationCompose = "2.9.4"
+navigationCompose = "2.9.5"
 appcompat = "1.7.1"
-navigationCommonKtx = "2.9.4"
+navigationCommonKtx = "2.9.5"
+roomVersion = "2.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,9 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-ktx = { module = "androidx.room:room-ktx" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

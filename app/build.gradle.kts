@@ -104,6 +104,9 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Icons dependencies
+    implementation(libs.androidx.material.icons.extended)
+
     // Local modules
     implementation(project(":core:base"))
     implementation(project(":core:localization"))
