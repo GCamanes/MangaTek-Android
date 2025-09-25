@@ -11,7 +11,6 @@ interface MangaRepository {
 
     fun getAllFavorites(): Flow<List<String>>
     fun isFavorite(id: String): Flow<Boolean>
-    suspend fun addFavorite(favorite: String)
-    suspend fun removeFavorite(favorite: String)
+    suspend fun toggleAFavorite(favorite: String)
     suspend fun clearAllFavorites()
 }

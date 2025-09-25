@@ -8,6 +8,7 @@ import com.groupany.manga.data.models.FavoriteModel
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class MangaRepositoryImpl(
@@ -37,12 +38,13 @@ class MangaRepositoryImpl(
         return dao.isFavorite(id)
     }
 
-    override suspend fun addFavorite(favorite: String) {
-        dao.addFavorite(FavoriteModel(mangaId = favorite))
-    }
-
-    override suspend fun removeFavorite(favorite: String) {
-        dao.removeFavorite(FavoriteModel(mangaId = favorite))
+    override suspend fun toggleAFavorite(favorite: String) {
+        val currentlyFavorite = dao.isFavorite(favorite).first()
+        if (currentlyFavorite) {
+            dao.removeFavorite(FavoriteModel(mangaId = favorite))
+        } else {
+            dao.addFavorite(FavoriteModel(mangaId = favorite))
+        }
     }
 
     override suspend fun clearAllFavorites() {
