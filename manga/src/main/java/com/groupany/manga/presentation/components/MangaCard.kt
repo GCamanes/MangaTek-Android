@@ -63,6 +63,7 @@ fun MangaCard(
         value = getCachedUrl(manga.coverPath) ?: getDownloadUrl(manga.coverPath)
     }
 
+    // Part for shared bounds animation when navigating (to detail screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No Scope found")
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current

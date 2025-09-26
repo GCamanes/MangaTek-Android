@@ -52,6 +52,7 @@ fun MangaDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No Scope found")
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
