@@ -1,8 +1,6 @@
 package com.groupany.manga.presentation.components
 
-import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
@@ -69,15 +67,6 @@ fun MangaCard(
         ?: throw IllegalStateException("No Scope found")
 
     with(sharedTransitionScope) {
-        val roundedCornerAnim by animatedVisibilityScope.transition
-            .animateDp(label = "rounded corner") { enterExit: EnterExitState ->
-                when (enterExit) {
-                    EnterExitState.PreEnter -> 0.dp
-                    EnterExitState.Visible -> UIConstants.CornerRound
-                    EnterExitState.PostExit -> 0.dp
-                }
-            }
-
         Column(
             modifier = Modifier
                 .clickable(
@@ -89,9 +78,6 @@ fun MangaCard(
                     sharedTransitionScope.rememberSharedContentState(key = manga.id),
                     animatedVisibilityScope = animatedVisibilityScope,
                     boundsTransform = boundsTransformWithBounce,
-                    clipInOverlayDuringTransition = OverlayClip(
-                        RoundedCornerShape(roundedCornerAnim),
-                    ),
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ),
@@ -100,7 +86,7 @@ fun MangaCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(0.7f),
-                shape = RoundedCornerShape(roundedCornerAnim),
+                shape = RoundedCornerShape(UIConstants.CornerRound),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )
