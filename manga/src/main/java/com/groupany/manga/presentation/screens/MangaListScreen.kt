@@ -101,8 +101,7 @@ fun MangaListScreen(
                             isFavorite = uiState::isFavorite,
                             onMangaClick = onMangaClick,
                             onToggle = viewModel::toggleFavorite,
-                            getCachedUrl = viewModel::getCachedUrl,
-                            getDownloadUrl = viewModel::getDownloadUrl,
+                            getCoverUrl = viewModel::getCoverUrl,
                         )
                         else EmptyError()
                     }

@@ -20,8 +20,7 @@ fun MangaLazyList(
     isFavorite: (String) -> Boolean,
     onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
     onToggle: suspend (String) -> Unit,
-    getCachedUrl: (String) -> String?,
-    getDownloadUrl: suspend (String) -> String?,
+    getCoverUrl: suspend (String, String) -> String?
 ) {
     LazyVerticalGrid(
         state = state,
@@ -46,12 +45,11 @@ fun MangaLazyList(
                     onMangaClick(
                         mangaList[index].id,
                         mangaList[index].title,
-                        getCachedUrl(mangaList[index].coverPath)!!,
+                        mangaList[index].coverPath,
                     )
                 },
                 onToggle = onToggle,
-                getCachedUrl = getCachedUrl,
-                getDownloadUrl = getDownloadUrl
+                getCoverUrl = getCoverUrl
             )
         }
     }

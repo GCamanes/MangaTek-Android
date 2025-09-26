@@ -105,8 +105,8 @@ fun AppNavHost(navController: NavHostController) {
                                 )
                             }
                         },
-                        onMangaClick = { id, title, coverUrl ->
-                            NavHelper.goToMangaDetail(navController, id, title, coverUrl)
+                        onMangaClick = { id, title, path ->
+                            NavHelper.goToMangaDetail(navController, id, title, path)
                         },
                     )
                 }
@@ -116,12 +116,11 @@ fun AppNavHost(navController: NavHostController) {
                     arguments = listOf(
                         navArgument(NavParam.Id.name) { type = NavType.StringType },
                         navArgument(NavParam.Title.name) { type = NavType.StringType },
-                        navArgument(NavParam.Url.name) { type = NavType.StringType },
+                        navArgument(NavParam.Path.name) { type = NavType.StringType },
                     ),
                 ) { backStackEntry ->
                     val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
                     val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
-                    val coverUrl = backStackEntry.arguments?.getString(NavParam.Url.name)!!
 
                     // Pass the backStackEntry so Hilt can use its SavedStateHandle
                     val viewModel: MangaDetailViewModel = hiltViewModel(backStackEntry)
@@ -129,7 +128,6 @@ fun AppNavHost(navController: NavHostController) {
                     MangaDetailScreen(
                         id = id,
                         title = title,
-                        coverUrl = coverUrl,
                         onBack = { navController.navigateUp() },
                         viewModel = viewModel,
                     )
@@ -157,14 +155,14 @@ object NavHelper {
         navController: NavHostController,
         id: String,
         title: String,
-        coverUrl: String,
+        path: String,
     ) {
         val encodedTitle = Uri.encode(title)
-        val encodedCoverUrl = Uri.encode(coverUrl)
+        val encodedCoverPath = Uri.encode(path)
         val route = Screen.MangaDetail.route
             .replace(NavParam.Id.asParam, id)
             .replace(NavParam.Title.asParam, encodedTitle)
-            .replace(NavParam.Url.asParam, encodedCoverUrl)
+            .replace(NavParam.Path.asParam, encodedCoverPath)
 
         navController.navigate(route) {
             launchSingleTop = true

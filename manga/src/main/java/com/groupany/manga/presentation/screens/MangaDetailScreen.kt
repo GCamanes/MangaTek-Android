@@ -46,7 +46,6 @@ import com.groupany.ui.constants.UIConstants
 fun MangaDetailScreen(
     id: String,
     title: String,
-    coverUrl: String,
     onBack: () -> Unit,
     viewModel: MangaDetailViewModel = hiltViewModel(),
 ) {
@@ -84,7 +83,7 @@ fun MangaDetailScreen(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(coverUrl)
+                    .data(uiState.coverUrl)
                     .crossfade(300)
                     .build(),
                 contentDescription = title,

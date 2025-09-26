@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.groupany.firebase.data.datasources.RemoteStorageDataSource
 import com.groupany.manga.data.database.MangaDatabase
 import com.groupany.manga.data.datasources.CoverDao
 import com.groupany.manga.data.datasources.FavoriteDao
@@ -50,11 +51,13 @@ object MangaModule {
         remoteDatasource: MangaRemoteDataSource,
         coverDao: CoverDao,
         favoriteDao: FavoriteDao,
+        firebaseDataSource: RemoteStorageDataSource,
     ): MangaRepository {
         return MangaRepositoryImpl(
             remoteDatasource,
             coverDao = coverDao,
             favoriteDao = favoriteDao,
+            firebaseDataSource = firebaseDataSource,
         )
     }
 }

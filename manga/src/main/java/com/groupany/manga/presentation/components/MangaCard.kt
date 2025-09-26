@@ -56,11 +56,10 @@ fun MangaCard(
     isFavorite: Boolean = false,
     onClick: () -> Unit,
     onToggle: suspend (String) -> Unit,
-    getCachedUrl: (String) -> String?,
-    getDownloadUrl: suspend (String) -> String?
+    getCoverUrl: suspend (String, String) -> String?
 ) {
     val imageUrl by produceState<String?>(initialValue = null, key1 = manga.id) {
-        value = getCachedUrl(manga.coverPath) ?: getDownloadUrl(manga.coverPath)
+        value = getCoverUrl(manga.id, manga.coverPath)
     }
 
     // Part for shared bounds animation when navigating (to detail screen for example)

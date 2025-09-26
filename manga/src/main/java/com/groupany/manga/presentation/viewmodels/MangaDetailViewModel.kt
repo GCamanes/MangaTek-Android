@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.base.CustomFailure
 import com.groupany.base.CustomResult
+import com.groupany.manga.domain.usecases.GetMangaCoverParams
+import com.groupany.manga.domain.usecases.GetMangaCoverUseCase
 import com.groupany.manga.domain.usecases.IsFavoriteUseCase
 import com.groupany.manga.domain.usecases.ToggleAFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MangaDetailViewModel @Inject constructor(
+    private val getMangaCoverUseCase: GetMangaCoverUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase,
     private val toggleAFavoriteUseCase: ToggleAFavoriteUseCase,
     savedStateHandle: SavedStateHandle,
@@ -23,12 +26,13 @@ class MangaDetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MangaDetailUiState())
     val uiState: StateFlow<MangaDetailUiState> = _uiState
     private val mangaId: String = savedStateHandle["id"] ?: error("Missing mangaId")
+    private val mangaPath: String = savedStateHandle["path"] ?: error("Missing mangaId")
 
     init {
-        loadUiState()
-    }
-
-    fun loadUiState() {
+        viewModelScope.launch {
+            val coverUrl = getMangaCoverUseCase(GetMangaCoverParams(mangaId, mangaPath))
+            _uiState.update { it.copy(coverUrl = coverUrl.getOrNull()?.cachedUrl) }
+        }
         viewModelScope.launch {
             isFavoriteUseCase(mangaId)
                 .collect { result ->
@@ -36,8 +40,8 @@ class MangaDetailViewModel @Inject constructor(
                         when (result) {
                             is CustomResult.Success -> it.copy(
                                 isFavorite = result.value,
-                                mangaId = mangaId,
                             )
+
                             is CustomResult.Failure -> it.copy(
                                 isFavorite = false,
                             )
@@ -53,8 +57,8 @@ class MangaDetailViewModel @Inject constructor(
 }
 
 data class MangaDetailUiState(
+    val coverUrl: String? = null,
     val isFavorite: Boolean = false,
     val failure: CustomFailure? = null,
     val isLoading: Boolean = false,
-    val mangaId: String = "",
 )

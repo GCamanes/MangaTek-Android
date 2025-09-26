@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.base.CustomFailure
 import com.groupany.base.CustomResult
-import com.groupany.firebase.domain.usecases.GetDownloadedUrlUseCase
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.enums.MangaFilter
 import com.groupany.manga.domain.usecases.GetAllFavoritesUseCase
+import com.groupany.manga.domain.usecases.GetMangaCoverParams
+import com.groupany.manga.domain.usecases.GetMangaCoverUseCase
 import com.groupany.manga.domain.usecases.GetMangaListUseCase
 import com.groupany.manga.domain.usecases.ToggleAFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,14 +22,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MangaListViewModel @Inject constructor(
     private val getMangaListUseCase: GetMangaListUseCase,
-    private val getDownloadedUrlUseCase: GetDownloadedUrlUseCase,
+    private val getMangaCoverUseCase: GetMangaCoverUseCase,
     private val getAllFavoritesUseCase: GetAllFavoritesUseCase,
     private val toggleAFavoriteUseCase: ToggleAFavoriteUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MangaListUiState())
     val uiState: StateFlow<MangaListUiState> = _uiState
-
-    private val imageUrlCache = mutableMapOf<String, String?>()
 
     init {
         loadUiState()
@@ -84,16 +83,9 @@ class MangaListViewModel @Inject constructor(
         }
     }
 
-    fun getCachedUrl(path: String): String? {
-        return imageUrlCache[path]
-    }
-
-    suspend fun getDownloadUrl(path: String): String? {
-        return imageUrlCache[path] ?: run {
-            val url = getDownloadedUrlUseCase(path).getOrNull()
-            imageUrlCache[path] = url
-            url
-        }
+    suspend fun getCoverUrl(id: String, path: String): String? {
+        val cachedUrl = getMangaCoverUseCase(GetMangaCoverParams(id, path))
+        return cachedUrl.getOrNull()?.cachedUrl
     }
 }
 
