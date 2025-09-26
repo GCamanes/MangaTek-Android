@@ -1,5 +1,6 @@
 package com.groupany.manga.data.repositories
 
+import com.groupany.manga.data.datasources.CoverDao
 import com.groupany.manga.data.datasources.FavoriteDao
 import com.groupany.manga.data.datasources.MangaRemoteDataSource
 import com.groupany.manga.data.mappers.MangaMapper
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.map
 
 class MangaRepositoryImpl(
     private val remoteDataSource: MangaRemoteDataSource,
-    private val dao: FavoriteDao,
+    private val coverDao: CoverDao,
+    private val favoriteDao: FavoriteDao,
 ) : MangaRepository {
 
     override fun getMangaList(): Flow<List<MangaLightEntity>> {
@@ -24,25 +26,25 @@ class MangaRepositoryImpl(
     }
 
     override fun getAllFavorites(): Flow<Set<String>> {
-        return dao.getAllFavorites().map { list ->
+        return favoriteDao.getAllFavorites().map { list ->
             list.map { it.mangaId }.toSet()
         }
     }
 
     override fun isFavorite(id: String): Flow<Boolean> {
-        return dao.isFavorite(id)
+        return favoriteDao.isFavorite(id)
     }
 
     override suspend fun toggleAFavorite(favorite: String) {
-        val currentlyFavorite = dao.isFavorite(favorite).first()
+        val currentlyFavorite = favoriteDao.isFavorite(favorite).first()
         if (currentlyFavorite) {
-            dao.removeFavorite(FavoriteModel(mangaId = favorite))
+            favoriteDao.removeFavorite(FavoriteModel(mangaId = favorite))
         } else {
-            dao.addFavorite(FavoriteModel(mangaId = favorite))
+            favoriteDao.addFavorite(FavoriteModel(mangaId = favorite))
         }
     }
 
     override suspend fun clearAllFavorites() {
-        dao.clearAllFavorites()
+        favoriteDao.clearAllFavorites()
     }
 }

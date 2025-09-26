@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.groupany.manga.data.database.MangaDatabase
+import com.groupany.manga.data.datasources.CoverDao
 import com.groupany.manga.data.datasources.FavoriteDao
 import com.groupany.manga.data.datasources.MangaRemoteDataSource
 import com.groupany.manga.data.datasources.MangaRemoteDataSourceImpl
@@ -29,7 +30,16 @@ object MangaModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): MangaDatabase =
-        Room.databaseBuilder(context, MangaDatabase::class.java, "app_db").build()
+        Room.databaseBuilder(
+            context,
+            MangaDatabase::class.java,
+            "manga.db"
+        )
+            .fallbackToDestructiveMigration(true)
+            .build()
+
+    @Provides
+    fun provideCoverDao(db: MangaDatabase): CoverDao = db.coverDao()
 
     @Provides
     fun provideFavoriteDao(db: MangaDatabase): FavoriteDao = db.favoriteDao()
@@ -38,11 +48,13 @@ object MangaModule {
     @Singleton
     fun provideMangaRepository(
         remoteDatasource: MangaRemoteDataSource,
+        coverDao: CoverDao,
         favoriteDao: FavoriteDao,
     ): MangaRepository {
         return MangaRepositoryImpl(
             remoteDatasource,
-            dao = favoriteDao,
+            coverDao = coverDao,
+            favoriteDao = favoriteDao,
         )
     }
 }
