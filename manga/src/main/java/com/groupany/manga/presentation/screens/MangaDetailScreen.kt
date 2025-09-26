@@ -116,7 +116,7 @@ fun MangaDetailScreen(
                         ),
                         actions = {
                             ToggleIconButton(
-                                isSelected = uiState.isFavorite(id),
+                                isSelected = uiState.isFavorite,
                                 selectedIcon = Icons.Outlined.Favorite,
                                 unselectedIcon = Icons.Outlined.FavoriteBorder,
                                 contentDescription = "add to favorites"

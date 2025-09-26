@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
@@ -35,6 +36,7 @@ import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
 import com.groupany.manga.presentation.screens.MangaDetailScreen
 import com.groupany.manga.presentation.screens.MangaListScreen
+import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.settings.presentation.screens.SettingsScreen
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
@@ -121,11 +123,15 @@ fun AppNavHost(navController: NavHostController) {
                     val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
                     val coverUrl = backStackEntry.arguments?.getString(NavParam.Url.name)!!
 
+                    // Pass the backStackEntry so Hilt can use its SavedStateHandle
+                    val viewModel: MangaDetailViewModel = hiltViewModel(backStackEntry)
+
                     MangaDetailScreen(
                         id = id,
                         title = title,
                         coverUrl = coverUrl,
                         onBack = { navController.navigateUp() },
+                        viewModel = viewModel,
                     )
                 }
             }

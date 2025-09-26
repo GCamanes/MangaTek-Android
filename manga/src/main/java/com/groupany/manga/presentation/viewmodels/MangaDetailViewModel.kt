@@ -1,10 +1,11 @@
 package com.groupany.manga.presentation.viewmodels
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.groupany.base.CustomFailure
 import com.groupany.base.CustomResult
-import com.groupany.manga.domain.usecases.GetAllFavoritesUseCase
+import com.groupany.manga.domain.usecases.IsFavoriteUseCase
 import com.groupany.manga.domain.usecases.ToggleAFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +16,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MangaDetailViewModel @Inject constructor(
-    private val getAllFavoritesUseCase: GetAllFavoritesUseCase,
+    private val isFavoriteUseCase: IsFavoriteUseCase,
     private val toggleAFavoriteUseCase: ToggleAFavoriteUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MangaDetailUiState())
     val uiState: StateFlow<MangaDetailUiState> = _uiState
+    private val mangaId: String = savedStateHandle["id"] ?: error("Missing mangaId")
 
     init {
         loadUiState()
@@ -27,16 +30,16 @@ class MangaDetailViewModel @Inject constructor(
 
     fun loadUiState() {
         viewModelScope.launch {
-            getAllFavoritesUseCase()
+            isFavoriteUseCase(mangaId)
                 .collect { result ->
                     _uiState.update {
                         when (result) {
                             is CustomResult.Success -> it.copy(
-                                favorites = result.value,
+                                isFavorite = result.value,
+                                mangaId = mangaId,
                             )
-
                             is CustomResult.Failure -> it.copy(
-                                favorites = emptySet(),
+                                isFavorite = false,
                             )
                         }
                     }
@@ -50,9 +53,8 @@ class MangaDetailViewModel @Inject constructor(
 }
 
 data class MangaDetailUiState(
-    val favorites: Set<String> = emptySet<String>(),
+    val isFavorite: Boolean = false,
     val failure: CustomFailure? = null,
     val isLoading: Boolean = false,
-) {
-    fun isFavorite(id: String): Boolean = favorites.contains(id)
-}
+    val mangaId: String = "",
+)
