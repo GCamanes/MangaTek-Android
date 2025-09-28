@@ -24,6 +24,7 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,10 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.groupany.localization.R
 import com.groupany.manga.presentation.components.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
@@ -141,6 +144,14 @@ fun MangaDetailScreen(
                                 height = headerHeight,
                                 title = title,
                                 manga = uiState.manga,
+                            )
+
+                            Text(
+                                stringResource(R.string.chapters),
+                                modifier = Modifier.padding(horizontal = UIConstants.PaddingMedium),
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                )
                             )
                         }
                     }

@@ -47,19 +47,11 @@ fun ReadChapterCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     stringResource(R.string.startReading),
-                    modifier = Modifier.padding(
-                        horizontal = UIConstants.PaddingSmall,
-                        vertical = UIConstants.PaddingExtraSmall
-                    ),
-                    style = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onSurfaceVariant)
+                    style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onSurfaceVariant)
                 )
                 Text(
                     "${stringResource(R.string.chapter)} $chapterId",
-                    modifier = Modifier.padding(
-                        horizontal = UIConstants.PaddingSmall,
-                        vertical = UIConstants.PaddingExtraSmall
-                    ),
-                    style = MaterialTheme.typography.bodyLarge.copy(MaterialTheme.colorScheme.onSurface)
+                    style = MaterialTheme.typography.titleMedium.copy(MaterialTheme.colorScheme.onSurface)
                 )
             }
             Icon(
