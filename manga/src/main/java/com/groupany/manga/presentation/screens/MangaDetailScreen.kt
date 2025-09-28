@@ -47,7 +47,7 @@ import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
-import com.groupany.ui.animation.AnimationUtils.boundsTransformWithoutBounce
+import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.ToggleIconButton
@@ -66,7 +66,7 @@ fun MangaDetailScreen(
 
     // containerSize is IntSize in pixels → convert to dp
     val screenWidth = SizeTools.getScreenWidth()
-    val backgroundImageHeight = screenWidth / 0.69f
+    val backgroundImageHeight = screenWidth / 0.68f
     val headerHeight =
         backgroundImageHeight - SizeTools.getTopAppBarHeight() - SizeTools.getStatusBarHeight()
 
@@ -93,7 +93,7 @@ fun MangaDetailScreen(
                 .sharedBounds(
                     sharedTransitionScope.rememberSharedContentState(key = id),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransformWithoutBounce,
+                    boundsTransform = boundsTransform,
                     clipInOverlayDuringTransition = OverlayClip(
                         RoundedCornerShape(roundedCornerAnim),
                     ),
@@ -174,7 +174,15 @@ fun MangaDetailScreen(
                                     Text(
                                         text = title,
                                         textAlign = TextAlign.Center,
-                                        modifier = Modifier.fillMaxWidth(),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .sharedBounds(
+                                                sharedTransitionScope.rememberSharedContentState(key = "title-${id}"),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                                boundsTransform = boundsTransform,
+                                                exit = fadeOut(nonSpatialExpressiveSpring()),
+                                                enter = fadeIn(nonSpatialExpressiveSpring()),
+                                            ),
                                         style = MaterialTheme.typography.displaySmall.copy(
                                             color = MaterialTheme.colorScheme.onBackground,
                                         )

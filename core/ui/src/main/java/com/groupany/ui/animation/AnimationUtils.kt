@@ -15,11 +15,6 @@ object AnimationUtils {
     @OptIn(ExperimentalSharedTransitionApi::class)
     val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
 
-    fun <T> spatialExpressiveSpring() = spring<T>(
-        dampingRatio = 0.8f,
-        stiffness = 150f,
-    )
-
     fun <T> spatialNotExpressiveSpring() = spring<T>(
         dampingRatio = 1f,
         stiffness = 150f,
@@ -31,12 +26,7 @@ object AnimationUtils {
     )
 
     @OptIn(ExperimentalSharedTransitionApi::class)
-    val boundsTransformWithBounce = BoundsTransform { _, _ ->
-        spatialExpressiveSpring()
-    }
-
-    @OptIn(ExperimentalSharedTransitionApi::class)
-    val boundsTransformWithoutBounce = BoundsTransform { _, _ ->
+    val boundsTransform = BoundsTransform { _, _ ->
         spatialNotExpressiveSpring()
     }
 

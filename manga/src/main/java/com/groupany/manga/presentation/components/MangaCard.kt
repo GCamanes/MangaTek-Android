@@ -41,7 +41,7 @@ import coil.request.ImageRequest
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
-import com.groupany.ui.animation.AnimationUtils.boundsTransformWithBounce
+import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
@@ -77,7 +77,7 @@ fun MangaCard(
                 .sharedBounds(
                     sharedTransitionScope.rememberSharedContentState(key = manga.id),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransformWithBounce,
+                    boundsTransform = boundsTransform,
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ),
@@ -133,7 +133,15 @@ fun MangaCard(
             VerticalSpacer(CustomSpacerSize.EXTRA_SMALL)
 
             Text(
-                modifier = Modifier.padding(horizontal = UIConstants.PaddingSmall),
+                modifier = Modifier
+                    .padding(horizontal = UIConstants.PaddingSmall)
+                    .sharedBounds(
+                        sharedTransitionScope.rememberSharedContentState(key = "title-${manga.id}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = boundsTransform,
+                        exit = fadeOut(),
+                        enter = fadeIn(),
+                    ),
                 text = manga.title,
                 maxLines = 2,
                 style = MaterialTheme.typography.titleLarge,
