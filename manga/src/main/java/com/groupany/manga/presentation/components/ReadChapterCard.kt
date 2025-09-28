@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.groupany.localization.R
+import com.groupany.ui.components.CustomSpacerSize
+import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 import com.groupany.ui.theme.MangaTekTheme
 
@@ -49,6 +51,9 @@ fun ReadChapterCard(
                     stringResource(R.string.startReading),
                     style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onSurfaceVariant)
                 )
+
+                VerticalSpacer(CustomSpacerSize.SMALL)
+
                 Text(
                     "${stringResource(R.string.chapter)} $chapterId",
                     style = MaterialTheme.typography.titleMedium.copy(MaterialTheme.colorScheme.onSurface)

@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +39,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.groupany.localization.R
+import com.groupany.manga.presentation.components.ChapterCard
+import com.groupany.manga.presentation.components.EmptyChapterCard
 import com.groupany.manga.presentation.components.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
@@ -45,8 +48,11 @@ import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
+import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
+import com.groupany.ui.components.HorizontalSpacer
 import com.groupany.ui.components.ToggleIconButton
+import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -58,6 +64,7 @@ fun MangaDetailScreen(
     viewModel: MangaDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val manga = uiState.manga
     val scrollState = rememberLazyListState()
 
     // containerSize is IntSize in pixels → convert to dp
@@ -111,6 +118,7 @@ fun MangaDetailScreen(
 
             Scaffold(
                 containerColor = Color.Transparent,
+                contentWindowInsets = WindowInsets(0.dp),
                 topBar = {
                     Box {
                         Box(
@@ -137,22 +145,78 @@ fun MangaDetailScreen(
                 Box(modifier = Modifier.padding(paddingValues)) {
                     LazyColumn(
                         state = scrollState,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     ) {
                         item {
                             MangaHeader(
                                 height = headerHeight,
                                 title = title,
-                                manga = uiState.manga,
+                                manga = manga,
                             )
-
+                        }
+                        item {
                             Text(
                                 stringResource(R.string.chapters),
-                                modifier = Modifier.padding(horizontal = UIConstants.PaddingMedium),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .padding(horizontal = UIConstants.PaddingMedium),
                                 style = MaterialTheme.typography.titleLarge.copy(
                                     color = MaterialTheme.colorScheme.onBackground,
                                 )
                             )
+                        }
+                        if (manga != null) {
+                            val columns = 3
+                            val chapterRows: List<List<String>> = manga.chapters.chunked(columns)
+
+                            items(chapterRows.size) { index ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(MaterialTheme.colorScheme.background)
+                                        .padding(top = UIConstants.PaddingMedium),
+                                ) {
+                                    HorizontalSpacer()
+                                    ChapterCard(
+                                        mangaId = manga.id,
+                                        chapterId = chapterRows[index][0],
+                                        onClick = { mid, cid -> },
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    HorizontalSpacer()
+                                    if (chapterRows[index].size >= columns - 1) {
+                                        ChapterCard(
+                                            mangaId = manga.id,
+                                            chapterId = chapterRows[index][columns - 2],
+                                            onClick = { mid, cid -> },
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    } else {
+                                        EmptyChapterCard(
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    }
+                                    HorizontalSpacer()
+                                    if (chapterRows[index].size == columns) {
+                                        ChapterCard(
+                                            mangaId = manga.id,
+                                            chapterId = chapterRows[index][columns - 1],
+                                            onClick = { mid, cid -> },
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    } else {
+                                        EmptyChapterCard(
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    }
+                                    HorizontalSpacer()
+                                }
+                            }
+
+                            item {
+                                VerticalSpacer(CustomSpacerSize.BIG)
+                            }
                         }
                     }
                 }
