@@ -14,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,6 +32,7 @@ import com.groupany.manga.presentation.components.MangaFilterFAB
 import com.groupany.manga.presentation.components.MangaLazyList
 import com.groupany.manga.presentation.viewmodels.MangaListViewModel
 import com.groupany.ui.components.CustomError
+import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.EmptyError
 import com.groupany.ui.components.MangaTekTitle
 import com.groupany.ui.constants.UIConstants
@@ -64,7 +64,7 @@ fun MangaListScreen(
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
-            TopAppBar(
+            CustomTopAppBar(
                 title = { MangaTekTitle() },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
@@ -85,7 +85,7 @@ fun MangaListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter
             ){
                 when {
                     uiState.isLoading -> CircularProgressIndicator()
@@ -121,7 +121,6 @@ fun MangaListScreen(
                                 )
                             )
                         )
-                        .align(Alignment.TopCenter)
                 )
             }
     }

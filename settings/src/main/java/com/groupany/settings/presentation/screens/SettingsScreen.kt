@@ -16,7 +16,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,8 +33,8 @@ import com.groupany.localization.LocaleHelper
 import com.groupany.settings.presentation.components.SettingsElement
 import com.groupany.settings.presentation.viewmodels.SettingsViewModel
 import com.groupany.ui.components.ButtonTypes
-import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.CustomButton
+import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.LanguageButton
 import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.VerticalSpacer
@@ -56,20 +55,20 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CustomTopAppBar(
                 title = { ScreenTitle(title = stringResource(localeR.string.settings)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
-                navigationIcon = { CustomBackButton(onClick = onBack) },
+                onBack = onBack,
             )
         },
         contentWindowInsets = WindowInsets(0.dp),
-    ) { innerPadding ->
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(paddingValues)
                 .padding(
                     bottom = UIConstants.PaddingBig,
                     start = UIConstants.PaddingMedium,
@@ -108,7 +107,7 @@ fun SettingsScreen(
                                     iconRes = LocaleHelper.getLocaleFlag(locale),
                                     value = locale,
                                     selectedValue = selectedLocale,
-                                    language = locale.toString(),
+                                    language = locale,
                                     onClick = {
                                         LocaleHelper.setLocale(context, locale)
                                         activity?.recreate()

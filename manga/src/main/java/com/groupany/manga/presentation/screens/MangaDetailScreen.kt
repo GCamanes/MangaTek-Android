@@ -28,8 +28,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -51,7 +49,7 @@ import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
-import com.groupany.ui.components.CustomBackButton
+import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
@@ -127,14 +125,7 @@ fun MangaDetailScreen(
                                 .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
                         )
 
-                        TopAppBar(
-                            title = {},
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = Color.Transparent,
-                                scrolledContainerColor = Color.Transparent,
-                                navigationIconContentColor = Color.White,
-                                titleContentColor = Color.White
-                            ),
+                        CustomTopAppBar(
                             actions = {
                                 ToggleIconButton(
                                     isSelected = uiState.isFavorite,
@@ -143,7 +134,7 @@ fun MangaDetailScreen(
                                     contentDescription = "add to favorites"
                                 ) { viewModel.toggleFavorite(id) }
                             },
-                            navigationIcon = { CustomBackButton(onClick = onBack) },
+                            onBack = onBack,
                         )
                     }
                 },
