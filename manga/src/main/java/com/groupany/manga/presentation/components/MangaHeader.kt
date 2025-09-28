@@ -103,7 +103,8 @@ fun MangaHeader(
 
                     ReadChapterCard(
                         mangaId = manga.id,
-                        chapterId = manga.chapters.first()
+                        chapterId = manga.chapters.first(),
+                        onClick = { mid, cid -> }
                     )
                 }
             }

@@ -18,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.groupany.localization.R
 import com.groupany.ui.constants.UIConstants
 import com.groupany.ui.theme.MangaTekTheme
 
@@ -27,13 +29,14 @@ import com.groupany.ui.theme.MangaTekTheme
 fun ReadChapterCard(
     mangaId: String,
     chapterId: String,
-    //onReadClick: (mangaId: String, chapterId: String) -> Unit,
+    onClick: (mangaId: String, chapterId: String) -> Unit,
 ) {
     Card(
         shape = RoundedCornerShape(UIConstants.CornerRound),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        onClick = { onClick(mangaId, chapterId) },
     ) {
         Row(
             modifier = Modifier
@@ -43,7 +46,7 @@ fun ReadChapterCard(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    "Lancer la lecture",
+                    stringResource(R.string.startReading),
                     modifier = Modifier.padding(
                         horizontal = UIConstants.PaddingSmall,
                         vertical = UIConstants.PaddingExtraSmall
@@ -51,7 +54,7 @@ fun ReadChapterCard(
                     style = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onSurfaceVariant)
                 )
                 Text(
-                    "Chapitre $chapterId",
+                    "${stringResource(R.string.chapter)} $chapterId",
                     modifier = Modifier.padding(
                         horizontal = UIConstants.PaddingSmall,
                         vertical = UIConstants.PaddingExtraSmall
@@ -73,6 +76,9 @@ fun ReadChapterCard(
 @Composable
 private fun GenreTagPreview() {
     MangaTekTheme {
-        ReadChapterCard("akira", chapterId = "0001")
+        ReadChapterCard(
+            "akira", chapterId = "0001",
+            onClick = { mid, cid -> }
+        )
     }
 }
