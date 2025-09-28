@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -37,6 +38,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -65,8 +67,8 @@ fun MangaDetailScreen(
     // containerSize is IntSize in pixels → convert to dp
     val screenWidth = SizeTools.getScreenWidth()
     val backgroundImageHeight = screenWidth / 0.69f
-    val headerPartHeight =
-        (backgroundImageHeight - SizeTools.getTopAppBarHeight() - SizeTools.getStatusBarHeight()) / 2
+    val headerHeight =
+        backgroundImageHeight - SizeTools.getTopAppBarHeight() - SizeTools.getStatusBarHeight()
 
 
     // Part for shared bounds animation when navigating (from list screen for example)
@@ -151,15 +153,8 @@ fun MangaDetailScreen(
                         item {
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(headerPartHeight)
-                            )
-                        }
-                        item {
-                            Box(
-                                modifier = Modifier
                                     .fillMaxSize()
-                                    .height(headerPartHeight)
+                                    .height(headerHeight)
                                     .background(
                                         Brush.verticalGradient(
                                             listOf(
@@ -171,14 +166,17 @@ fun MangaDetailScreen(
                             ) {
                                 Column(
                                     modifier = Modifier
-                                        .fillMaxWidth()
+                                        .fillMaxSize()
                                         .padding(UIConstants.PaddingMedium),
-                                    horizontalAlignment = Alignment.CenterHorizontally
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Bottom,
                                 ) {
                                     Text(
                                         text = title,
-                                        style = MaterialTheme.typography.displayLarge.copy(
-                                            color = MaterialTheme.colorScheme.onBackground
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        style = MaterialTheme.typography.displaySmall.copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
                                         )
                                     )
                                 }
