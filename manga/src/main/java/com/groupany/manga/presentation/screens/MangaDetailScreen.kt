@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.groupany.manga.presentation.components.GenreTag
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
@@ -51,6 +53,7 @@ import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomBackButton
 import com.groupany.ui.components.ToggleIconButton
+import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -189,12 +192,16 @@ fun MangaDetailScreen(
                                     )
 
                                     if (uiState.manga != null) {
-                                        Text(
-                                            uiState.manga!!.genres.toString(),
-                                            style = MaterialTheme.typography.headlineSmall.copy(
-                                                color = MaterialTheme.colorScheme.onBackground
-                                            )
-                                        )
+                                        VerticalSpacer()
+
+                                        FlowRow(
+                                            horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingSmall),
+                                            verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingSmall),
+                                        ) {
+                                            uiState.manga!!.genres.map { genre -> GenreTag(genre) }
+                                        }
+
+                                        VerticalSpacer()
                                         Text(
                                             uiState.manga!!.getFilteredAuthors().toString(),
                                             style = MaterialTheme.typography.headlineSmall.copy(
