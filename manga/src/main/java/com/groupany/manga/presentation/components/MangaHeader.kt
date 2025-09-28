@@ -99,11 +99,10 @@ fun MangaHeader(
                     }
 
                     VerticalSpacer()
-                    Text(
-                        manga.getFilteredAuthors().toString(),
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
+
+                    ReadChapterCard(
+                        mangaId = manga.id,
+                        chapterId = manga.chapters.first()
                     )
                 }
             }
