@@ -4,8 +4,6 @@ data class MangaLightModel(
     val id: String = "",
     val title: String = "",
     val coverPath: String = "",
-    val authors: List<String> = emptyList(),
-    val genres: List<String> = emptyList(),
     val status: String = "",
     val lastChapter: String = ""
 ) {
@@ -15,8 +13,6 @@ data class MangaLightModel(
                 id = map["id"] as? String ?: "",
                 title = map["title"] as? String ?: "",
                 coverPath = map["cover_path"] as? String ?: "",
-                authors = (map["authors"] as? List<*>)?.filterIsInstance<String>() ?: emptyList(),
-                genres = (map["genres"] as? List<*>)?.filterIsInstance<String>() ?: emptyList(),
                 status = map["status"] as? String ?: "",
                 lastChapter = when (val chapter = map["last_chapter"]) {
                     is String -> chapter
