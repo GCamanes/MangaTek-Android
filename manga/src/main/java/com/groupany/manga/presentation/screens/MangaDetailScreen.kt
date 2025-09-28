@@ -171,7 +171,8 @@ fun MangaDetailScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .sharedBounds(
-                                                sharedTransitionScope.rememberSharedContentState(key = "title-${id}"),
+                                                sharedTransitionScope
+                                                    .rememberSharedContentState(key = "title-${id}"),
                                                 animatedVisibilityScope = animatedVisibilityScope,
                                                 boundsTransform = boundsTransform,
                                                 exit = fadeOut(nonSpatialExpressiveSpring()),
@@ -186,10 +187,17 @@ fun MangaDetailScreen(
                                         VerticalSpacer()
 
                                         FlowRow(
-                                            horizontalArrangement = Arrangement.spacedBy(UIConstants.PaddingSmall),
-                                            verticalArrangement = Arrangement.spacedBy(UIConstants.PaddingSmall),
+                                            horizontalArrangement = Arrangement.spacedBy(
+                                                UIConstants.PaddingSmall,
+                                                Alignment.CenterHorizontally,
+                                            ),
+                                            verticalArrangement = Arrangement.spacedBy(
+                                                UIConstants.PaddingSmall,
+                                            ),
                                         ) {
-                                            uiState.manga!!.genres.map { genre -> GenreTag(genre) }
+                                            uiState.manga!!.genres.map { genre ->
+                                                GenreTag(genre)
+                                            }
                                         }
 
                                         VerticalSpacer()
