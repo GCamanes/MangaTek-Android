@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
@@ -32,6 +31,7 @@ import com.groupany.ui.constants.UIConstants
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MangaHeader(
+    alpha: Float = 0f,
     height: Dp,
     title: String,
     manga: MangaEntity? = null,
@@ -50,7 +50,7 @@ fun MangaHeader(
                 .background(
                     Brush.verticalGradient(
                         colorStops = arrayOf(
-                            0.0f to Color.Transparent,
+                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             0.8f to MaterialTheme.colorScheme.background, // still transparent
                             1f to MaterialTheme.colorScheme.background // fully solid
                         )

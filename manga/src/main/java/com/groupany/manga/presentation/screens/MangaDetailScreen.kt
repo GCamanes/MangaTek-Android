@@ -9,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,13 +29,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -65,14 +73,26 @@ fun MangaDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val manga = uiState.manga
-    val scrollState = rememberLazyListState()
 
-    // containerSize is IntSize in pixels → convert to dp
     val screenWidth = SizeTools.getScreenWidth()
     val backgroundImageHeight = screenWidth / 0.68f
-    val headerHeight =
-        backgroundImageHeight - SizeTools.getTopAppBarHeight() - SizeTools.getStatusBarHeight()
+    val headerHeight = backgroundImageHeight
 
+    // Scroll logic
+    val scrollState = rememberLazyListState()
+    val maxOffset = with(LocalDensity.current) { (backgroundImageHeight / 3).toPx() }
+    var scrollOffset by remember { mutableFloatStateOf(0f) }
+    LaunchedEffect(scrollState) {
+        snapshotFlow {
+            // total offset = item index * item height (approx) + pixel offset
+            val firstIndex = scrollState.firstVisibleItemIndex
+            val offset = scrollState.firstVisibleItemScrollOffset
+            firstIndex * maxOffset + offset
+        }.collect { offset ->
+            scrollOffset = offset
+        }
+    }
+    val alpha = (scrollOffset / maxOffset).coerceIn(0f, 1f)
 
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -117,7 +137,7 @@ fun MangaDetailScreen(
             )
 
             Scaffold(
-                containerColor = Color.Transparent,
+                containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
                 contentWindowInsets = WindowInsets(0.dp),
                 topBar = {
                     Box {
@@ -129,6 +149,8 @@ fun MangaDetailScreen(
                         )
 
                         CustomTopAppBar(
+                            title = { Text(alpha.toString()) },
+                            containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             actions = {
                                 ToggleIconButton(
                                     isSelected = uiState.isFavorite,
@@ -142,13 +164,20 @@ fun MangaDetailScreen(
                     }
                 },
             ) { paddingValues ->
-                Box(modifier = Modifier.padding(paddingValues)) {
+                Box(
+                    modifier = Modifier.padding(
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+                        bottom = paddingValues.calculateBottomPadding()
+                    )
+                ) {
                     LazyColumn(
                         state = scrollState,
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         item {
                             MangaHeader(
+                                alpha = alpha,
                                 height = headerHeight,
                                 title = title,
                                 manga = manga,

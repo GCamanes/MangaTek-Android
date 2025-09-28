@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -14,7 +13,12 @@ import androidx.compose.ui.graphics.Color
 fun CustomTopAppBar(
     title: @Composable (() -> Unit) = {},
     actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors? = null,
+    containerColor: Color? = null,
+    scrolledContainerColor: Color? = null,
+    navigationIconContentColor: Color? = null,
+    titleContentColor: Color? = null,
+    actionIconContentColor: Color = Color.Unspecified,
+    subtitleContentColor: Color = Color.Unspecified,
     onBack: (() -> Unit)? = null
 ) {
     TopAppBar(
@@ -25,11 +29,14 @@ fun CustomTopAppBar(
             } else null
         },
         actions = actions,
-        colors = colors ?: TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            titleContentColor = MaterialTheme.colorScheme.onBackground,
-            scrolledContainerColor = Color.Transparent,
-            navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor ?: Color.Transparent,
+            scrolledContainerColor = scrolledContainerColor ?: Color.Transparent,
+            navigationIconContentColor = navigationIconContentColor
+                ?: MaterialTheme.colorScheme.onBackground,
+            titleContentColor = titleContentColor ?: MaterialTheme.colorScheme.onBackground,
+            actionIconContentColor = actionIconContentColor,
+            subtitleContentColor = subtitleContentColor,
         ),
     )
 }
