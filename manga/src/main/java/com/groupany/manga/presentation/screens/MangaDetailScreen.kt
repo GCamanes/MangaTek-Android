@@ -7,15 +7,19 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -23,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -93,37 +96,36 @@ fun MangaDetailScreen(
                 contentScale = ContentScale.Crop
             )
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
-                        )
-                    )
-            )
-
             Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
-                    TopAppBar(
-                        title = { ScreenTitle(title = title) },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.Transparent,
-                            scrolledContainerColor = Color.Transparent,
-                            navigationIconContentColor = Color.White,
-                            titleContentColor = Color.White
-                        ),
-                        actions = {
-                            ToggleIconButton(
-                                isSelected = uiState.isFavorite,
-                                selectedIcon = Icons.Outlined.Favorite,
-                                unselectedIcon = Icons.Outlined.FavoriteBorder,
-                                contentDescription = "add to favorites"
-                            ) { viewModel.toggleFavorite(id) }
-                        },
-                        navigationIcon = { CustomBackButton(onClick = onBack) },
-                    )
+                    Box {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .windowInsetsTopHeight(WindowInsets.statusBars)
+                                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                        )
+
+                        TopAppBar(
+                            title = { ScreenTitle(title = title) },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color.Transparent,
+                                scrolledContainerColor = Color.Transparent,
+                                navigationIconContentColor = Color.White,
+                                titleContentColor = Color.White
+                            ),
+                            actions = {
+                                ToggleIconButton(
+                                    isSelected = uiState.isFavorite,
+                                    selectedIcon = Icons.Outlined.Favorite,
+                                    unselectedIcon = Icons.Outlined.FavoriteBorder,
+                                    contentDescription = "add to favorites"
+                                ) { viewModel.toggleFavorite(id) }
+                            },
+                            navigationIcon = { CustomBackButton(onClick = onBack) },
+                        )
+                    }
                 },
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {}
