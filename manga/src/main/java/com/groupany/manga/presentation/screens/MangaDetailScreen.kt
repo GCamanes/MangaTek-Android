@@ -187,6 +187,21 @@ fun MangaDetailScreen(
                                             color = MaterialTheme.colorScheme.onBackground,
                                         )
                                     )
+
+                                    if (uiState.manga != null) {
+                                        Text(
+                                            uiState.manga!!.genres.toString(),
+                                            style = MaterialTheme.typography.headlineSmall.copy(
+                                                color = MaterialTheme.colorScheme.onBackground
+                                            )
+                                        )
+                                        Text(
+                                            uiState.manga!!.getFilteredAuthors().toString(),
+                                            style = MaterialTheme.typography.headlineSmall.copy(
+                                                color = MaterialTheme.colorScheme.onBackground
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }

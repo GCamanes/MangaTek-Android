@@ -2,11 +2,12 @@ package com.groupany.manga.data.datasources
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.groupany.manga.data.models.MangaLightModel
+import com.groupany.manga.data.models.MangaModel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class MangaRemoteDataSourceImpl(firestore: FirebaseFirestore) : MangaRemoteDataSource {
+class MangaRemoteDataSourceImpl(private val firestore: FirebaseFirestore) : MangaRemoteDataSource {
 
     private val docRef = firestore.collection("mangas-list").document("mangas-list")
 
@@ -30,4 +31,24 @@ class MangaRemoteDataSourceImpl(firestore: FirebaseFirestore) : MangaRemoteDataS
         }
         awaitClose { listener.remove() }
     }
+
+    override fun getManga(id: String): Flow<MangaModel> = callbackFlow {
+        val mangaDocRef = firestore.collection("mangas").document(id)
+
+        val listener = mangaDocRef.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                // Optional: handle error
+                close(error)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                val manga = snapshot.toObject(MangaModel::class.java)?.copy(id = snapshot.id)
+                if (manga != null) trySend(manga).isSuccess
+            }
+        }
+
+        awaitClose { listener.remove() }
+    }
+
 }

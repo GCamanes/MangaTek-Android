@@ -9,6 +9,7 @@ import com.groupany.manga.data.mappers.CoverMapper
 import com.groupany.manga.data.mappers.MangaMapper
 import com.groupany.manga.data.models.FavoriteModel
 import com.groupany.manga.domain.entities.CoverEntity
+import com.groupany.manga.domain.entities.MangaEntity
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.manga.domain.repositories.MangaRepository
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,11 @@ class MangaRepositoryImpl(
                     model -> MangaMapper.toModelLightEntity(model)
                 }
             }
+    }
+
+    override fun getManga(id: String): Flow<MangaEntity> {
+        return remoteDataSource.getManga(id)
+            .map { model -> MangaMapper.toModelEntity(model) }
     }
 
     override suspend fun getMangaCover(id: String, coverPath: String): CoverEntity? {
