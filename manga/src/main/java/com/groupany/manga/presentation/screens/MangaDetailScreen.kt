@@ -6,10 +6,7 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,22 +24,18 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.groupany.manga.presentation.components.GenreTag
+import com.groupany.manga.presentation.components.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
@@ -51,7 +44,6 @@ import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.ToggleIconButton
-import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -145,71 +137,11 @@ fun MangaDetailScreen(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .height(headerHeight)
-                                    .background(
-                                        Brush.verticalGradient(
-                                            listOf(
-                                                Color.Transparent,
-                                                MaterialTheme.colorScheme.background
-                                            )
-                                        )
-                                    )
-                            ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(UIConstants.PaddingMedium),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Bottom,
-                                ) {
-                                    Text(
-                                        text = title,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .sharedBounds(
-                                                sharedTransitionScope
-                                                    .rememberSharedContentState(key = "title-${id}"),
-                                                animatedVisibilityScope = animatedVisibilityScope,
-                                                boundsTransform = boundsTransform,
-                                                exit = fadeOut(nonSpatialExpressiveSpring()),
-                                                enter = fadeIn(nonSpatialExpressiveSpring()),
-                                            ),
-                                        style = MaterialTheme.typography.displaySmall.copy(
-                                            color = MaterialTheme.colorScheme.onBackground,
-                                        )
-                                    )
-
-                                    if (uiState.manga != null) {
-                                        VerticalSpacer()
-
-                                        FlowRow(
-                                            horizontalArrangement = Arrangement.spacedBy(
-                                                UIConstants.PaddingSmall,
-                                                Alignment.CenterHorizontally,
-                                            ),
-                                            verticalArrangement = Arrangement.spacedBy(
-                                                UIConstants.PaddingSmall,
-                                            ),
-                                        ) {
-                                            uiState.manga!!.genres.map { genre ->
-                                                GenreTag(genre)
-                                            }
-                                        }
-
-                                        VerticalSpacer()
-                                        Text(
-                                            uiState.manga!!.getFilteredAuthors().toString(),
-                                            style = MaterialTheme.typography.headlineSmall.copy(
-                                                color = MaterialTheme.colorScheme.onBackground
-                                            )
-                                        )
-                                    }
-                                }
-                            }
+                            MangaHeader(
+                                height = headerHeight,
+                                title = title,
+                                manga = uiState.manga,
+                            )
                         }
                     }
                 }
