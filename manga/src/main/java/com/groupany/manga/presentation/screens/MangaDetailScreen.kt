@@ -7,13 +7,17 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
@@ -21,12 +25,15 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -35,12 +42,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
+import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.animation.AnimationUtils.boundsTransformWithoutBounce
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomBackButton
-import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.constants.UIConstants
 
@@ -53,6 +60,14 @@ fun MangaDetailScreen(
     viewModel: MangaDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val scrollState = rememberLazyListState()
+
+    // containerSize is IntSize in pixels → convert to dp
+    val screenWidth = SizeTools.getScreenWidth()
+    val backgroundImageHeight = screenWidth / 0.69f
+    val headerPartHeight =
+        (backgroundImageHeight - SizeTools.getTopAppBarHeight() - SizeTools.getStatusBarHeight()) / 2
+
 
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -91,8 +106,8 @@ fun MangaDetailScreen(
                     .build(),
                 contentDescription = title,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(0.7f),
+                    .width(screenWidth)
+                    .height(backgroundImageHeight), // same result as aspectRatio(0.7f)
                 contentScale = ContentScale.Crop
             )
 
@@ -108,7 +123,7 @@ fun MangaDetailScreen(
                         )
 
                         TopAppBar(
-                            title = { ScreenTitle(title = title) },
+                            title = {},
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color.Transparent,
                                 scrolledContainerColor = Color.Transparent,
@@ -128,7 +143,49 @@ fun MangaDetailScreen(
                     }
                 },
             ) { paddingValues ->
-                Box(modifier = Modifier.padding(paddingValues)) {}
+                Box(modifier = Modifier.padding(paddingValues)) {
+                    LazyColumn(
+                        state = scrollState,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(headerPartHeight)
+                            )
+                        }
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .height(headerPartHeight)
+                                    .background(
+                                        Brush.verticalGradient(
+                                            listOf(
+                                                Color.Transparent,
+                                                MaterialTheme.colorScheme.background
+                                            )
+                                        )
+                                    )
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(UIConstants.PaddingMedium),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = title,
+                                        style = MaterialTheme.typography.displayLarge.copy(
+                                            color = MaterialTheme.colorScheme.onBackground
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
