@@ -23,6 +23,11 @@ object SizeTools {
     }
 
     @Composable
+    fun getFullAppBarHeight(): Dp {
+        return getTopAppBarHeight() + getStatusBarHeight()
+    }
+
+    @Composable
     fun getScreenWidth(): Dp {
         val windowInfo = LocalWindowInfo.current
         val density = LocalDensity.current

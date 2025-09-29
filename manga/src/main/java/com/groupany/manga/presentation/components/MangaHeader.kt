@@ -17,7 +17,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
@@ -32,9 +35,11 @@ import com.groupany.ui.constants.UIConstants
 @Composable
 fun MangaHeader(
     alpha: Float = 0f,
+    titleAlpha: Float = 1f,
     height: Dp,
     title: String,
     manga: MangaEntity? = null,
+    onTitleYChanged: (Float) -> Unit
 ) {
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -69,6 +74,11 @@ fun MangaHeader(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .onGloballyPositioned { layoutCoordinates ->
+                            // Y position relative to parent / screen
+                            onTitleYChanged(layoutCoordinates.positionInParent().y)
+                        }
+                        .alpha(titleAlpha)
                         .sharedBounds(
                             sharedTransitionScope
                                 .rememberSharedContentState(key = "title-${manga?.id ?: ""}"),
