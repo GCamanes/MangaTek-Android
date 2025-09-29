@@ -3,6 +3,8 @@ package com.groupany.manga.presentation.screens
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -103,10 +105,10 @@ fun MangaDetailScreen(
         else -> scrollOffset - titleMinPosition
     }
     val titleAlpha = (customTitlePosition / appBarPx).coerceIn(0f, 1f)
-    val appBarTile = when {
-        titleAlpha >= 1f -> title
-        else -> ""
-    }
+    val appBarTitleAlpha by animateFloatAsState(
+        targetValue = if (titleAlpha >= 1f) 1f else 0f,
+        animationSpec = tween(durationMillis = 200)
+    )
 
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -163,7 +165,13 @@ fun MangaDetailScreen(
                         )
 
                         CustomTopAppBar(
-                            title = { ScreenTitle(appBarTile, centered = true) },
+                            title = {
+                                ScreenTitle(
+                                    title,
+                                    centered = true,
+                                    alpha = appBarTitleAlpha
+                                )
+                            },
                             containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             actions = {
                                 ToggleIconButton(
