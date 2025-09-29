@@ -59,6 +59,7 @@ import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.HorizontalSpacer
+import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
@@ -80,19 +81,32 @@ fun MangaDetailScreen(
 
     // Scroll logic
     val scrollState = rememberLazyListState()
-    val maxOffset = with(LocalDensity.current) { (backgroundImageHeight / 3).toPx() }
+    var titleY by remember { mutableFloatStateOf(0f) }
     var scrollOffset by remember { mutableFloatStateOf(0f) }
+    val appBarPx = with(LocalDensity.current) { (SizeTools.getFullAppBarHeight()).toPx() }
     LaunchedEffect(scrollState) {
         snapshotFlow {
-            // total offset = item index * item height (approx) + pixel offset
-            val firstIndex = scrollState.firstVisibleItemIndex
-            val offset = scrollState.firstVisibleItemScrollOffset
-            firstIndex * maxOffset + offset
+            val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
+            val firstVisibleItemOffset = scrollState.firstVisibleItemScrollOffset
+            firstVisibleItemIndex * titleY + firstVisibleItemOffset
         }.collect { offset ->
-            scrollOffset = offset
+            scrollOffset = if (offset > titleY - appBarPx) titleY - appBarPx else offset
         }
     }
-    val alpha = (scrollOffset / maxOffset).coerceIn(0f, 1f)
+
+    val alpha = (scrollOffset / (titleY - appBarPx)).coerceIn(0f, 1f)
+    val titleMaxPosition = titleY - appBarPx
+    val titleMinPosition = titleY - appBarPx * 2
+    val customTitlePosition = when {
+        scrollOffset < titleMinPosition -> 0f
+        scrollOffset > titleMaxPosition -> appBarPx
+        else -> scrollOffset - titleMinPosition
+    }
+    val titleAlpha = (customTitlePosition / appBarPx).coerceIn(0f, 1f)
+    val appBarTile = when {
+        titleAlpha >= 1f -> title
+        else -> ""
+    }
 
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -149,7 +163,7 @@ fun MangaDetailScreen(
                         )
 
                         CustomTopAppBar(
-                            title = { Text(alpha.toString()) },
+                            title = { ScreenTitle(appBarTile, centered = true) },
                             containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             actions = {
                                 ToggleIconButton(
@@ -180,7 +194,9 @@ fun MangaDetailScreen(
                                 alpha = alpha,
                                 height = headerHeight,
                                 title = title,
+                                titleAlpha = 1f - titleAlpha,
                                 manga = manga,
+                                onTitleYChanged = { y -> titleY = y }
                             )
                         }
                         item {
