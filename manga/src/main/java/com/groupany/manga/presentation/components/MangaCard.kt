@@ -73,19 +73,19 @@ fun MangaCard(
                     enabled = imageUrl != null,
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
-                ) { onClick() }
-                .sharedBounds(
-                    sharedTransitionScope.rememberSharedContentState(key = manga.id),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransform,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                ),
+                ) { onClick() },
         ) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(0.7f),
+                    .aspectRatio(0.7f)
+                    .sharedBounds(
+                        sharedTransitionScope.rememberSharedContentState(key = manga.id),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = boundsTransform,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ),
                 shape = RoundedCornerShape(UIConstants.CornerRound),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
@@ -133,15 +133,7 @@ fun MangaCard(
             VerticalSpacer(CustomSpacerSize.EXTRA_SMALL)
 
             Text(
-                modifier = Modifier
-                    .padding(horizontal = UIConstants.PaddingSmall)
-                    .sharedBounds(
-                        sharedTransitionScope.rememberSharedContentState(key = "title-${manga.id}"),
-                        animatedVisibilityScope = animatedVisibilityScope,
-                        boundsTransform = boundsTransform,
-                        exit = fadeOut(),
-                        enter = fadeIn(),
-                    ),
+                modifier = Modifier.padding(horizontal = UIConstants.PaddingSmall),
                 text = manga.title,
                 maxLines = 2,
                 style = MaterialTheme.typography.titleLarge,

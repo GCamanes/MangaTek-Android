@@ -3,8 +3,6 @@ package com.groupany.manga.presentation.screens
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -17,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,6 +35,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -61,7 +59,6 @@ import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.HorizontalSpacer
-import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
@@ -104,11 +101,7 @@ fun MangaDetailScreen(
         scrollOffset > titleMaxPosition -> appBarPx
         else -> scrollOffset - titleMinPosition
     }
-    val titleAlpha = (customTitlePosition / appBarPx).coerceIn(0f, 1f)
-    val appBarTitleAlpha by animateFloatAsState(
-        targetValue = if (titleAlpha >= 1f) 1f else 0f,
-        animationSpec = tween(durationMillis = 200)
-    )
+    val headerTitleAlpha = (customTitlePosition / appBarPx).coerceIn(0f, 1f)
 
     // Part for shared bounds animation when navigating (from list screen for example)
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -159,20 +152,26 @@ fun MangaDetailScreen(
                     Box {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .windowInsetsTopHeight(WindowInsets.statusBars)
-                                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                                .matchParentSize()
+                                .background(
+                                    Brush.verticalGradient(
+                                        colorStops = arrayOf(
+                                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
+                                            0.3f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
+                                            1f to MaterialTheme.colorScheme.background.copy(alpha = headerTitleAlpha),
+                                        )
+                                    )
+                                )
                         )
 
                         CustomTopAppBar(
                             title = {
-                                ScreenTitle(
+                                /*ScreenTitle(
                                     title,
                                     centered = true,
-                                    alpha = appBarTitleAlpha
-                                )
+                                    alpha = appBarAlpha
+                                )*/
                             },
-                            containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             actions = {
                                 ToggleIconButton(
                                     isSelected = uiState.isFavorite,
@@ -202,7 +201,7 @@ fun MangaDetailScreen(
                                 alpha = alpha,
                                 height = headerHeight,
                                 title = title,
-                                titleAlpha = 1f - titleAlpha,
+                                titleAlpha = 1f - headerTitleAlpha,
                                 manga = manga,
                                 onTitleYChanged = { y -> titleY = y }
                             )
@@ -272,6 +271,22 @@ fun MangaDetailScreen(
                             }
                         }
                     }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = paddingValues.calculateTopPadding())
+                            .height(UIConstants.PaddingMedium)
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        MaterialTheme.colorScheme.background.copy(alpha = headerTitleAlpha),
+                                        Color.Transparent,
+                                        Color.Transparent,
+                                    )
+                                )
+                            )
+                    )
                 }
             }
         }

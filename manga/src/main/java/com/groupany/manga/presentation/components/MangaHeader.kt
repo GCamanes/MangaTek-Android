@@ -1,8 +1,6 @@
 package com.groupany.manga.presentation.components
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,10 +22,6 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
-import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
-import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
-import com.groupany.ui.animation.AnimationUtils.boundsTransform
-import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
@@ -41,82 +35,66 @@ fun MangaHeader(
     manga: MangaEntity? = null,
     onTitleYChanged: (Float) -> Unit
 ) {
-    // Part for shared bounds animation when navigating (from list screen for example)
-    val sharedTransitionScope = LocalSharedTransitionScope.current
-        ?: throw IllegalStateException("No Scope found")
-    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
-        ?: throw IllegalStateException("No Scope found")
-
-    with(sharedTransitionScope) {
-        Box(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .height(height)
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
+                        0.8f to MaterialTheme.colorScheme.background, // still transparent
+                        1f to MaterialTheme.colorScheme.background // fully solid
+                    )
+                )
+            )
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .height(height)
-                .background(
-                    Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
-                            0.8f to MaterialTheme.colorScheme.background, // still transparent
-                            1f to MaterialTheme.colorScheme.background // fully solid
-                        )
-                    )
-                )
+                .padding(UIConstants.PaddingMedium),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
         ) {
-            Column(
+            Text(
+                text = title,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(UIConstants.PaddingMedium),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom,
-            ) {
-                Text(
-                    text = title,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onGloballyPositioned { layoutCoordinates ->
-                            // Y position relative to parent / screen
-                            onTitleYChanged(layoutCoordinates.positionInParent().y)
-                        }
-                        .alpha(titleAlpha)
-                        .sharedBounds(
-                            sharedTransitionScope
-                                .rememberSharedContentState(key = "title-${manga?.id ?: ""}"),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            boundsTransform = boundsTransform,
-                            exit = fadeOut(nonSpatialExpressiveSpring()),
-                            enter = fadeIn(nonSpatialExpressiveSpring()),
-                        ),
-                    style = MaterialTheme.typography.displaySmall.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
-                    )
-                )
-
-                if (manga != null) {
-                    VerticalSpacer()
-
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(
-                            UIConstants.PaddingSmall,
-                            Alignment.CenterHorizontally,
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(
-                            UIConstants.PaddingSmall,
-                        ),
-                    ) {
-                        manga.genres.map { genre ->
-                            GenreTag(genre)
-                        }
+                    .fillMaxWidth()
+                    .onGloballyPositioned { layoutCoordinates ->
+                        // Y position relative to parent / screen
+                        onTitleYChanged(layoutCoordinates.positionInParent().y)
                     }
+                    .alpha(titleAlpha),
+                style = MaterialTheme.typography.displaySmall.copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            )
 
-                    VerticalSpacer()
+            if (manga != null) {
+                VerticalSpacer()
 
-                    ReadChapterCard(
-                        mangaId = manga.id,
-                        chapterId = manga.chapters.first(),
-                        onClick = { mid, cid -> }
-                    )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(
+                        UIConstants.PaddingSmall,
+                        Alignment.CenterHorizontally,
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(
+                        UIConstants.PaddingSmall,
+                    ),
+                ) {
+                    manga.genres.map { genre ->
+                        GenreTag(genre)
+                    }
                 }
+
+                VerticalSpacer()
+
+                ReadChapterCard(
+                    mangaId = manga.id,
+                    chapterId = manga.chapters.first(),
+                    onClick = { mid, cid -> }
+                )
             }
         }
     }
