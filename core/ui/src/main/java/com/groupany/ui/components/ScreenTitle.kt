@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun ScreenTitle(
+    modifier: Modifier = Modifier,
     title: String,
     color: Color? = null,
     centered: Boolean = false,
@@ -19,7 +20,7 @@ fun ScreenTitle(
     Text(
         title,
         maxLines = 2,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .alpha(alpha),
         textAlign = if (centered) TextAlign.Center else TextAlign.Unspecified,

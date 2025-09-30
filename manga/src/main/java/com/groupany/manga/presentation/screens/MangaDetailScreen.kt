@@ -1,5 +1,6 @@
 package com.groupany.manga.presentation.screens
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDp
@@ -95,14 +96,15 @@ fun MangaDetailScreen(
     // Second alpha based on when title is near app bar
     val titleMaxPosition = titleY - appBarPx
     val titleMinPosition = titleY - appBarPx * 2
-    val customTitlePosition = when {
+    val secondAlpha = when {
         scrollOffset < titleMinPosition -> 0f
         scrollOffset > titleMaxPosition -> appBarPx
-        else -> scrollOffset - titleMinPosition
+        else -> ((scrollOffset - titleMinPosition) / appBarPx).coerceIn(0f, 1f)
     }
-    val headerTitleAlpha = (customTitlePosition / appBarPx).coerceIn(0f, 1f)
+    // Condition to animate title from header to app bar title
+    val switchTitle = scrollOffset + appBarPx > titleY
 
-    // Part for shared bounds animation when navigating (from list screen for example)
+    // Part for shared bounds animation
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No Scope found")
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
@@ -157,7 +159,7 @@ fun MangaDetailScreen(
                                         colorStops = arrayOf(
                                             0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
                                             0.3f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
-                                            1f to MaterialTheme.colorScheme.background.copy(alpha = headerTitleAlpha),
+                                            1f to MaterialTheme.colorScheme.background.copy(alpha = secondAlpha),
                                         )
                                     )
                                 )
@@ -165,10 +167,12 @@ fun MangaDetailScreen(
 
                         CustomTopAppBar(
                             title = {
-                                ScreenTitle(
-                                    titleY.toString(),
-                                    centered = true,
-                                )
+                                AnimatedContent(targetState = switchTitle) { target ->
+                                    if (target) ScreenTitle(
+                                        title = title,
+                                        centered = true,
+                                    )
+                                }
                             },
                             actions = {
                                 ToggleIconButton(
@@ -199,7 +203,6 @@ fun MangaDetailScreen(
                                 alpha = alpha,
                                 height = headerHeight,
                                 title = title,
-                                titleAlpha = 1f - headerTitleAlpha,
                                 manga = manga,
                                 onTitleYChanged = { y -> titleY = y }
                             )
@@ -278,7 +281,7 @@ fun MangaDetailScreen(
                             .background(
                                 brush = Brush.verticalGradient(
                                     colors = listOf(
-                                        MaterialTheme.colorScheme.background.copy(alpha = headerTitleAlpha),
+                                        MaterialTheme.colorScheme.background.copy(alpha = secondAlpha),
                                         Color.Transparent,
                                         Color.Transparent,
                                     )
