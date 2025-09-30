@@ -40,4 +40,14 @@ object SizeTools {
         val density = LocalDensity.current
         return with(density) { windowInfo.containerSize.height.toDp() }
     }
+
+    @Composable
+    fun convertDpToPx(dp: Dp): Float {
+        return with(LocalDensity.current) { dp.toPx() }
+    }
+
+    @Composable
+    fun convertPxToDp(pixels: Float): Dp {
+        return with(LocalDensity.current) { pixels.toDp() }
+    }
 }

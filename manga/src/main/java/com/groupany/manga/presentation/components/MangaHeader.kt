@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
+import com.groupany.ui.SizeTools
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
@@ -56,6 +57,7 @@ fun MangaHeader(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom,
         ) {
+            val paddingDp = SizeTools.convertDpToPx(UIConstants.PaddingMedium)
             Text(
                 text = title,
                 textAlign = TextAlign.Center,
@@ -63,7 +65,8 @@ fun MangaHeader(
                     .fillMaxWidth()
                     .onGloballyPositioned { layoutCoordinates ->
                         // Y position relative to parent / screen
-                        onTitleYChanged(layoutCoordinates.positionInParent().y)
+
+                        onTitleYChanged(layoutCoordinates.positionInParent().y + paddingDp)
                     }
                     .alpha(titleAlpha),
                 style = MaterialTheme.typography.displaySmall.copy(

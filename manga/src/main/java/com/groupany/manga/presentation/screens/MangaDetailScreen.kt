@@ -58,6 +58,7 @@ import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.HorizontalSpacer
+import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
@@ -80,7 +81,7 @@ fun MangaDetailScreen(
     // Scroll logic
     val scrollState = rememberLazyListState()
     var titleY by remember { mutableFloatStateOf(0f) }
-    val appBarPx = with(LocalDensity.current) { (SizeTools.getFullAppBarHeight()).toPx() }
+    val appBarPx = with(LocalDensity.current) { SizeTools.getFullAppBarHeight().toPx() }
     val scrollOffset by remember {
         derivedStateOf {
             val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
@@ -164,11 +165,10 @@ fun MangaDetailScreen(
 
                         CustomTopAppBar(
                             title = {
-                                /*ScreenTitle(
-                                    title,
+                                ScreenTitle(
+                                    titleY.toString(),
                                     centered = true,
-                                    alpha = appBarAlpha
-                                )*/
+                                )
                             },
                             actions = {
                                 ToggleIconButton(
