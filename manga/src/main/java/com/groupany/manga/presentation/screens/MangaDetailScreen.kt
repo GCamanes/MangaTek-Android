@@ -27,13 +27,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -81,19 +80,18 @@ fun MangaDetailScreen(
     // Scroll logic
     val scrollState = rememberLazyListState()
     var titleY by remember { mutableFloatStateOf(0f) }
-    var scrollOffset by remember { mutableFloatStateOf(0f) }
     val appBarPx = with(LocalDensity.current) { (SizeTools.getFullAppBarHeight()).toPx() }
-    LaunchedEffect(scrollState) {
-        snapshotFlow {
+    val scrollOffset by remember {
+        derivedStateOf {
             val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
             val firstVisibleItemOffset = scrollState.firstVisibleItemScrollOffset
             firstVisibleItemIndex * titleY + firstVisibleItemOffset
-        }.collect { offset ->
-            scrollOffset = if (offset > titleY - appBarPx) titleY - appBarPx else offset
         }
     }
 
+    // Global alpha based on scroll offset
     val alpha = (scrollOffset / (titleY - appBarPx)).coerceIn(0f, 1f)
+    // Second alpha based on when title is near app bar
     val titleMaxPosition = titleY - appBarPx
     val titleMinPosition = titleY - appBarPx * 2
     val customTitlePosition = when {
