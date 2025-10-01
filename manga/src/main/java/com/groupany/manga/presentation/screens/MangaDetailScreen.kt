@@ -204,7 +204,6 @@ fun MangaDetailScreen(
                     ) {
                         item {
                             MangaHeader(
-                                alpha = uiState.alpha,
                                 height = headerHeight,
                                 id = id,
                                 title = title,

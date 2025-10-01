@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
@@ -32,7 +31,6 @@ import com.groupany.ui.constants.UIConstants
 @Composable
 fun MangaHeader(
     alpha: Float = 0f,
-    titleAlpha: Float = 1f,
     height: Dp,
     id: String,
     title: String,
@@ -81,7 +79,6 @@ fun MangaHeader(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .alpha(titleAlpha)
                             .sharedBounds(
                                 sharedTransitionScope.rememberSharedContentState(key = "title-$id"),
                                 animatedVisibilityScope = this@AnimatedContent
