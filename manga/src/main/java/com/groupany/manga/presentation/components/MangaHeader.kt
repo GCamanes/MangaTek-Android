@@ -34,10 +34,11 @@ fun MangaHeader(
     alpha: Float = 0f,
     titleAlpha: Float = 1f,
     height: Dp,
+    id: String,
     title: String,
     manga: MangaEntity? = null,
     onTitleYChanged: (Float) -> Unit,
-    showTitle: Boolean,
+    showTitle: Boolean = true,
 ) {
     // Part for shared bounds animation
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -66,20 +67,23 @@ fun MangaHeader(
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 val paddingDp = SizeTools.convertDpToPx(UIConstants.PaddingMedium)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onGloballyPositioned { layoutCoordinates ->
+                            // Y position relative to parent
+                            onTitleYChanged(layoutCoordinates.positionInParent().y + paddingDp)
+                        }
+                )
                 AnimatedContent(targetState = showTitle) { target ->
                     if (target) Text(
                         text = title,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .onGloballyPositioned { layoutCoordinates ->
-                                // Y position relative to parent / screen
-
-                                onTitleYChanged(layoutCoordinates.positionInParent().y + paddingDp)
-                            }
                             .alpha(titleAlpha)
                             .sharedBounds(
-                                sharedTransitionScope.rememberSharedContentState(key = "title"),
+                                sharedTransitionScope.rememberSharedContentState(key = "title-$id"),
                                 animatedVisibilityScope = this@AnimatedContent
                             ),
                         style = MaterialTheme.typography.displaySmall.copy(

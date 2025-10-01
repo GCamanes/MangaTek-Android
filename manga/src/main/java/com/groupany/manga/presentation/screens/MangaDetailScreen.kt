@@ -28,12 +28,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -55,6 +55,7 @@ import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.animation.AnimationUtils.boundsTransform
+import com.groupany.ui.animation.AnimationUtils.isAnimationFinished
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
@@ -78,31 +79,25 @@ fun MangaDetailScreen(
     val screenWidth = SizeTools.getScreenWidth()
     val backgroundImageHeight = screenWidth / 0.68f
     val headerHeight = backgroundImageHeight
+    val headerHeightPx = SizeTools.convertDpToPx(headerHeight)
 
     // Scroll logic
     val scrollState = rememberLazyListState()
-    var titleY by remember { mutableFloatStateOf(0f) }
     val appBarPx = with(LocalDensity.current) { SizeTools.getFullAppBarHeight().toPx() }
     val scrollOffset by remember {
         derivedStateOf {
             val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
             val firstVisibleItemOffset = scrollState.firstVisibleItemScrollOffset
-            firstVisibleItemIndex * titleY + firstVisibleItemOffset
+            firstVisibleItemIndex * headerHeightPx + firstVisibleItemOffset
         }
     }
 
-    // Global alpha based on scroll offset
-    val alpha = (scrollOffset / (titleY - appBarPx)).coerceIn(0f, 1f)
-    // Second alpha based on when title is near app bar
-    val titleMaxPosition = titleY - appBarPx
-    val titleMinPosition = titleY - appBarPx * 2
-    val secondAlpha = when {
-        scrollOffset < titleMinPosition -> 0f
-        scrollOffset > titleMaxPosition -> appBarPx
-        else -> ((scrollOffset - titleMinPosition) / appBarPx).coerceIn(0f, 1f)
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollOffset }
+            .collect { offset ->
+                viewModel.updateUI(offset, appBarPx)
+            }
     }
-    // Condition to animate title from header to app bar title
-    val switchTitle = scrollOffset + appBarPx > titleY
 
     // Part for shared bounds animation
     val sharedTransitionScope = LocalSharedTransitionScope.current
@@ -147,7 +142,7 @@ fun MangaDetailScreen(
             )
 
             Scaffold(
-                containerColor = MaterialTheme.colorScheme.background.copy(alpha = alpha),
+                containerColor = MaterialTheme.colorScheme.background.copy(alpha = uiState.alpha),
                 contentWindowInsets = WindowInsets(0.dp),
                 topBar = {
                     Box {
@@ -157,9 +152,9 @@ fun MangaDetailScreen(
                                 .background(
                                     Brush.verticalGradient(
                                         colorStops = arrayOf(
-                                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
-                                            0.3f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * alpha),
-                                            1f to MaterialTheme.colorScheme.background.copy(alpha = secondAlpha),
+                                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * uiState.alpha),
+                                            0.3f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * uiState.alpha),
+                                            1f to MaterialTheme.colorScheme.background.copy(alpha = uiState.secondAlpha),
                                         )
                                     )
                                 )
@@ -167,16 +162,20 @@ fun MangaDetailScreen(
 
                         CustomTopAppBar(
                             title = {
-                                AnimatedContent(targetState = switchTitle) { target ->
-                                    if (target) ScreenTitle(
-                                        title = title,
-                                        centered = true,
-                                        modifier = Modifier
-                                            .sharedBounds(
-                                                sharedTransitionScope.rememberSharedContentState(key = "title"),
-                                                animatedVisibilityScope = this@AnimatedContent
-                                            )
-                                    )
+                                AnimatedContent(targetState = uiState.switchTitle) { target ->
+                                    if (target) {
+                                        ScreenTitle(
+                                            title = title,
+                                            centered = true,
+                                            modifier = Modifier
+                                                .sharedBounds(
+                                                    sharedTransitionScope.rememberSharedContentState(
+                                                        key = "title-$id"
+                                                    ),
+                                                    animatedVisibilityScope = this@AnimatedContent
+                                                ),
+                                        )
+                                    }
                                 }
                             },
                             actions = {
@@ -205,12 +204,19 @@ fun MangaDetailScreen(
                     ) {
                         item {
                             MangaHeader(
-                                alpha = alpha,
+                                alpha = uiState.alpha,
                                 height = headerHeight,
+                                id = id,
                                 title = title,
                                 manga = manga,
-                                onTitleYChanged = { y -> titleY = y },
-                                showTitle = !switchTitle
+                                onTitleYChanged = { y ->
+                                    viewModel.saveStableTitleY(
+                                        y,
+                                        animatedVisibilityScope
+                                            .isAnimationFinished()
+                                    )
+                                },
+                                showTitle = !uiState.switchTitle
                             )
                         }
                         item {
@@ -287,7 +293,7 @@ fun MangaDetailScreen(
                             .background(
                                 brush = Brush.verticalGradient(
                                     colors = listOf(
-                                        MaterialTheme.colorScheme.background.copy(alpha = secondAlpha),
+                                        MaterialTheme.colorScheme.background.copy(alpha = uiState.secondAlpha),
                                         Color.Transparent,
                                         Color.Transparent,
                                     )

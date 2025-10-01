@@ -12,6 +12,10 @@ object AnimationUtils {
 
     val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 
+    fun AnimatedVisibilityScope.isAnimationFinished(): Boolean {
+        return transition.currentState == transition.targetState
+    }
+
     @OptIn(ExperimentalSharedTransitionApi::class)
     val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
 
