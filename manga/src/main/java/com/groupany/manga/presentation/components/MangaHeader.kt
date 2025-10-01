@@ -1,5 +1,6 @@
 package com.groupany.manga.presentation.components
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
 import com.groupany.ui.SizeTools
+import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
 
@@ -34,70 +36,83 @@ fun MangaHeader(
     height: Dp,
     title: String,
     manga: MangaEntity? = null,
-    onTitleYChanged: (Float) -> Unit
+    onTitleYChanged: (Float) -> Unit,
+    showTitle: Boolean,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .height(height)
-            .background(
-                Brush.verticalGradient(
-                    colorStops = arrayOf(
-                        0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
-                        0.8f to MaterialTheme.colorScheme.background, // still transparent
-                        1f to MaterialTheme.colorScheme.background // fully solid
-                    )
-                )
-            )
-    ) {
-        Column(
+    // Part for shared bounds animation
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No Scope found")
+
+    with(sharedTransitionScope) {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(UIConstants.PaddingMedium),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom,
-        ) {
-            val paddingDp = SizeTools.convertDpToPx(UIConstants.PaddingMedium)
-            Text(
-                text = title,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { layoutCoordinates ->
-                        // Y position relative to parent / screen
-
-                        onTitleYChanged(layoutCoordinates.positionInParent().y + paddingDp)
-                    }
-                    .alpha(titleAlpha),
-                style = MaterialTheme.typography.displaySmall.copy(
-                    color = MaterialTheme.colorScheme.onBackground,
+                .height(height)
+                .background(
+                    Brush.verticalGradient(
+                        colorStops = arrayOf(
+                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
+                            0.8f to MaterialTheme.colorScheme.background, // still transparent
+                            1f to MaterialTheme.colorScheme.background // fully solid
+                        )
+                    )
                 )
-            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(UIConstants.PaddingMedium),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom,
+            ) {
+                val paddingDp = SizeTools.convertDpToPx(UIConstants.PaddingMedium)
+                AnimatedContent(targetState = showTitle) { target ->
+                    if (target) Text(
+                        text = title,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onGloballyPositioned { layoutCoordinates ->
+                                // Y position relative to parent / screen
 
-            if (manga != null) {
-                VerticalSpacer()
-
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        UIConstants.PaddingSmall,
-                        Alignment.CenterHorizontally,
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(
-                        UIConstants.PaddingSmall,
-                    ),
-                ) {
-                    manga.genres.map { genre ->
-                        GenreTag(genre)
-                    }
+                                onTitleYChanged(layoutCoordinates.positionInParent().y + paddingDp)
+                            }
+                            .alpha(titleAlpha)
+                            .sharedBounds(
+                                sharedTransitionScope.rememberSharedContentState(key = "title"),
+                                animatedVisibilityScope = this@AnimatedContent
+                            ),
+                        style = MaterialTheme.typography.displaySmall.copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                    )
                 }
 
-                VerticalSpacer()
+                if (manga != null) {
+                    VerticalSpacer()
 
-                ReadChapterCard(
-                    mangaId = manga.id,
-                    chapterId = manga.chapters.first(),
-                    onClick = { mid, cid -> }
-                )
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(
+                            UIConstants.PaddingSmall,
+                            Alignment.CenterHorizontally,
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(
+                            UIConstants.PaddingSmall,
+                        ),
+                    ) {
+                        manga.genres.map { genre ->
+                            GenreTag(genre)
+                        }
+                    }
+
+                    VerticalSpacer()
+
+                    ReadChapterCard(
+                        mangaId = manga.id,
+                        chapterId = manga.chapters.first(),
+                        onClick = { mid, cid -> }
+                    )
+                }
             }
         }
     }

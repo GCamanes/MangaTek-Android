@@ -171,6 +171,11 @@ fun MangaDetailScreen(
                                     if (target) ScreenTitle(
                                         title = title,
                                         centered = true,
+                                        modifier = Modifier
+                                            .sharedBounds(
+                                                sharedTransitionScope.rememberSharedContentState(key = "title"),
+                                                animatedVisibilityScope = this@AnimatedContent
+                                            )
                                     )
                                 }
                             },
@@ -204,7 +209,8 @@ fun MangaDetailScreen(
                                 height = headerHeight,
                                 title = title,
                                 manga = manga,
-                                onTitleYChanged = { y -> titleY = y }
+                                onTitleYChanged = { y -> titleY = y },
+                                showTitle = !switchTitle
                             )
                         }
                         item {
