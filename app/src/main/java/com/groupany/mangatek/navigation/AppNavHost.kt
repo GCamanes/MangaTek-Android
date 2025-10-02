@@ -1,6 +1,5 @@
 package com.groupany.mangatek.navigation
 
-import android.net.Uri
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
@@ -31,6 +30,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.groupany.authentication.presentation.screens.LoginScreen
 import com.groupany.localization.R
@@ -51,86 +51,107 @@ fun AppNavHost(navController: NavHostController) {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Screen.Login.route,
+                startDestination = NavGraph.Auth.route,
             ) {
-                composable(
-                    Screen.Login.route,
-                    arguments = listOf(
-                        navArgument(NavParam.AutoAuth.name) {
-                            type = NavType.BoolType
-                            defaultValue = true
-                            nullable = false
-                        }
-                    ),
-                    enterTransition = { fadeIn(animationSpec = tween(1000)) },
-                    exitTransition = { fadeOut(animationSpec = tween(1000)) }
-                ) { backStackEntry ->
-                    val autoAuth =
-                        backStackEntry.arguments?.getBoolean(NavParam.AutoAuth.name) != false
-                    LoginScreen(
-                        autoAuth,
-                        onSuccess = { NavHelper.goToMangaList(navController) },
-                    )
-                }
-
-                composable(
-                    Screen.Settings.route,
-                    enterTransition = {
-                        slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
-                    },
-                    exitTransition = {
-                        slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
-                    }
+                navigation(
+                    startDestination = Screen.Login.route,
+                    route = NavGraph.Auth.route,
                 ) {
-                    SettingsScreen(
-                        onBack = { navController.navigateUp() },
-                        onLogout = { NavHelper.backToLogin(navController) },
-                    )
-                }
-
-                composableWithCompositionLocal(
-                    Screen.MangaList.route,
-                    enterTransition = { fadeIn(animationSpec = tween(3000)) },
-                    popEnterTransition = { EnterTransition.None },
-                    popExitTransition = { ExitTransition.None },
-                ) {
-                    MangaListScreen(
-                        actions = {
-                            IconButton(onClick = { NavHelper.goToSettings(navController) }) {
-                                Icon(
-                                    Icons.Outlined.Settings,
-                                    contentDescription = stringResource(R.string.settings),
-                                    modifier = Modifier.size(UIConstants.IconHeight),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                    composable(
+                        Screen.Login.route,
+                        arguments = listOf(
+                            navArgument(NavParam.AutoAuth.name) {
+                                type = NavType.BoolType
+                                defaultValue = true
                             }
-                        },
-                        onMangaClick = { id, title, path ->
-                            NavHelper.goToMangaDetail(navController, id, title, path)
-                        },
-                    )
+                        ),
+                        enterTransition = { fadeIn(animationSpec = tween(1000)) },
+                        exitTransition = { fadeOut(animationSpec = tween(1000)) }
+                    ) { backStackEntry ->
+                        val autoAuth = backStackEntry
+                            .arguments?.getBoolean(NavParam.AutoAuth.name) ?: true
+                        LoginScreen(
+                            autoAuth = autoAuth,
+                            onSuccess = { NavHelper.goToMangaList(navController) },
+                        )
+                    }
                 }
 
-                composableWithCompositionLocal(
-                    Screen.MangaDetail.route,
-                    arguments = listOf(
-                        navArgument(NavParam.Id.name) { type = NavType.StringType },
-                        navArgument(NavParam.Title.name) { type = NavType.StringType },
-                        navArgument(NavParam.Path.name) { type = NavType.StringType },
-                    ),
-                ) { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
-                    val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
+                navigation(
+                    startDestination = Screen.MangaList.route,
+                    route = NavGraph.Main.route,
+                ) {
+                    composableWithCompositionLocal(
+                        Screen.MangaList.route,
+                        enterTransition = { fadeIn(animationSpec = tween(3000)) },
+                        popEnterTransition = { EnterTransition.None },
+                        popExitTransition = { ExitTransition.None },
+                    ) {
+                        MangaListScreen(
+                            actions = {
+                                IconButton(onClick = {
+                                    NavHelper.goToSettings(navController)
+                                }) {
+                                    Icon(
+                                        Icons.Outlined.Settings,
+                                        contentDescription = stringResource(R.string.settings),
+                                        modifier = Modifier.size(UIConstants.IconHeight),
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            },
+                            onMangaClick = { id, title, path ->
+                                NavHelper.goToMangaDetail(navController, id, title, path)
+                            },
+                        )
+                    }
 
-                    // Pass the backStackEntry so Hilt can use its SavedStateHandle
-                    val viewModel: MangaDetailViewModel = hiltViewModel(backStackEntry)
+                    composableWithCompositionLocal(
+                        Screen.MangaDetail.route,
+                        arguments = listOf(
+                            navArgument(NavParam.Id.name) { type = NavType.StringType },
+                            navArgument(NavParam.Title.name) { type = NavType.StringType },
+                            navArgument(NavParam.Path.name) { type = NavType.StringType },
+                        ),
+                    ) { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString(NavParam.Id.name)!!
+                        val title = backStackEntry.arguments?.getString(NavParam.Title.name)!!
 
-                    MangaDetailScreen(
-                        id = id,
-                        title = title,
-                        onBack = { navController.navigateUp() },
-                        viewModel = viewModel,
-                    )
+                        // Pass the backStackEntry so Hilt can use its SavedStateHandle
+                        val viewModel: MangaDetailViewModel = hiltViewModel(backStackEntry)
+
+                        MangaDetailScreen(
+                            id = id,
+                            title = title,
+                            onBack = {
+                                navController.popBackStack(
+                                    route = Screen.MangaList.route,
+                                    inclusive = false
+                                )
+                            },
+                            viewModel = viewModel,
+                        )
+                    }
+
+                    composable(
+                        Screen.Settings.route,
+                        enterTransition = {
+                            slideInVertically(initialOffsetY = { it }, animationSpec = tween(700))
+                        },
+                        exitTransition = {
+                            slideOutVertically(targetOffsetY = { it }, animationSpec = tween(700))
+                        }
+                    ) {
+                        SettingsScreen(
+                            onBack = {
+                                navController.popBackStack(
+                                    route = Screen.MangaList.route,
+                                    inclusive = false
+                                )
+                            },
+                            onLogout = { NavHelper.backToLogin(navController) },
+                        )
+                    }
                 }
             }
         }
@@ -138,13 +159,10 @@ fun AppNavHost(navController: NavHostController) {
 }
 
 object NavHelper {
-    fun goToSettings(navController: NavHostController) {
-        navController.navigate(Screen.Settings.route) {
-            launchSingleTop = true
-        }
-    }
-
     fun goToMangaList(navController: NavHostController) {
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
+        val args = navController.currentBackStackEntry?.arguments
+        val autoAuth = args?.getBoolean(NavParam.AutoAuth.name)
         navController.navigate(Screen.MangaList.route) {
             popUpTo(Screen.Login.route) { inclusive = true }
             launchSingleTop = true
@@ -157,22 +175,21 @@ object NavHelper {
         title: String,
         path: String,
     ) {
-        val encodedTitle = Uri.encode(title)
-        val encodedCoverPath = Uri.encode(path)
-        val route = Screen.MangaDetail.route
-            .replace(NavParam.Id.asParam, id)
-            .replace(NavParam.Title.asParam, encodedTitle)
-            .replace(NavParam.Path.asParam, encodedCoverPath)
+        navController.navigate(Screen.MangaDetail.route(id, title, path)) {
+            launchSingleTop = true
+        }
+    }
 
-        navController.navigate(route) {
+    fun goToSettings(navController: NavHostController) {
+        navController.navigate(Screen.Settings.route) {
             launchSingleTop = true
         }
     }
 
     fun backToLogin(navController: NavHostController) {
-        val route = Screen.Login.route.replace(NavParam.AutoAuth.asParam, "false")
-        navController.navigate(route) {
-            popUpTo(0) { inclusive = true } // Clears the entire back stack
+        navController.navigate(Screen.Login.route(autoAuth = false)) {
+            popUpTo(NavGraph.Main.route) { inclusive = true }
+            launchSingleTop = true
         }
     }
 }
