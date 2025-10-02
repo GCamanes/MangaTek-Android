@@ -88,33 +88,34 @@ class MangaDetailViewModel @Inject constructor(
         }
     }
 
-    fun updateUI(scrollOffset: Float, appBarPx: Float) {
+    fun updateUI(scrollOffset: Float, appBarPx: Float, headerPx: Float) {
         viewModelScope.launch {
+            // Global alpha based on scroll offset
+            val alpha = (scrollOffset / (headerPx - appBarPx * 1.2f)).coerceIn(0f, 1f)
+            // Second alpha based on when title is near app bar
+            val titleMaxPosition = headerPx - appBarPx * 2
+            val titleMinPosition = headerPx - appBarPx * 3
+            val secondAlpha = when {
+                scrollOffset < titleMinPosition -> 0f
+                scrollOffset > titleMaxPosition -> 1f
+                else -> ((scrollOffset - titleMinPosition) / appBarPx).coerceIn(0f, 1f)
+            }
+            var switchTitle = false
             if (_uiState.value.titleY != null) {
                 val titleY = _uiState.value.titleY!!
-                // Global alpha based on scroll offset
-                val alpha = (scrollOffset / (titleY - appBarPx)).coerceIn(0f, 1f)
-                // Second alpha based on when title is near app bar
-                val titleMaxPosition = titleY - appBarPx
-                val titleMinPosition = titleY - appBarPx * 2
-                val secondAlpha = when {
-                    scrollOffset < titleMinPosition -> 0f
-                    scrollOffset > titleMaxPosition -> appBarPx
-                    else -> ((scrollOffset - titleMinPosition) / appBarPx).coerceIn(0f, 1f)
-                }
                 // Condition to animate title from header to app bar title
-                val switchTitle = scrollOffset + appBarPx > titleY
-                _uiState.update { current ->
-                    current.takeIf {
-                        it.alpha == alpha &&
-                                it.secondAlpha == secondAlpha &&
-                                it.switchTitle == switchTitle
-                    } ?: current.copy(
-                        alpha = alpha,
-                        secondAlpha = secondAlpha,
-                        switchTitle = switchTitle
-                    )
-                }
+                switchTitle = scrollOffset + appBarPx > titleY
+            }
+            _uiState.update { current ->
+                current.takeIf {
+                    it.alpha == alpha &&
+                            it.secondAlpha == secondAlpha &&
+                            it.switchTitle == switchTitle
+                } ?: current.copy(
+                    alpha = alpha,
+                    secondAlpha = secondAlpha,
+                    switchTitle = switchTitle
+                )
             }
         }
     }

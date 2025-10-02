@@ -34,9 +34,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -80,7 +80,8 @@ fun MangaDetailScreen(
 
     // Scroll logic
     val scrollState = rememberLazyListState()
-    val appBarPx = with(LocalDensity.current) { SizeTools.getFullAppBarHeight().toPx() }
+    val appBarHeight = SizeTools.getFullAppBarHeight()
+    val appBarHeightPx = SizeTools.convertDpToPx(SizeTools.getFullAppBarHeight())
     val scrollOffset by remember {
         derivedStateOf {
             val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
@@ -92,7 +93,7 @@ fun MangaDetailScreen(
     LaunchedEffect(scrollState) {
         snapshotFlow { scrollOffset }
             .collect { offset ->
-                viewModel.updateUI(offset, appBarPx)
+                viewModel.updateUI(offset, appBarHeightPx, headerHeightPx)
             }
     }
 
@@ -139,14 +140,14 @@ fun MangaDetailScreen(
             )
 
             Scaffold(
-                containerColor = MaterialTheme.colorScheme.background.copy(alpha = uiState.alpha),
+                containerColor = Color.Transparent,
                 contentWindowInsets = WindowInsets(0.dp),
                 topBar = {
                     Box {
                         MangaAppBarGradient(
-                            modifier = Modifier.matchParentSize(),
-                            uiState.alpha,
-                            uiState.secondAlpha,
+                            height = appBarHeight,
+                            alpha = uiState.secondAlpha,
+                            secondAlpha = uiState.secondAlpha,
                         )
 
                         CustomTopAppBar(
@@ -194,6 +195,7 @@ fun MangaDetailScreen(
                         item {
                             MangaHeader(
                                 height = headerHeight,
+                                alpha = uiState.alpha,
                                 id = id,
                                 title = title,
                                 manga = manga,

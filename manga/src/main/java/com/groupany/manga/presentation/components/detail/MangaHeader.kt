@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.groupany.manga.domain.entities.MangaEntity
@@ -42,6 +43,9 @@ fun MangaHeader(
     val sharedTransitionScope = LocalSharedTransitionScope.current
         ?: throw IllegalStateException("No Scope found")
 
+    val appBarPx = with(LocalDensity.current) { SizeTools.getFullAppBarHeight().toPx() }
+    val heightPx = with(LocalDensity.current) { height.toPx() }
+
     with(sharedTransitionScope) {
         Box(
             modifier = Modifier
@@ -50,7 +54,10 @@ fun MangaHeader(
                 .background(
                     Brush.verticalGradient(
                         colorStops = arrayOf(
-                            0.4f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
+                            0f to MaterialTheme.colorScheme.background.copy(alpha = 0f),
+                            ((appBarPx * 0.95f) / heightPx) to MaterialTheme.colorScheme.background.copy(
+                                alpha = alpha
+                            ),
                             0.8f to MaterialTheme.colorScheme.background, // still transparent
                             1f to MaterialTheme.colorScheme.background // fully solid
                         )
