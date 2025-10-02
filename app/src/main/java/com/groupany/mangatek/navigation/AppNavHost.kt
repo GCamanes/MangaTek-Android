@@ -108,6 +108,8 @@ fun AppNavHost(navController: NavHostController) {
 
                     composableWithCompositionLocal(
                         Screen.MangaDetail.route,
+                        enterTransition = { fadeIn(animationSpec = tween(1000)) },
+                        exitTransition = { fadeOut(animationSpec = tween(500)) },
                         arguments = listOf(
                             navArgument(NavParam.Id.name) { type = NavType.StringType },
                             navArgument(NavParam.Title.name) { type = NavType.StringType },
