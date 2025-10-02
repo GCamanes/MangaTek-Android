@@ -18,6 +18,7 @@ fun MangaAppBarGradient(
     secondAlpha: Float = 0f,
 ) {
     val startAlpha = 0.5f
+    val startSecondAlpha = 0.5f
     val background = MaterialTheme.colorScheme.background
     val statusBarPx = SizeTools.getStatusBarHeight() / height
 
@@ -29,7 +30,9 @@ fun MangaAppBarGradient(
                 Brush.verticalGradient(
                     colorStops = arrayOf(
                         0.0f to background.copy(alpha = startAlpha + (1 - startAlpha) * alpha),
-                        statusBarPx to background.copy(alpha = startAlpha + (1 - startAlpha) * alpha),
+                        statusBarPx to background.copy(
+                            alpha = startSecondAlpha * alpha + (1 - startSecondAlpha) * secondAlpha
+                        ),
                         1f to background.copy(alpha = secondAlpha),
                     )
                 )
