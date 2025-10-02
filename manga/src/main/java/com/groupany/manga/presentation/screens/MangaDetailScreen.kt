@@ -35,8 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -62,6 +60,7 @@ import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.HorizontalSpacer
 import com.groupany.ui.components.ScreenTitle
+import com.groupany.ui.components.ScrollGradient
 import com.groupany.ui.components.ToggleIconButton
 import com.groupany.ui.components.VerticalSpacer
 import com.groupany.ui.constants.UIConstants
@@ -277,20 +276,9 @@ fun MangaDetailScreen(
                         }
                     }
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = paddingValues.calculateTopPadding())
-                            .height(UIConstants.PaddingMedium)
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.background.copy(alpha = uiState.secondAlpha),
-                                        Color.Transparent,
-                                        Color.Transparent,
-                                    )
-                                )
-                            )
+                    ScrollGradient(
+                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+                        alpha = uiState.secondAlpha
                     )
                 }
             }
