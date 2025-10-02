@@ -21,7 +21,7 @@ fun ScreenTitle(
         modifier = modifier
             .fillMaxWidth(),
         textAlign = if (centered) TextAlign.Center else TextAlign.Unspecified,
-        style = MaterialTheme.typography.headlineSmall.copy(
+        style = MaterialTheme.typography.headlineMedium.copy(
             color = color ?: MaterialTheme.colorScheme.onBackground,
         )
     )
