@@ -43,12 +43,12 @@ class MangaRemoteDataSourceImpl(private val firestore: FirebaseFirestore) : Mang
             }
 
             if (snapshot != null && snapshot.exists()) {
-                val manga = snapshot.toObject(MangaModel::class.java)?.copy(id = snapshot.id)
-                if (manga != null) trySend(manga).isSuccess
+                val map = snapshot.data
+                val manga = MangaModel.fromMap(map as Map<String, Any>)
+                trySend(manga)
             }
         }
 
         awaitClose { listener.remove() }
     }
-
 }
