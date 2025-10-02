@@ -27,8 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.groupany.manga.presentation.components.MangaFilterFAB
-import com.groupany.manga.presentation.components.MangaLazyList
+import com.groupany.manga.presentation.components.list.MangaFilterFAB
+import com.groupany.manga.presentation.components.list.MangaLazyList
 import com.groupany.manga.presentation.viewmodels.MangaListViewModel
 import com.groupany.ui.components.CustomError
 import com.groupany.ui.components.CustomTopAppBar

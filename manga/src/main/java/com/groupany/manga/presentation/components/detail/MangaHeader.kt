@@ -1,4 +1,4 @@
-package com.groupany.manga.presentation.components
+package com.groupany.manga.presentation.components.detail
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi

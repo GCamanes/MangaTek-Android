@@ -47,10 +47,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.groupany.localization.R
-import com.groupany.manga.presentation.components.ChapterCard
-import com.groupany.manga.presentation.components.EmptyChapterCard
-import com.groupany.manga.presentation.components.MangaAppBarGradient
-import com.groupany.manga.presentation.components.MangaHeader
+import com.groupany.manga.presentation.components.detail.ChapterCard
+import com.groupany.manga.presentation.components.detail.EmptyChapterCard
+import com.groupany.manga.presentation.components.detail.MangaAppBarGradient
+import com.groupany.manga.presentation.components.detail.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
 import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope

@@ -1,4 +1,4 @@
-package com.groupany.manga.presentation.components
+package com.groupany.manga.presentation.components.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.groupany.manga.presentation.components
+package com.groupany.manga.presentation.components.detail
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.ExperimentalSharedTransitionApi
