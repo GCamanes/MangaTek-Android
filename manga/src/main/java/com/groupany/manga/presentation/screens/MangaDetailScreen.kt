@@ -49,6 +49,7 @@ import coil.request.ImageRequest
 import com.groupany.localization.R
 import com.groupany.manga.presentation.components.ChapterCard
 import com.groupany.manga.presentation.components.EmptyChapterCard
+import com.groupany.manga.presentation.components.MangaAppBarGradient
 import com.groupany.manga.presentation.components.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
@@ -146,18 +147,10 @@ fun MangaDetailScreen(
                 contentWindowInsets = WindowInsets(0.dp),
                 topBar = {
                     Box {
-                        Box(
-                            modifier = Modifier
-                                .matchParentSize()
-                                .background(
-                                    Brush.verticalGradient(
-                                        colorStops = arrayOf(
-                                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * uiState.alpha),
-                                            0.3f to MaterialTheme.colorScheme.background.copy(alpha = 0.6f + 0.4f * uiState.alpha),
-                                            1f to MaterialTheme.colorScheme.background.copy(alpha = uiState.secondAlpha),
-                                        )
-                                    )
-                                )
+                        MangaAppBarGradient(
+                            modifier = Modifier.matchParentSize(),
+                            uiState.alpha,
+                            uiState.secondAlpha,
                         )
 
                         CustomTopAppBar(

@@ -50,7 +50,7 @@ fun MangaHeader(
                 .background(
                     Brush.verticalGradient(
                         colorStops = arrayOf(
-                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
+                            0.4f to MaterialTheme.colorScheme.background.copy(alpha = alpha),
                             0.8f to MaterialTheme.colorScheme.background, // still transparent
                             1f to MaterialTheme.colorScheme.background // fully solid
                         )
