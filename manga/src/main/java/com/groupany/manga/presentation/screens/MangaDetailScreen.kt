@@ -134,6 +134,7 @@ fun MangaDetailScreen(
                             RoundedCornerShape(roundedCornerAnim),
                         ),
                         renderInOverlayDuringTransition = false,
+                        zIndexInOverlay = 1f
                     ), // same result as aspectRatio(0.7f)
                 contentScale = ContentScale.Crop
             )
