@@ -38,6 +38,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -65,12 +66,12 @@ android {
             dimension = "version"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "MangaTek Dev")
+            resValue("string", "app_label", "MangaTek Dev")
         }
         create("prod") {
             dimension = "version"
             applicationIdSuffix = ".prod"
-            resValue("string", "app_name", "MangaTek")
+            resValue("string", "app_label", "MangaTek")
         }
     }
 }
