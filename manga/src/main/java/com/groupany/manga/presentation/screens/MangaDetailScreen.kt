@@ -8,7 +8,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -45,9 +44,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.groupany.localization.R
-import com.groupany.manga.presentation.components.detail.ChapterCard
-import com.groupany.manga.presentation.components.detail.EmptyChapterCard
 import com.groupany.manga.presentation.components.detail.MangaAppBarGradient
+import com.groupany.manga.presentation.components.detail.MangaChaptersRow
 import com.groupany.manga.presentation.components.detail.MangaHeader
 import com.groupany.manga.presentation.viewmodels.MangaDetailViewModel
 import com.groupany.ui.SizeTools
@@ -58,7 +56,6 @@ import com.groupany.ui.animation.AnimationUtils.isAnimationFinished
 import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
-import com.groupany.ui.components.HorizontalSpacer
 import com.groupany.ui.components.ScreenTitle
 import com.groupany.ui.components.ScrollGradient
 import com.groupany.ui.components.ToggleIconButton
@@ -200,6 +197,7 @@ fun MangaDetailScreen(
                                 id = id,
                                 title = title,
                                 manga = manga,
+                                showTitle = !uiState.switchTitle,
                                 onTitleYChanged = { y ->
                                     viewModel.saveStableTitleY(
                                         y,
@@ -207,7 +205,6 @@ fun MangaDetailScreen(
                                             .isAnimationFinished()
                                     )
                                 },
-                                showTitle = !uiState.switchTitle
                             )
                         }
                         item {
@@ -227,52 +224,14 @@ fun MangaDetailScreen(
                             val chapterRows: List<List<String>> = manga.chapters.chunked(columns)
 
                             items(chapterRows.size) { index ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(MaterialTheme.colorScheme.background)
-                                        .padding(top = UIConstants.PaddingMedium),
-                                ) {
-                                    HorizontalSpacer()
-                                    ChapterCard(
-                                        mangaId = manga.id,
-                                        chapterId = chapterRows[index][0],
-                                        onClick = { mid, cid -> },
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                    HorizontalSpacer()
-                                    if (chapterRows[index].size >= columns - 1) {
-                                        ChapterCard(
-                                            mangaId = manga.id,
-                                            chapterId = chapterRows[index][columns - 2],
-                                            onClick = { mid, cid -> },
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    } else {
-                                        EmptyChapterCard(
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    }
-                                    HorizontalSpacer()
-                                    if (chapterRows[index].size == columns) {
-                                        ChapterCard(
-                                            mangaId = manga.id,
-                                            chapterId = chapterRows[index][columns - 1],
-                                            onClick = { mid, cid -> },
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    } else {
-                                        EmptyChapterCard(
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    }
-                                    HorizontalSpacer()
-                                }
+                                MangaChaptersRow(
+                                    columns = columns,
+                                    manga = manga,
+                                    chapters = chapterRows[index],
+                                )
                             }
 
-                            item {
-                                VerticalSpacer(CustomSpacerSize.BIG)
-                            }
+                            item { VerticalSpacer(CustomSpacerSize.BIG) }
                         }
                     }
 
