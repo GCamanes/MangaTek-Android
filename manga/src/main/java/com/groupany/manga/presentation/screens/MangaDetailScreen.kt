@@ -2,10 +2,10 @@ package com.groupany.manga.presentation.screens
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterExitState
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -53,7 +53,6 @@ import com.groupany.ui.animation.AnimationUtils.LocalNavAnimatedVisibilityScope
 import com.groupany.ui.animation.AnimationUtils.LocalSharedTransitionScope
 import com.groupany.ui.animation.AnimationUtils.boundsTransform
 import com.groupany.ui.animation.AnimationUtils.isAnimationFinished
-import com.groupany.ui.animation.AnimationUtils.nonSpatialExpressiveSpring
 import com.groupany.ui.components.CustomSpacerSize
 import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.ScreenTitle
@@ -114,18 +113,7 @@ fun MangaDetailScreen(
             }
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .sharedBounds(
-                    sharedTransitionScope.rememberSharedContentState(key = id),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransform,
-                    clipInOverlayDuringTransition = OverlayClip(
-                        RoundedCornerShape(roundedCornerAnim),
-                    ),
-                    exit = fadeOut(nonSpatialExpressiveSpring()),
-                    enter = fadeIn(nonSpatialExpressiveSpring()),
-                )
+            modifier = Modifier.fillMaxSize()
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -135,7 +123,18 @@ fun MangaDetailScreen(
                 contentDescription = title,
                 modifier = Modifier
                     .width(screenWidth)
-                    .height(backgroundImageHeight), // same result as aspectRatio(0.7f)
+                    .height(backgroundImageHeight)
+                    .sharedBounds(
+                        sharedTransitionScope.rememberSharedContentState(key = id),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = boundsTransform,
+                        enter = EnterTransition.None,
+                        exit = ExitTransition.None,
+                        clipInOverlayDuringTransition = OverlayClip(
+                            RoundedCornerShape(roundedCornerAnim),
+                        ),
+                        renderInOverlayDuringTransition = false,
+                    ), // same result as aspectRatio(0.7f)
                 contentScale = ContentScale.Crop
             )
 

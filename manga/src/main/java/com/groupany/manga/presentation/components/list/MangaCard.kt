@@ -1,8 +1,8 @@
 package com.groupany.manga.presentation.components.list
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -83,8 +83,9 @@ fun MangaCard(
                         sharedTransitionScope.rememberSharedContentState(key = manga.id),
                         animatedVisibilityScope = animatedVisibilityScope,
                         boundsTransform = boundsTransform,
-                        enter = fadeIn(),
-                        exit = fadeOut(),
+                        enter = EnterTransition.None,
+                        exit = ExitTransition.None,
+                        renderInOverlayDuringTransition = false,
                     ),
                 shape = RoundedCornerShape(UIConstants.CornerRound),
                 colors = CardDefaults.cardColors(
