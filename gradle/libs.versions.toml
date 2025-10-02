@@ -1,61 +1,42 @@
 [versions]
-accompanistNavigationAnimation = "0.32.0"
-agp = "8.9.2"
-androidxHiltNavigationCompose = "1.3.0"
-coilCompose = "2.5.0"
-firebaseBom = "33.13.0"
-firebaseFirestoreKtx = "25.1.4"
-googleHiltAndroid = "2.56.2"
-hiltAndroid = "2.54"
-hiltAndroidCompiler = "2.51.1"
-hiltAndroidCompilerVersion = "2.56.2"
-hiltAndroidVersion = "2.54"
-hiltCompiler = "2.56.2"
-hiltCompilerVersion = "2.56.2"
-hiltLifecycleViewmodel = "1.3.0"
+agp = "8.13.0"
+coilCompose = "2.7.0"
+firebaseBom = "34.3.0"
+firebaseFirestore = "26.0.1"
+hiltAndroid = "2.57.1"
+hiltAndroidCompiler = "2.57.1"
+hiltCompiler = "2.57.1"
 hiltNavigationCompose = "1.3.0"
-hiltNavigationComposeVersion = "1.3.0"
-kotlin = "2.0.21"
-coreKtx = "1.16.0"
+kotlin = "2.2.20"
+coreKtx = "1.17.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.04.01"
-material = "1.12.0"
-material3 = "1.3.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+lifecycleRuntimeKtx = "2.9.4"
+activityCompose = "1.11.0"
+composeBom = "2025.09.01"
+material = "1.13.0"
+material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
-navigationCompose = "2.8.9"
-appcompat = "1.7.0"
+navigationCompose = "2.9.5"
+appcompat = "1.7.1"
+navigationCommonKtx = "2.9.5"
+roomVersion = "2.8.1"
 
 [libraries]
-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }
-#noinspection SimilarGradleDependency
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-#noinspection SimilarGradleDependency
-androidx-hilt-navigation-compose-v100 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
-androidx-hilt-navigation-compose-v120 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
-firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { module = "com.google.firebase:firebase-storage" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-#noinspection SimilarGradleDependency
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
-#noinspection SimilarGradleDependency
-hilt-android-compiler-v2562 = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompilerVersion" }
-hilt-android-v250 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
-hilt-android-v2562 = { module = "com.google.dagger:hilt-android", version.ref = "googleHiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
-hilt-compiler-v2562 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompilerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -72,6 +53,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 material = { module = "com.google.android.material:material", version.ref = "material" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-ktx = { module = "androidx.room:room-ktx" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

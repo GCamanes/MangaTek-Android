@@ -1,0 +1,28 @@
+package com.groupany.ui.components
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+
+@Composable
+fun ScreenTitle(
+    modifier: Modifier = Modifier,
+    title: String,
+    color: Color? = null,
+    centered: Boolean = false,
+) {
+    Text(
+        title,
+        maxLines = 2,
+        modifier = modifier
+            .fillMaxWidth(),
+        textAlign = if (centered) TextAlign.Center else TextAlign.Unspecified,
+        style = MaterialTheme.typography.headlineMedium.copy(
+            color = color ?: MaterialTheme.colorScheme.onBackground,
+        )
+    )
+}

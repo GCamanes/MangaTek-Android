@@ -1,20 +1,16 @@
 package com.groupany.manga.presentation.screens
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -22,25 +18,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.groupany.manga.presentation.components.MangaFilterFAB
-import com.groupany.manga.presentation.components.MangaLazyList
+import com.groupany.manga.presentation.components.list.MangaFilterFAB
+import com.groupany.manga.presentation.components.list.MangaLazyList
 import com.groupany.manga.presentation.viewmodels.MangaListViewModel
 import com.groupany.ui.components.CustomError
+import com.groupany.ui.components.CustomTopAppBar
 import com.groupany.ui.components.EmptyError
 import com.groupany.ui.components.MangaTekTitle
+import com.groupany.ui.components.ScrollGradient
 import com.groupany.ui.constants.UIConstants
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun MangaListScreen(
     actions: @Composable RowScope.() -> Unit = {},
-    viewModel: MangaListViewModel = hiltViewModel()
+    onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
+    viewModel: MangaListViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyGridState()
@@ -62,11 +58,9 @@ fun MangaListScreen(
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
-            TopAppBar(
+            CustomTopAppBar(
                 title = { MangaTekTitle() },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                ),
+                containerColor = MaterialTheme.colorScheme.background,
                 actions = actions,
             )
         },
@@ -83,7 +77,7 @@ fun MangaListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter
             ){
                 when {
                     uiState.isLoading -> CircularProgressIndicator()
@@ -97,30 +91,15 @@ fun MangaListScreen(
                             state = listState,
                             mangaList = mangaList,
                             isFavorite = uiState::isFavorite,
+                            onMangaClick = onMangaClick,
                             onToggle = viewModel::toggleFavorite,
-                            getCachedUrl = viewModel::getCachedUrl,
-                            getDownloadUrl = viewModel::getDownloadUrl,
+                            getCoverUrl = viewModel::getCoverUrl,
                         )
                         else EmptyError()
                     }
                 }
                 // Top gradient appearing on scroll
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(UIConstants.PaddingMedium)
-                        .alpha(alpha)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.background,
-                                    Color.Transparent,
-                                    Color.Transparent,
-                                )
-                            )
-                        )
-                        .align(Alignment.TopCenter)
-                )
+                ScrollGradient(alpha = alpha)
             }
     }
 }

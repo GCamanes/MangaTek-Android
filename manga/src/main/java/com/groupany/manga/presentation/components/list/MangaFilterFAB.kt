@@ -1,4 +1,4 @@
-package com.groupany.manga.presentation.components
+package com.groupany.manga.presentation.components.list
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

@@ -23,7 +23,7 @@ object LocaleHelper {
     fun setLocale(context: Context, language: String): Context {
         saveLanguagePreference(context, language)
 
-        val locale = Locale(language)
+        val locale = Locale.forLanguageTag(language)
         Locale.setDefault(locale)
 
         val config = Configuration()

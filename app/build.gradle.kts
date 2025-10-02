@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
 }
 
 val localProperties = Properties().apply {
@@ -18,12 +18,12 @@ val password: String = localProperties.getProperty("LOGIN_PASSWORD") ?: ""
 
 android {
     namespace = "com.groupany.mangatek"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "fr.groupany.mangatek"
         minSdk = 30
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
 
@@ -48,8 +48,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
     buildFeatures {
         compose = true
@@ -65,7 +67,7 @@ android {
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "MangaTek Dev")
         }
-        create("pred") {
+        create("prod") {
             dimension = "version"
             applicationIdSuffix = ".prod"
             resValue("string", "app_name", "MangaTek")
@@ -77,6 +79,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.common.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -95,12 +98,14 @@ dependencies {
 
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.accompanist.navigation.animation)
 
     // Hilt dependencies
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // Icons dependencies
+    implementation(libs.androidx.material.icons.extended)
 
     // Local modules
     implementation(project(":core:base"))
@@ -109,8 +114,4 @@ dependencies {
     implementation(project(":authentication"))
     implementation(project(":manga"))
     implementation(project(":settings"))
-}
-
-kapt {
-    correctErrorTypes = true
 }

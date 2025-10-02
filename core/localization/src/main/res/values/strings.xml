@@ -4,6 +4,8 @@
     <!--ACTION-->
     <string name="login">Login</string>
     <string name="logout">Logout</string>
+    <string name="resumeReading">Resume reading</string>
+    <string name="startReading">Start reading</string>
     <!--ERRORS-->
     <string name="error_credentials">Invalid email or password</string>
     <string name="error_empty">Oops, there is nothing here…</string>
@@ -11,6 +13,8 @@
     <string name="error_too_many_request">Too many request have been made, please wait and try again</string>
     <string name="error_unknown">An unknown error has occurred</string>
     <!--GENERAL-->
+    <string name="chapter">Chapter</string>
+    <string name="chapters">Chapters</string>
     <string name="email">Email</string>
     <string name="home">Home</string>
     <string name="language">Language</string>

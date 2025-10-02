@@ -1,5 +1,6 @@
-package com.groupany.manga.presentation.components
+package com.groupany.manga.presentation.components.list
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +12,15 @@ import androidx.compose.ui.Modifier
 import com.groupany.manga.domain.entities.MangaLightEntity
 import com.groupany.ui.constants.UIConstants
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MangaLazyList(
     state: LazyGridState,
     mangaList: List<MangaLightEntity> = emptyList(),
     isFavorite: (String) -> Boolean,
-    onToggle: (String) -> Unit,
-    getCachedUrl: (String) -> String?,
-    getDownloadUrl: suspend (String) -> String?
+    onMangaClick: (id: String, title: String, coverUrl: String) -> Unit,
+    onToggle: suspend (String) -> Unit,
+    getCoverUrl: suspend (String, String) -> String?
 ) {
     LazyVerticalGrid(
         state = state,
@@ -39,9 +41,15 @@ fun MangaLazyList(
             MangaCard(
                 mangaList[index],
                 isFavorite(mangaList[index].id),
+                onClick = {
+                    onMangaClick(
+                        mangaList[index].id,
+                        mangaList[index].title,
+                        mangaList[index].coverPath,
+                    )
+                },
                 onToggle = onToggle,
-                getCachedUrl = getCachedUrl,
-                getDownloadUrl = getDownloadUrl
+                getCoverUrl = getCoverUrl
             )
         }
     }

@@ -4,6 +4,8 @@
     <!--ACTION-->
     <string name="login">Se connecter</string>
     <string name="logout">Se déconnecter</string>
+    <string name="resumeReading">Reprendre la lecture</string>
+    <string name="startReading">Lancer la lecture</string>
     <!--ERRORS-->
     <string name="error_credentials">Email ou mot de passe invalide</string>
     <string name="error_empty">Oups, il n\'y a rien ici…</string>
@@ -11,6 +13,8 @@
     <string name="error_too_many_request">Trop de tentatives, merci de patienter et de recommencer plus tard</string>
     <string name="error_unknown">Une errur inconnue est survenue</string>
     <!--GENERAL-->
+    <string name="chapter">Chapitre</string>
+    <string name="chapters">Chapitres</string>
     <string name="email">Email</string>
     <string name="home">Accueil</string>
     <string name="language">Langue</string>
