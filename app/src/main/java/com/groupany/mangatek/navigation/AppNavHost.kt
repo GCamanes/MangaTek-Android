@@ -123,12 +123,7 @@ fun AppNavHost(navController: NavHostController) {
                         MangaDetailScreen(
                             id = id,
                             title = title,
-                            onBack = {
-                                navController.popBackStack(
-                                    route = Screen.MangaList.route,
-                                    inclusive = false
-                                )
-                            },
+                            onBack = { navController.safeNavigateUp() },
                             viewModel = viewModel,
                         )
                     }
@@ -143,12 +138,7 @@ fun AppNavHost(navController: NavHostController) {
                         }
                     ) {
                         SettingsScreen(
-                            onBack = {
-                                navController.popBackStack(
-                                    route = Screen.MangaList.route,
-                                    inclusive = false
-                                )
-                            },
+                            onBack = { navController.safeNavigateUp() },
                             onLogout = { NavHelper.backToLogin(navController) },
                         )
                     }
@@ -160,11 +150,8 @@ fun AppNavHost(navController: NavHostController) {
 
 object NavHelper {
     fun goToMangaList(navController: NavHostController) {
-        val currentRoute = navController.currentBackStackEntry?.destination?.route
-        val args = navController.currentBackStackEntry?.arguments
-        val autoAuth = args?.getBoolean(NavParam.AutoAuth.name)
         navController.navigate(Screen.MangaList.route) {
-            popUpTo(Screen.Login.route) { inclusive = true }
+            popUpTo(NavGraph.Auth.route) { inclusive = true }
             launchSingleTop = true
         }
     }
@@ -191,6 +178,12 @@ object NavHelper {
             popUpTo(NavGraph.Main.route) { inclusive = true }
             launchSingleTop = true
         }
+    }
+}
+
+fun NavHostController.safeNavigateUp() {
+    if (this.previousBackStackEntry != null) {
+        this.navigateUp()
     }
 }
 
